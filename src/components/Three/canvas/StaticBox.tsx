@@ -1,16 +1,15 @@
-import { useLoader } from "@react-three/fiber";
 import React, { useRef } from "react";
-import { TextureLoader } from "three";
+
 
 function StaticBox(props) {
   // This reference will give us direct access to the THREE.Mesh object
   const mesh = useRef<any>(null)
 
-  const texture = useLoader(TextureLoader, "/textures/gallery_baseColor.png"); // @/components/Three/assets/textures/gallery
+  // const texture = useLoader(TextureLoader, "/textures/gallery_baseColor.png"); // @/components/Three/assets/textures/gallery
   return (
     <mesh ref={mesh} {...props} recieveShadow={true} castShadow={true}>
       <boxBufferGeometry />
-      <meshPhysicalMaterial map={texture} color={"white"} />
+      {/* <meshPhysicalMaterial map={texture} color={"white"} /> */}
     </mesh>
   );
 }
