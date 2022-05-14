@@ -36,3 +36,7 @@ yarn-error.log*
 
 # lock
 **/yarn.lock
+
+# gltf large files
+/public/gltf/*
+/public/textures/space

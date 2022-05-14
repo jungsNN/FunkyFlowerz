@@ -48,6 +48,8 @@
     "next-compose-plugins": "^2.2.1",
     "next-offline": "^5.0.5",
     "postcss": "^8.4.13",
+    "postcss-import": "^14.1.0",
+    "postcss-nesting": "^10.1.5",
     "prettier": "^2.6.2",
     "raw-loader": "^4.0.2",
     "tailwindcss": "^3.0.24",

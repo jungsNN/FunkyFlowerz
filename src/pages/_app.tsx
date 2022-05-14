@@ -5,7 +5,8 @@ import useStore from '@/utils/store'
 import partition from '@/utils/partition'
 import Dom from '@/components/Three/layout/dom'
 import Header from '@/config'
-import '@/styles/globals.css'
+// import '@/styles/globals.css'
+import '../index.css';
 
 const LCanvas = dynamic(() => import('@/components/Three/layout/canvas'), {
   ssr: false,

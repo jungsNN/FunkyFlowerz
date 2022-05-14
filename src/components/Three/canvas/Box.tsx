@@ -27,8 +27,8 @@ const BoxComponent = ({ route }: {route: string}) => {
         <boxBufferGeometry args={[1, 1, 1]} />
         <meshPhysicalMaterial color={route === '/' ? 'orange' : 'hotpink'} />
       </mesh>
-      <directionalLight position={[5, 5, 5]} />
-      <ambientLight />
+      {/* <directionalLight position={[5, 5, 5]} />
+      <ambientLight /> */}
     </>
   )
 }

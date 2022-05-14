@@ -1,0 +1,41 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* daisyui */
+/* @import "../../node_modules/daisyui/dist/styled.css";
+@import "../../node_modules/daisyui/dist/full.css";
+@import "../../node_modules/daisyui/dist/unstyled.css";
+@import "../node_modules/daisyui/dist/themes.css"; */
+
+/* App */
+@import "./styles/globals.css";
+@import "./styles/components.css";
+@import "./styles/layout.css";
+@import "./styles/typography.css";
+
+/* Delete later */
+@import "./styles/Home.module.css";
+
+/* utility */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  html,
+  body,
+  #__next {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: "Chainprinter", sans-serif;
+  }
+}
+
+
+/* swiper */
+/* @import "../node_modules/swiper/swiper.scss";
+@import "../node_modules/swiper/swiper-vars.scss"; */

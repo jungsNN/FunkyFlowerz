@@ -1,5 +1,7 @@
 import dynamic from 'next/dynamic'
 import Instructions from '@/components/Three/dom/Instructions'
+import Floor from '@/components/Three/props/Floor'
+import { Sky } from '@react-three/drei'
 
 const Box = dynamic(() => import('@/components/Three/canvas/Box'), {
   ssr: false,
@@ -8,14 +10,18 @@ const Box = dynamic(() => import('@/components/Three/canvas/Box'), {
 const DOM = () => {
   return (
     // Step 5 - delete Instructions components
-    <Instructions />
+    // <Instructions />
+    <h1>HELLO, Welcome!</h1>
   )
 }
 
 const R3F = () => {
   return (
     <>
-      <Box route='/' />
+      
+      <Sky />
+      <Box route='/test' />
+      <Floor position={[0, -1, 0]}/>
     </>
   )
 }

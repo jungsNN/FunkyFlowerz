@@ -7,30 +7,30 @@ import dynamic from 'next/dynamic'
 // WARNING ! errors might get obfuscated by using dynamic import.
 // If something goes wrong go back to a static import to show the error.
 // https://github.com/pmndrs/react-three-next/issues/49
-const Shader = dynamic(() => import('@/components/Three/canvas/Shader/Shader'), {
+const DungeonShader = dynamic(() => import('@/components/Three/canvas/Dungeon'), {
   ssr: false,
-})
-
-const Text = dynamic(() => import('@/components/Three/canvas/Text'), {
-  ssr: false,
-})
-
+});
 
 // dom components goes here
 const DOM = () => {
   return (
     // Step 5 - delete Instructions components
     // <Instructions />
-    <Text route="/box" />
-  )
-}
+    <h1> </h1>
+    )
+  }
+  
+  // home canvas components goes here
+  const R3F = () => {
+    return (
+      <>
+        <DungeonShader />
 
-// canvas components goes here
-const R3F = () => {
-  return (
-    <>
-      <Shader />
-    </>
+      </>
+    // <Scenery>
+    //   <ProfilePortal route="/" />
+    // </Scenery>
+    
   )
 }
 
