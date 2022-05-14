@@ -30,7 +30,7 @@ const LCanvas = ({ children }) => {
       // @ts-ignore
         mode='concurrent'
         camera={{
-          position: [-6, 0, 15],
+          position: [-1, 0, 15],
           rotation: [Math.PI / 2, 10, 0],
         }}
         onCreated={(state) => state.events.connect(dom.current)}

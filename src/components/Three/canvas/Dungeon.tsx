@@ -12,26 +12,7 @@ export default function DungeonShader() {
   const mesh = useRef<any>(null);
   const frontFloatv = [10, 1, 5]
   const floatingEths = ({position, scale}: {position?: number[], scale?: number}) => <FloatingCrystals scale={scale ?? 0.04} position={position ?? frontFloatv}/>
-  const glowShroom = () => (<GlowShroom position={[-2, 0.5, 3]} scale={0.05} />)
-
-  // The cubeRenderTarget is used to generate a texture for the reflective sphere.
-  // It must be updated on each frame in order to track camera movement and other changes.
-  // const cubeRenderTarget = new WebGLCubeRenderTarget(256, {
-  //   format: RGBAFormat,
-  //   generateMipmaps: true,
-  //   minFilter: LinearMipmapLinearFilter
-  // });
-  // useFrame((state, delta) =>
-  //   mesh.current
-  //     ? (mesh.current.rotation.y = mesh.current.rotation.x += 0.01)
-  //     : null
-  // )
-  // const cubeCamera = new CubeCamera(1, 1000, cubeRenderTarget);
-  // cubeCamera.position.set(0, 15, 0);
-  // scene.add(cubeCamera);
-
-  // Update the cubeCamera with current renderer and scene.
-  // useFrame(() => cubeCamera.update(gl, scene));
+  const glowShroom = ({position, scale}: {position?: number[], scale?: number}) => (<GlowShroom position={position ?? [-2, 0.5, 3]} scale={scale ?? 0.05} />)
 
   return (
     <mesh ref={mesh} position={[0, -4, 0]}>
@@ -51,15 +32,9 @@ export default function DungeonShader() {
       
       {floatingEths({})}
       {floatingEths({position: [-3, 1, -1], scale: 0.03})}
-      {glowShroom()}
+      {glowShroom({})}
       <MagicPortal scale={.8}  position={[0, 0, 0]}/>
       <Dungeon route="/"/>
-      {/* <meshStandardMaterial
-        attach="material"
-        // envMap={cubeCamera.renderTarget.texture}
-        // rough={0.1}
-        // metalness={1}
-      /> */}
     </mesh>
   );
 }
