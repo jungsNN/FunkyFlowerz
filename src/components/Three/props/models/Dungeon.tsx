@@ -8,7 +8,7 @@ title: Small Scene
 
 import * as THREE from 'three'
 import React, { useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { MeshReflectorMaterial, useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 
 type GLTFResult = GLTF & {
@@ -33,18 +33,59 @@ type GLTFResult = GLTF & {
 
 export default function Model({ ...props }: JSX.IntrinsicElements['group']) {
   const group = useRef<THREE.Group>()
-  const { nodes, materials } = useGLTF('/dungeon-transformed.glb') as GLTFResult
+  // const ref = useRef<any>(null);
+  const { nodes, materials } = useGLTF('/dungeon-transformed.glb') as GLTFResult;
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-            <mesh geometry={nodes.Circle_M_Circle_0.geometry} material={materials.M_Circle} />
-            <mesh geometry={nodes.Circle_M_Circle_Water_0.geometry} material={materials.M_Circle_Water} />
-            <mesh geometry={nodes.Circle_M_Circle_Net_0.geometry} material={materials.M_Circle_Net} />
-            <mesh geometry={nodes.Circle_M_Circle_Dirt_0.geometry} material={materials.M_Circle_Dirt} />
-            <mesh geometry={nodes.Circle_Material002_0.geometry} material={materials['Material.002']} />
-            <mesh geometry={nodes.Circle_M_Collumn_0.geometry} material={materials.M_Collumn} />
+            <mesh geometry={nodes.Circle_M_Circle_0.geometry} material={materials.M_Circle} >
+              <meshStandardMaterial toneMapped
+                color="#1D9553" metalness={1} roughness={5}/>
+            </mesh>
+            <mesh geometry={nodes.Circle_M_Circle_Water_0.geometry} material={materials.M_Circle_Water}>
+            {/* <meshReflectorMaterial color="blue"/> */}
+            <planeBufferGeometry />
+            {/* <MeshReflectorMaterial
+                blur={[100, 100]}
+                resolution={256}
+                attach="material"
+                mixBlur={1}
+                mixStrength={40}
+                roughness={1}
+                depthScale={1.2}
+                minDepthThreshold={0.4}
+                maxDepthThreshold={1.4}
+                color="#3BBBE2"
+                metalness={0.5} mirror={1}            /> */}
+              </mesh>
+              {/* <Wave  /> */}
+            <mesh geometry={nodes.Circle_M_Circle_Net_0.geometry} material={materials.M_Circle_Net}>
+            <meshStandardMaterial toneMapped
+                color="#C2BF63"  roughness={5}/>
+            </mesh>
+            <mesh geometry={nodes.Circle_M_Circle_Dirt_0.geometry} material={materials.M_Circle_Dirt} >
+            {/* <meshStandardMaterial toneMapped color="blue" roughness={10}/> */}
+            <planeBufferGeometry />
+            {/* <MeshReflectorMaterial
+                blur={[300, 100]}
+                resolution={256}
+                attach="material"
+                mixBlur={1}
+                mixStrength={40}
+                roughness={1}
+                depthScale={1.2}
+                minDepthThreshold={0.4}
+                maxDepthThreshold={1.4}
+                color="#3BBBE2"
+                metalness={0.5} mirror={1}/> */}
+              </mesh>
+            <mesh geometry={nodes.Circle_Material002_0.geometry} material={materials['Material.002']} >
+            <meshStandardMaterial fog toneMapped color="#847B3A" roughness={7}/>
+              </mesh>
+            <mesh geometry={nodes.Circle_M_Collumn_0.geometry} material={materials.M_Collumn}/>
             <mesh geometry={nodes.Circle_M_Collumn_0_1.geometry} material={materials.M_Collumn} />
           </group>
         </group>

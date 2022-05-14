@@ -1,3 +1,4 @@
+
 import { useRef } from "react";
 import Model from '../../models/Crystal';
 
@@ -6,7 +7,7 @@ export default function FloatingCrystals(props) {
 
   return (
     <mesh ref={mesh} {...props}>
-      <Model />
+        <Model  />
     </mesh>
   )
 }

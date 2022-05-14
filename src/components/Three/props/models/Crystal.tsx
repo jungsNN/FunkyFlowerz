@@ -10,6 +10,8 @@ import * as THREE from 'three'
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
+import Lightbulb from '../environment/Lights/Lightbulb'
+import SparkleLights from '../environment/Lights/SparkleLights'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -27,8 +29,10 @@ export default function Model({ ...props }: JSX.IntrinsicElements['group']) {
     <group ref={group} {...props} dispose={null}>
       <group position={[17.01, 0, -9.49]} rotation={[-Math.PI / 2, 0, 0]}>
         <group rotation={[Math.PI / 2, 0, 0]}>
-          <group position={[-122.22, 34.23, -15.44]} rotation={[Math.PI / 2, 0, -2.71]} scale={47.49}>
-            <mesh geometry={nodes.Cone007__0.geometry} material={materials['Scene_-_Root']} />
+          <group position={[-122.22, 34.23, -15.44]} rotation={[Math.PI / 2, 0, -2.71]} scale={4.49}>
+            <mesh geometry={nodes.Cone007__0.geometry} material={materials['Scene_-_Root']} >
+              <meshBasicMaterial wireframe toneMapped color="skyblue" wireframeLinewidth={4} />
+            </mesh>
           </group>
         </group>
       </group>
