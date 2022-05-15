@@ -16,6 +16,11 @@
 
 /* Delete later */
 @import "./styles/Home.module.css";
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: 'Chainprinter', sans-serif;
+  }
+}
 
 /* utility */
 @layer base {
@@ -25,13 +30,31 @@
   
   html,
   body,
+  #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
   #__next {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
     font-family: "Chainprinter", sans-serif;
+  }
+  
+  body {
+    overscroll-behavior: none;
+  }
+  h1 {
+    font-family: "Cardo", serif;
+  }
+  a {
+    pointer-events: all;
+    color: pink;
+    text-decoration: none;
   }
 }
 

@@ -60,7 +60,7 @@ const Header = ({ title = titleDefault }) => {
           href='/icons/safari-pinned-tab.svg'
         />
         <link rel='apple-touch-startup-image' href='/startup.png' />
-
+        
         {/* Meta Tags for HTML pages on Mobile */}
         {/* <meta name="format-detection" content="telephone=yes"/>
         <meta name="HandheldFriendly" content="true"/>  */}
@@ -70,7 +70,11 @@ const Header = ({ title = titleDefault }) => {
         />
         <meta name='theme-color' content='#000' />
         <link rel='shortcut icon' href='/icons/favicon.ico' />
-
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+        <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet" />
+        {/* https://fonts.googleapis.com/css2?family=Amiri&display=swap */}
+{/* https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz@8..144,300&display=swap */}
         {/* 
       Twitter Summary card
         documentation: https://dev.twitter.com/cards/getting-started

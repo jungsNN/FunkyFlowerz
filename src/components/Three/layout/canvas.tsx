@@ -1,5 +1,5 @@
 import { Canvas, useThree } from '@react-three/fiber'
-import { AdaptiveDpr, AdaptiveEvents, BakeShadows, OrbitControls, Preload, Sky, Stars } from '@react-three/drei'
+import { AdaptiveDpr, AdaptiveEvents, BakeShadows, Environment, OrbitControls, Preload, Stars } from '@react-three/drei'
 import useStore from '@/utils/store'
 import { Suspense, useEffect, useRef } from 'react'
 import Loader from '../helpers/Loader'
@@ -21,8 +21,12 @@ const LControl = () => {
 }
 const LCanvas = ({ children }) => {
   const dom = useStore((state) => state.dom)
+  // const overlay = useRef<any>(null);
+  // const caption = useRef<any>(null);
+  // const scroll = useRef<any>(null);
 
   return (
+    <>
       <Canvas
         shadows
         // @ts-ignore
@@ -47,7 +51,7 @@ const LCanvas = ({ children }) => {
         <hemisphereLight color="orange" intensity={0.02}/>
         <Lightbulb position={[0, 0, 0]} intensity={.5} rotation={[-Math.PI / 2, 10, 0]} color="blue"/>
         {/* <Sky distance={50000} sunPosition={[3, 5, 1]} inclination={10} azimuth={0.25}/> */}
-        <Sky turbidity={8} rayleigh={6} mieCoefficient={.005} mieDirectionalG={0.8} sunPosition={ [0, 0, 0]} />
+        {/* <Sky turbidity={8} rayleigh={6} mieCoefficient={.005} mieDirectionalG={0.8} sunPosition={ [0, 0, 0]} /> */}
         {/* <Cloud
           opacity={0.5}
           speed={1} // Rotation speed
@@ -58,10 +62,13 @@ const LCanvas = ({ children }) => {
         <Suspense fallback={<Loader />}>
           {children}
           <Preload all />
+          <Environment preset="city"/>
           <BakeShadows/>
         </Suspense>
         <Stars radius={100} depth={50} count={1000} factor={5} saturation={0} fade speed={1} />
       </Canvas>
+      {/* <ScrollOverlay ref={overlay} {...{caption: caption, scroll: scroll}}/> */}
+    </>
   )
 }
 

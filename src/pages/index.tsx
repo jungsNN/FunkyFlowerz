@@ -1,9 +1,13 @@
 import { Title } from '@/components/Foundation/Text';
 import dynamic from 'next/dynamic'
+import { Suspense } from 'react';
 const DungeonShader = dynamic(() => import('@/components/Three/canvas/Dungeon'), {
   ssr: false,
 });
 
+const ScrollView = dynamic(() => import('@/components/Three/canvas/ScrollView'), {
+  ssr: false,
+})
 // const Opener = dynamic(() => import('@/components/Three/canvas/StaticBox'), {
 //   ssr: false,
 // });
@@ -11,17 +15,26 @@ const DungeonShader = dynamic(() => import('@/components/Three/canvas/Dungeon'),
 // dom components goes here
 const DOM = () => {
   return (
-      <Title >HELLO</Title>
+      <Title >Index</Title>
       )
     }
     
-    // home canvas components goes here
-    const R3F = () => {
-      return (
-        <>
-        <DungeonShader />
-        {/* <Opener /> */}
-      </>
+// home canvas components goes here
+// {/* <DungeonShader /> */}
+const R3F = () => {
+  return (
+      <ScrollView />
+      // <Scroll>
+      //   <group position={[-200, 0, 0 ]}>
+      //     <Box/>
+      //   </group>
+      //   <group position={[200, -window?.innerHeight, 0]}>
+      //     <Box />
+      //   </group>
+      //   <group position={[100, 0, 0]}>
+      //     <Box />
+      //   </group>
+      // </Scroll>
   )
 }
 
