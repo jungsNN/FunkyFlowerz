@@ -25,8 +25,13 @@ const LCanvas = ({ children }) => {
   return (
       <Canvas
         shadows
+        // @ts-ignore
+        raycaster={{ computeOffsets: ({ clientX, clientY }) => ({
+          offsetX: clientX, offsetY: clientY 
+        })
+      }}
         className="canvas"
-        style={{background: "navy"}}
+        style={{background: "navy", }}
       // @ts-ignore
         mode='concurrent'
         camera={{
