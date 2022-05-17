@@ -11,9 +11,14 @@ import '../index.css';
 const SCanvas = dynamic(() => import('@/components/Three/layout/scroll'), {
   ssr: false,
 })
+
+const PCanvas = dynamic(() => import('@/components/Three/layout/presentation'), {
+  ssr: false,
+})
 // const LCanvas = dynamic(() => import('@/components/Three/layout/canvas'), {
 //   ssr: false,
 // });
+
 
 
 function Overlay() {
@@ -24,7 +29,7 @@ function Overlay() {
           position: 'absolute', top: 40, left: 90, fontSize: '13px', color: 'white'
         }}>
           <br/>
-          Jung Portfolio
+          Jung Collectives
         </a>
         <div style={{ position: 'absolute', top: 40, right: 40, fontSize: '13px', color: 'white'}}>
           <br/>
@@ -40,8 +45,8 @@ const Balance = ({ child }) => {
   return (
     <>
       <Dom>{dom}</Dom>
-      <SCanvas>{r3f}</SCanvas>
-
+      {/* <SCanvas>{r3f}</SCanvas> */}
+      <PCanvas>{r3f}</PCanvas>
       {/* <LCanvas>{r3f}</LCanvas> */}
       
     </>
@@ -60,10 +65,12 @@ function App({ Component, pageProps = { title: 'index' } }) {
   return (
     <>
       <Header title={pageProps.title} />
-      <Suspense>
+      
+      {/* <Balance child={child} /> */}
+      {/* <Suspense> */}
 
         <Balance child={child} />
-      </Suspense>
+      {/* </Suspense> */}
       <Overlay />
     </>
   )

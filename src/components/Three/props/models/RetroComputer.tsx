@@ -37,4 +37,4 @@ export default function Model({ ...props }: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/scene-transformed.glb')
+useGLTF.preload('/retro-computer-transformed.glb')

@@ -40,3 +40,14 @@
   height: 1em;
   margin-left: 0.5rem;
 }
+
+.barcode {
+  font-family: 'Libre Barcode 128', cursive;
+}
+
+.jap {
+  font-family: 'Zen Maru Gothic', sans-serif;
+}
+/* .kor {
+  font-family: 'Nanum Myeongjo', serif;
+} */

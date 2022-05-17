@@ -16,6 +16,8 @@
 
 /* Delete later */
 @import "./styles/Home.module.css";
+@import "./styles/canvas.css";
+
 @supports (font-variation-settings: normal) {
   html {
     font-family: 'Chainprinter', sans-serif;
@@ -49,7 +51,8 @@
     overscroll-behavior: none;
   }
   h1 {
-    font-family: "Cardo", serif;
+    /* font-family: 'Zen Ma', sans-serif; */
+    font-family: 'Zen Maru Gothic', sans-serif;
   }
   a {
     pointer-events: all;

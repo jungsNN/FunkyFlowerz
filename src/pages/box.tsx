@@ -7,6 +7,14 @@ const Box = dynamic(() => import('@/components/Three/canvas/Box'), {
   ssr: false,
 })
 
+const Portal = dynamic(() => import('@/components/Three/props/portals/Cursor'), {
+  ssr: false,
+})
+
+const LevelCube = dynamic(() => import ('@/components/Three/canvas/Level'), {
+  ssr: false
+})
+
 const DOM = () => {
   return (
     // Step 5 - delete Instructions components
@@ -18,10 +26,10 @@ const DOM = () => {
 const R3F = () => {
   return (
     <>
-      
-      <Sky />
+      <LevelCube/>
+      {/* <Sky />
       <Box route='/test' />
-      <Floor position={[0, -1, 0]}/>
+      <Floor position={[0, -1, 0]}/> */}
     </>
   )
 }
