@@ -1,37 +1,49 @@
-import { tempImgUrl } from "@/constants/urls";
 import useStore from "@/utils/store";
-import { PresentationControls, Image, Scroll, ScrollControls, PerspectiveCamera } from "@react-three/drei";
-import { useControls } from "leva";
-import { useRef } from "react";
+import { PresentationControls, PerspectiveCamera } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+// import { useControls } from "leva";
+import { useRef, useState } from "react";
 import Level from "../props/environment/Decors/Level";
 
 export default function LevelCanvas(props) {
   const mesh = useRef<any>(null);
   const { target, setTarget } = useStore()
-  const { mode } = useControls({ mode: { value: 'translate', options: ['translate', 'rotate', 'scale'] } })
+  // const { mode } = useControls({ mode: { value: 'translate', options: ['translate', 'rotate', 'scale'] } })
 
   // position-y={-0.75}
+  // const [isSelected, setSelected] = useState(false);
+
+  useFrame((state, delta) => 
+    mesh.current 
+      ? (mesh.current.rotation.y = mesh.current.rotation.x + 0.01)
+      : null)
+
   return (
-    <mesh ref={mesh} {...props} scale={1}>
+    <mesh 
+      ref={mesh}
+      scale={1} 
+      {...props}>
 
       <color attach="background" args={['#e0b7ff']} />
       <ambientLight />
-      <PresentationControls global cursor zoom={0.8} rotation={[0, -Math.PI / 4, 0]} polar={[0, Math.PI / 4]} azimuth={[-Math.PI / 4, Math.PI / 4]}>
+        <PresentationControls global cursor zoom={0.8} rotation={[0, -Math.PI / 4, 0]} polar={[0, Math.PI / 4]} azimuth={[-Math.PI / 4, Math.PI / 4]}>
+            <group position-y={-0.75} position-x={-3.4} dispose={null}> 
+              <Level scale={ 1} />
+              {/* <Sudo />
+              <Camera />
+              <Cactus />
+              <Icon />
+              <Pyramid /> */}
+            </group>
+            
+          </PresentationControls>
         
-        <group position-y={-0.75} position-x={-3.4} dispose={null}> 
-          <Level scale={1} />
-          {/* <Sudo />
-          <Camera />
-          <Cactus />
-          <Icon />
-          <Pyramid /> */}
-        </group>
-
-        {/* <Scroll>
-          <Image url={tempImgUrl} />
-        </Scroll> */}
+        {/* <PresentationControls  cursor zoom={0.8} rotation={[0, -Math.PI / 4, 0]} polar={[0, Math.PI / 4]} azimuth={[-Math.PI / 4, Math.PI / 4]} > */}
+        {/* <group position-y={-0.75} position-x={1.4} dispose={null}> 
+          <Level scale={ 1} />
+        </group> */}
           
-      </PresentationControls>
+      {/* </PresentationControls> */}
       <group name="Camera" position={[-1.78, 2.04, 23.58]} rotation={[1.62, 0.01, 0.11]}>
         <PerspectiveCamera makeDefault far={100} near={0.1} fov={28} rotation={[-Math.PI / 2, 0, 0]}>
           <directionalLight
