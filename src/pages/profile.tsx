@@ -42,27 +42,6 @@ const Portal = () => {
       {/* @ts-ignore */}
       <R3F r3f />
     </div>
-    // <div className="scene">
-    //   <Canvas
-    //       shadows
-    //       className="canvas"
-    //       camera={{
-    //         // position: [0, 0, 0]
-    //         position: [-6, 7, 7],
-    //       }}
-    //     >
-    //       <CameraController />
-          
-    //       <ambientLight color={"white"} intensity={0.2} />
-    //       <Lightbulb position={[0, 3, 0]} />
-    //       <Sphere />
-    //       <Sky />
-    //       <Suspense fallback={null}>
-    //         {/* <StaticBox rotateX={3} rotateY={0.2} /> */}
-    //       </Suspense>
-    //       <Floor position={[0, -1, 0]} />
-    //     </Canvas>
-    // </div>
   )
 }
 

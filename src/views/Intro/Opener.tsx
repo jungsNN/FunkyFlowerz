@@ -21,16 +21,8 @@ const Opener = () => {
             transform: 'translate3d(0, -100%, 0)',
           }}>
             <Title size="256px">
-              J      
+              Intro Page  
             </Title>
-            <Box gap="1rem">
-              <Title size="128px">
-                enny
-              </Title>
-              <Title size="128px">
-                ung
-              </Title>
-            </Box>
           </Col>
         </Box>
       </Scroll>

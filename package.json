@@ -1,5 +1,5 @@
 {
-  "name": "profile",
+  "name": "freshbaked",
   "version": "0.1.0",
   "authors": [
     "Jenny Jung <suzukidogemom@icloud.com>"
@@ -41,6 +41,7 @@
     "three-stdlib": "^2.10.1",
     "uuid": "^8.3.2",
     "v8": "^0.1.0",
+    "valtio": "^1.6.0",
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {

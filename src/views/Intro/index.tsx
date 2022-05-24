@@ -8,16 +8,8 @@ const Intro = () => {
       <Box>
         <Col>
           <Title size="256px">
-            J
+            Title
           </Title>
-          <Box>
-            <Title size="128px">
-              enny
-            </Title>
-            <Title size="128px">
-              ung
-            </Title>
-          </Box>
         </Col>
       </Box>
     </Page>

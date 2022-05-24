@@ -21,14 +21,14 @@ export default function LevelCanvas(props) {
   return (
     <mesh 
       ref={mesh}
-      scale={1} 
+      scale={.8} 
       {...props}>
 
       <color attach="background" args={['#e0b7ff']} />
       <ambientLight />
-        <PresentationControls global cursor zoom={0.8} rotation={[0, -Math.PI / 4, 0]} polar={[0, Math.PI / 4]} azimuth={[-Math.PI / 4, Math.PI / 4]}>
-            <group position-y={-0.75} position-x={-3.4} dispose={null}> 
-              <Level scale={ 1} />
+        <PresentationControls global zoom={0.8} rotation={[0, -Math.PI / 4, 0]} polar={[0, Math.PI / 4]} azimuth={[-Math.PI / 4, Math.PI / 4]}>
+            <group position-y={1} position-x={-2.4} dispose={null}> 
+              <Level scale={5} />
               {/* <Sudo />
               <Camera />
               <Cactus />

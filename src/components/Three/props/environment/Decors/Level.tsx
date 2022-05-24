@@ -1,11 +1,11 @@
 import { useThree } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 import { useSpring } from '@react-spring/three'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Level(props) {
   // @ts-ignore
-  const { nodes } = useGLTF('/level-react-draco.glb')
+  const { nodes, scenes , material} = useGLTF('/level-react-draco.glb')
   const { camera } = useThree()
   const mesh = useRef<any>(null);
 
@@ -18,6 +18,10 @@ export default function Level(props) {
     }),
     [],
   )
+  // useEffect(() => {
+  //   console.log('level meshes ', nodes.Level.layers.mask)
+
+  // }, [nodes.Level])
   return (
       <mesh ref={mesh} geometry={nodes.Level.geometry} material={nodes.Level.material} position={[-0.38, 0.69, 0.62]} rotation={[Math.PI / 2, -Math.PI / 9, 0]} 
       {...props}/>
