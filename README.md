@@ -8,7 +8,7 @@ Utilization of cryptography
 
 Implementation of the new Metaplex Javascript SDK for minting
 
-Cool customized UI's
+Cool customized UI's & expanding web designs to 3D
 
 & many more...
 
