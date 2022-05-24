@@ -15,9 +15,9 @@ Cool customized UI's & expanding web designs to 3D
 
 ## Previews
 
-pre-lauch sneak peek.. will be public soon!
+pre-lauch sneak peeks.. will be public soon,
 
-But here is our very first featuring artist's launch pad (follow & support [@ivorguest](https://twitter.com/ivorguest) on twitter!)
+but here is our very first featuring artist's launch pad (follow & support [@ivorguest](https://twitter.com/ivorguest) on twitter!)
 
 <a href="https://ipfs.infura.io/ipfs/bafkreidacehf2j4dalrxu7zgjlpvuebbbq2cppahtnx2fnqlrn7psw76qu" align="center">
   <img src="https://ipfs.infura.io/ipfs/bafkreidacehf2j4dalrxu7zgjlpvuebbbq2cppahtnx2fnqlrn7psw76qu" />  
