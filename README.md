@@ -1,3 +1,23 @@
+# FreshBaked
+
+Launch pad to mint collections and assets
+
+Exploring distributed systems via IPFS
+
+Utilization of cryptography  
+
+Implementation of the new Metaplex Javascript SDK for minting
+
+
+Upcoming:
+
+- [ ] deploy basic launch pad app ( featuring Funky Flowerz )
+- [ ] 1-stop-swap & special functionalities for traders
+- [ ] Facilitated wallet connection and switching between Ethereum & Solana 
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
