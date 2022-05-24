@@ -8,15 +8,35 @@ Utilization of cryptography
 
 Implementation of the new Metaplex Javascript SDK for minting
 
+Cool customized UI's
 
-Upcoming:
+& many more...
+
+
+## Previews
+
+pre-lauch sneak peek.. will be public soon!
+
+But here is our very first featuring artist's launch pad
+
+<a href="https://ipfs.infura.io/ipfs/bafkreidacehf2j4dalrxu7zgjlpvuebbbq2cppahtnx2fnqlrn7psw76qu" align="center">
+  <img src="https://ipfs.infura.io/ipfs/bafkreidacehf2j4dalrxu7zgjlpvuebbbq2cppahtnx2fnqlrn7psw76qu" />  
+</a>
+
+
+## Upcoming
 
 - [ ] deploy basic launch pad app ( featuring Funky Flowerz )
 - [ ] 1-stop-swap & special functionalities for traders
 - [ ] Facilitated wallet connection and switching between Ethereum & Solana 
 
 
+## About
 
+ 
+Focusing on what to explore and how to help others using the technologies we pioneer seems to allows us to thrive more than when we are chasing the 💸 -- is the philosophy.
+
+<hr />
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
