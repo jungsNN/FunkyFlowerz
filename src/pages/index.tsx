@@ -12,7 +12,7 @@ const ScrollView = dynamic(() => import('@/components/Three/canvas/ScrollView'),
 // dom components goes here
 const DOM = () => {
   return (
-      <Title >Index</Title>
+      <Title className="home-title">Index</Title>
       )
     }
     
