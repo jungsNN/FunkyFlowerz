@@ -8,7 +8,7 @@ import Header from '@/config'
 // import '@/styles/globals.css'
 import '../index.css';
 
-const SCanvas = dynamic(() => import('@/components/Three/layout/scroll'), {
+const SCanvas = dynamic(() => import('@/components/Three/layout/selections'), {
   ssr: false,
 })
 
@@ -54,7 +54,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
     <>
       <Header title={pageProps.title} />
         <Balance child={child} />
-      <Overlay />
+      {/* <Overlay /> */}
     </>
   )
 }

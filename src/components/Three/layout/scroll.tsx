@@ -9,7 +9,7 @@ const SCanvas = ({ children }) => {
 
   return (
       <Canvas
-        flat
+        orthographic
 
         dpr={[1, 2]} camera={{ fov: 15, zoom: 5, position: [0, 0, 8] }}
         onCreated={(state) => state.events.connect(dom.current)}

@@ -19,7 +19,7 @@ const DOM = () => {
 const R3F = () => {
   return (
     <>
-      <LevelCube/>
+      <LevelCube route="/box"/>
     </>
   )
 }
