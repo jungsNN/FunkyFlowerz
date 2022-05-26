@@ -45,6 +45,7 @@
     padding: 0;
     /* overflow: hidden; */
     font-family: "Chainprinter", sans-serif;
+    background: black;
   }
   
   body {

@@ -17,7 +17,7 @@ function ScrollContents() {
   console.log(w, h)
   return (
       <Scroll>
-        <Content url={tempImgUrl} scale={[w / 5, h / 5, 0]} position={[0, -h / 1.2, 0]} />
+        <Content url={tempImgUrl} scale={[w / 5.5, h / 5, 0]} position={[0, -h / 1.2, 0]} />
       </Scroll>
   )
 }
@@ -28,7 +28,7 @@ function Content({url, scale,...props}) {
   const { height } = useThree((state) => state.viewport);
   useFrame((state, delta) => {
     ref.current.position.y = THREE.MathUtils.damp(
-      ref.current.position.y, visible.current ? -height / 6 : -height / 2+1, 2, delta)
+      ref.current.position.y, visible.current ? -height / 6.5 : -height / 2+1, 4, delta)
       ref.current.material.zoom = THREE.MathUtils.damp(
         ref.current.material.zoom, visible.current ? 1 : 1.5, 4, delta)
   })
@@ -37,9 +37,9 @@ function Content({url, scale,...props}) {
     <group { ...props} >
       {/* <mesh onClick={() => console.log('clicked')}> */}
         <Html>
-          <button>hi</button>
+          <button style={{transform: 'translate(-40px, 600px)', color: 'white', width:'120px', height: '40px', background: '#FFFFFF42'}}>Mint</button>
         </Html>
-        <Image ref={ref} scale={scale} url={url} />
+        <Image transparent opacity={0.2} ref={ref} scale={scale} url={url} />
       {/* </mesh> */}
     </group>
   )

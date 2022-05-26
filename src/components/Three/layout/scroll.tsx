@@ -20,7 +20,7 @@ const SCanvas = ({ children }) => {
           // depth: false,
         }}
       >
-        <ScrollControls damping={5} pages={2} style={{background: 'transparent',}}>
+        <ScrollControls damping={3} pages={2} style={{background: 'transparent',}}>
           {/* For Three/drei objects */}
           <Suspense fallback={null}>
             {children}
@@ -29,7 +29,7 @@ const SCanvas = ({ children }) => {
           </Suspense>
           {/* @ts-ignore */}
           <Scroll html  style={{position: 'absolute', top: 0, right: 0, left: 0}} >
-              <img className="scroll-landing" width="100%" src={landingPage} alt="landing-page"/>
+              <img className="scroll-landing" width="100%" src={landingPage} alt="landing-page" style={{transform: 'translateY(100px)'}}/>
 
           </Scroll>
         </ScrollControls>
