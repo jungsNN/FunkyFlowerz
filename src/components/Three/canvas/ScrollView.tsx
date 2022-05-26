@@ -17,8 +17,8 @@ function ScrollContents() {
   console.log(w, h)
   return (
       <Scroll>
-        {/* <MysteryBox  position={[0,1, 0]} /> */}
-        <Content url={tempImgUrl} scale={[w / 5.5, h / 5, 0]} position={[0, -h / 1.2, 0]} />
+        <Content url={tempImgUrl} scale={[w / 1.5, h, 0]} position={[0, -h / 1.2, 0]} />
+        {/* <MintBox scale={0.1} /> */}
       </Scroll>
   )
 }
@@ -40,7 +40,6 @@ function Content({url, scale,...props}) {
         <Html>
           <button style={{transform: 'translate(-40px, 600px)', color: 'white', width:'120px', height: '40px', background: '#FFFFFF42'}}>Mint</button>
         </Html>
-        
         <Image transparent opacity={0.2} ref={ref} scale={scale} url={url} />
       {/* </mesh> */}
     </group>

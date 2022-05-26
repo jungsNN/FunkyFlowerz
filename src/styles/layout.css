@@ -1,14 +1,25 @@
+@import url('https://rsms.me/inter/inter.css');
+
 .scene {
   width: 100vw;
   height: 100vh;
 }
 
-.canvas {
-  background: var(--scene-bg);
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.container {
-  padding: 0 2rem;
+.canvas {
+  pointer-events: none;
+  /* position: fixed !important; */
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: black;
 }
 
 .main {
@@ -45,9 +56,86 @@
   max-width: 800px;
 }
 
+
+.view1 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.view2 {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+  width: calc(250px - 2em);
+  height: calc(250px - 2em);
+}
+
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
     flex-direction: column;
   }
+}
+
+
+@keyframes scaleAnim {
+  0% {
+    transform: scale(0.3, 0.7);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.3, 0.7);
+  }
+}
+
+@keyframes translateXAnim {
+  0% {
+    transform: translate3d(-100px, 0, 0);
+  }
+  25% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(100px, 0, 0);
+  }
+  75% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100px, 0, 0);
+  }
+}
+
+@keyframes translateYAnim {
+  0% {
+    transform: translate3d(0, -100px, 0);
+  }
+  25% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 100px, 0);
+  }
+  75% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, -100px, 0);
+  }
+}
+
+.scale {
+  animation: scaleAnim 4s ease-in-out 0s infinite;
+}
+
+.translateX {
+  animation: translateXAnim 4s ease-in-out 0s infinite;
+}
+
+.translateY {
+  animation: translateYAnim 4s ease-in-out 0s infinite;
 }

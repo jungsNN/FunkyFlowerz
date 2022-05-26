@@ -1,9 +1,10 @@
 import useStore from '@/utils/store'
+import { OrbitControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useCallback, useRef, useState } from 'react'
 import MysteryBox from '../props/models/MysteryBox'
 
-const MintBoxCanvas = ({ route }: {route: string}) => {
+const MintBoxCanvas = ({ route }: {route?: string}, props) => {
   const router = useStore((s) => s.router)
   // This reference will give us direct access to the THREE.Mesh object
   const mesh = useRef<any>(null)
@@ -34,9 +35,10 @@ const MintBoxCanvas = ({ route }: {route: string}) => {
         onClick={() => handleOnClick()}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
-        scale={hovered ? 1.1 : 1}
+        {...props}
       >
-        <MysteryBox scale={.1} position={[1, clicked ? 3 : 2, 0]}/>
+          <MysteryBox scale={1} position={[1, clicked ? 0.2 : 0, 0]}/>
+          <OrbitControls />
       </mesh>
     </>
   )

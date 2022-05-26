@@ -1,10 +1,9 @@
 import useStore from "@/utils/store";
-import { Environment, OrbitControls, Preload, Sky } from "@react-three/drei";
-import { Canvas, useThree } from "@react-three/fiber";
-import { Suspense, useEffect, useRef } from "react";
+import { Environment, Preload, Sky } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Suspense } from "react";
 import CameraController from "../helpers/jsm/controls/CameraController";
 import Loader from "../helpers/Loader";
-import { SelectControls } from "../helpers/Selector";
 import Floor from "../props/Floor";
 
 

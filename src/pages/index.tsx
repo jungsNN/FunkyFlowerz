@@ -1,4 +1,5 @@
 import { Title } from '@/components/Foundation/Text';
+import { Views } from '@/components/Three/layout/views';
 import dynamic from 'next/dynamic'
 
 // const DungeonShader = dynamic(() => import('@/components/Three/canvas/Dungeon'), {
@@ -12,7 +13,7 @@ const ScrollView = dynamic(() => import('@/components/Three/canvas/ScrollView'),
 // dom components goes here
 const DOM = () => {
   return (
-      <Title className="home-title">Index</Title>
+      <Title className="Featured Collection">Index</Title>
       )
     }
     
@@ -21,6 +22,7 @@ const R3F = () => {
   return (
       <>
       <ScrollView />
+      {/* <Views /> */}
       </>
   )
 }
