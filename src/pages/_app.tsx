@@ -13,12 +13,6 @@ const SCanvas = dynamic(() => import('@/components/Three/layout/scroll'), {
 })
 
 
-const OCanvas = dynamic(() => import('@/components/Three/layout/selections'), {
-  ssr: false,
-})
-
-
-
 function Overlay() {
   return (
     <div style={{
@@ -38,14 +32,11 @@ function Overlay() {
 
 const Balance = ({ child }) => {
   const [r3f, dom] = partition(child, (c) => c.props.r3f === true)
-  
+
   return (
     <>
       <Dom>{dom}</Dom>
-
       <SCanvas>{r3f}</SCanvas>
-      {/* <SCanvas> */}
-
     </>
   )
 }
@@ -62,7 +53,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
   return (
     <>
       <Header title={pageProps.title} />
-        <Balance child={child} />
+      <Balance child={child} />
       <Overlay />
     </>
   )

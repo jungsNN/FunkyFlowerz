@@ -1,70 +1,132 @@
-import { Canvas } from '@react-three/fiber'
-import { Bounds, ContactShadows, Environment, OrbitControls, OrthographicCamera,  PerspectiveCamera,  Scroll,ScrollControls, TransformControls, useGLTF, View} from '@react-three/drei'
-import useStore from '@/utils/store'
-import { landingPage } from '@/constants/urls'
-import useRefs from 'react-use-refs'
-import Model from '../props/models/MysteryBox';
-import { useState } from 'react'
-import MintBoxCanvas from '../canvas/MintBoxCanvas'
 
-const SCanvas = ({ children }) => {
-  const [ref, view1, view2, mintBox] = useRefs()
+// import { Canvas } from '@react-three/fiber'
+// import { Html, Preload, PresentationControls, Scroll,ScrollControls} from '@react-three/drei'
+// import { Suspense } from 'react'
+// import { Box, Col } from '@/components/Layout/styled'
+// import useStore from '@/utils/store'
+
+// const SCanvas = ({ children }) => {
+//   const dom = useStore((state) => state.dom);
+
+//   return (
+//       <Canvas
+//         flat
+//         dpr={[1, 2]} camera={{ fov: 25, zoom: 50, position: [0, 0, 8] }}
+//         onCreated={(state) => state.events.connect(dom.current)}
+//         gl={{
+//           // alpha: false,
+//           antialias: false,
+//           // stencil: false,
+//           // depth: false,
+//         }}
+//       >
+//         <ScrollControls damping={4} pages={2}>
+//           <Scroll html >
+//               <img height="100vh" src="https://ipfs.infura.io/ipfs/bafkreidacehf2j4dalrxu7zgjlpvuebbbq2cppahtnx2fnqlrn7psw76qu" alt="landing-page" />
+//           </Scroll>
+//         {/* <PresentationControls global zoom={0.9} rotation={[0, -Math.PI / 4, 0]} polar={[0, Math.PI / 4]} azimuth={[-Math.PI / 4, Math.PI / 4]}> */}
+//         <Suspense fallback={null}>
+//             {children}
+//             <Preload all />
+//           </Suspense>
+     
+//           {/* </PresentationControls> */}
+//         </ScrollControls>
+//         <color attach="background" args={['#000000']} />
+//       </Canvas>
+//   )
+// }
+
+// export default SCanvas
+
+
+import { Canvas } from '@react-three/fiber'
+import { Environment,  Preload,  Scroll,ScrollControls, } from '@react-three/drei'
+import useStore from '@/utils/store'
+import { collectionData, landingPage } from '@/constants/urls'
+import { Suspense, useEffect, useState } from 'react'
+import Loader from '../helpers/Loader'
+import { Row } from '@/components/styled'
+
+const SCanvas = ({children }) => {
+  const baseUrl = 'https://ipfs.infura.io/ipfs'
+  const mobileContents = collectionData.funkyFlowerz;
+  const [isMobile, setMobile] = useState(false);
+
     const dom = useStore((state) => state.dom);
 
+  useEffect(() => {
+    const width = window?.innerWidth;
+    console.log('window width ', width);
+    setMobile(width < 1024);
+  }, [])
+
   return (
-    <div ref={dom} className="container">
-      <div className="text" style={{height: 0}}>
-        Featuring Collection
-        {/* <div ref={splash} className="scale" style={{ margin: '0.2em', width: 600, height: 300, display: 'inline-block' }} /> */}
-        <div ref={view1} className="view1"/>
-        <div className="view2" ref={view2}  />
-        {/* <div ref={mintBox} className="translateX" style={{ margin: '0.2em', width: window.innerWidth < 460 ? 300 : 400, height: 600, display: 'inline-block' }} /> */}
-        {/* Mint Box */}
-      </div>
-      <Canvas onCreated={(state) => state.events.connect(dom.current)} className="canvas">
-        {/* @ts-ignore */}  
-        <View index={1} track={view1} >
-            <color attach="background" args={['black']} />
-            <PerspectiveCamera makeDefault position={[-2.5, 0, 5]} fov={35} />
-            <Lights />
-            <Bounds fit clip observe margin={1.5}>
-              <MintBoxCanvas  />
-            </Bounds>
-            <ContactShadows frames={1} position={[0, -1, 0]} blur={1} opacity={0.6} />
-            <OrbitControls makeDefault />
-          </View>
-          {/* @ts-ignore */}  
-          <View index={2} track={view2}>
-            <color attach="background" args={['#d6edf3']} />
-            <OrthographicCamera makeDefault position={[0, 0, 5]} zoom={80} />
-            <Lights />
-            <OrbitControls makeDefault />
-            {/* @ts-ignore */}
-            <TransformControls>
-              <Bounds fit clip observe margin={1.5}>
-                <MintBoxCanvas />
-              </Bounds>
-              <ContactShadows frames={1} position={[0, -1, 0]} blur={1} opacity={0.6} />
-            </TransformControls>
-          </View>
-      
+      <Canvas
+      orthographic
+      // shadows
+
+      dpr={[1, 2]} camera={{ fov: 15, zoom: 15, position: [0, 0, 8] }}
+      onCreated={(state) => state.events.connect(dom.current)}
+      gl={{
+        // alpha: false,
+        antialias: false,
+        stencil: false,
+        depth: false,
+      }}
+
+      // @ts-ignore
+      raycaster={{ computeOffsets: ({ clientX, clientY }) => ({
+        offsetX: clientX, offsetY: clientY 
+      })
+    }}
+    >
+
+        <ScrollControls damping={5} pages={2} style={{background: 'transparent',}}> 
+        
+            {/* For Three/drei objects */}
+          <Suspense fallback={<Loader />}>
+            {children}
+            <Preload all />
+          </Suspense>
+              
+          {isMobile ? (
+            <>
+            {  /* @ts-ignore */}
+              <Scroll html style={{position: 'absolute', top: 0, right: 0, left: 0,}}>
+                <div style={{padding: '1rem', marginTop: '2rem'}}>
+                  <Row gap="3rem">
+                    <img src={`${baseUrl}/${mobileContents.cids.samples}`} alt="mobile-landing-sample-img" />
+                    <Row gap="2rem" justify="start">
+                      <img src={`${baseUrl}/${mobileContents.cids.heading}`} alt="mobile-landing-heading-img" />
+                      {Object.values(mobileContents.descriptions).map((d, i) => (
+                        <div style={{paddingLeft: '1rem', width: 'calc(100vw / 1.2)'}}  key={`description-${i}`}>
+                          <p style={{color: 'white'}}>{d}</p>
+                        </div>
+                      ))}
+                    </Row>
+                  </Row>
+                </div>
+              </Scroll>
+              {  /* @ts-ignore */}
+              {/* <Scroll html style={{position: 'absolute', top: '100%', right: 0, left: 0,}}>
+                <img src={`${baseUrl}/${mobileContents.cids.heading}`} alt="mobile-landing-heading-img" />
+              </Scroll> */}
+            </>
+          ) : (
+            <>
+              {  /* @ts-ignore */}
+              <Scroll html style={{position: 'absolute', top: 0, right: 0, left: 0,}} >
+                <img className="scroll-landing" width="100%" src={landingPage} alt="landing-page"/>
+              </Scroll>
+            </>
+          ) }
+        </ScrollControls>
         {/* <color attach="background" args={['#000000']} /> */}
       </Canvas>
-     </div>
   )
 }
 
-// <ScrollControls damping={3} pages={2} style={{background: 'transparent',}}> 
-// {  /* @ts-ignore */}
-// {/* <Scroll html style={{position: 'absolute', top: 0, right: 0, left: 0,}} >
-//   <img className="scroll-landing" width="100%" src={landingPage} alt="landing-page" style={{transform: 'translateY(100px)'}}/>
-// </Scroll>  */}
-//   {/* @ts-ignore */}  
-// {/* <View index={1} track={view1} >
-//   {children}
-// </View> */}
-
-// </ScrollControls>
 
 function Lights() {
   return (
@@ -88,57 +150,5 @@ function Scene() {
 }
 
 
-function Target(props) {
-  // @ts-ignore
-  const { nodes, materials } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/target-stand/model.gltf')
-  const [hovered, hover] = useState(false)
-  return (
-    <group position={[0, -1, 0]} {...props} dispose={null}>
-      <group onPointerOver={() => hover(true)} onPointerOut={() => hover(false)} rotation={[Math.PI / 2, 0, 0]}>
-        <mesh geometry={nodes.Cylinder016.geometry} material={materials['Red.025']} />
-        <mesh geometry={nodes.Cylinder016_1.geometry}>
-          <meshStandardMaterial color={hovered ? 'orange' : 'white'} />
-        </mesh>
-      </group>
-      <mesh rotation={[Math.PI / 2, 0, 0]} geometry={nodes.Cylinder016_2.geometry} material={materials['BrownDark.018']} />
-    </group>
-  )
-}
-
 export default SCanvas
-        
-
-
-// <Suspense fallback={null}>
-// {/* @ts-ignore */}
-// <View track={mintPage} position={[0, 800, 0]}>
-//   {/* For Three/drei objects */}
-//   {/* <Suspense fallback={<Loader />}> */}
-//     {/* {children} */}
-//     {children}
-//     {/* <Preload all /> */}
-//   {/* </Suspense> */}
-//   {/* @ts-ignore */}
-  
-//     {/* <color attach="background" args={['lightblue']} /> */}
-//     <Scene />
-    
-//     {/* <TransformControls position={[0, -1, 0]}>
-//       <Model scale={.5} />
-//     </TransformControls>
-//     <OrbitControls makeDefault /> */}
-//     <PerspectiveCamera makeDefault fov={40} position={[0, 0, 6]} />
-//   </View >
-//   {/* @ts-ignore */}
-//   <View track={mintBox}>
-//     <color attach="background" args={['black']} />
-//     <Scene />
-//     <TransformControls position={[0, -1, 0]}>
-//       <Model scale={.1} />
-//     </TransformControls>
-//     <OrbitControls makeDefault />
-//     <PerspectiveCamera makeDefault fov={40} position={[0, 0, 6]} />
-//   </View>
-  
-//   <Preload all />
-// </Suspense>
+     
