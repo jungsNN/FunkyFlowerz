@@ -1,3 +1,43 @@
+# FreshBaked
+
+Launch pad to mint collections and assets
+
+Exploring distributed systems via IPFS
+
+Utilization of cryptography  
+
+Implementation of the new Metaplex Javascript SDK for minting
+
+Cool customized UI's & expanding web designs to 3D
+
+& many more...
+
+
+## Previews
+
+pre-lauch sneak peeks.. will be public soon,
+
+but here is our very first featuring artist's launch pad (follow & support [@ivorguest](https://twitter.com/ivorguest) on twitter!)
+
+<a href="https://ipfs.infura.io/ipfs/bafkreidacehf2j4dalrxu7zgjlpvuebbbq2cppahtnx2fnqlrn7psw76qu" align="center">
+  <img src="https://ipfs.infura.io/ipfs/bafkreidacehf2j4dalrxu7zgjlpvuebbbq2cppahtnx2fnqlrn7psw76qu" />  
+</a>
+
+
+## Upcoming
+
+- [ ] deploy basic launch pad app ( featuring Funky Flowerz )
+- [ ] 1-stop-swap & special functionalities for traders
+- [ ] Facilitated wallet connection and switching between Ethereum & Solana 
+
+
+## About
+
+ 
+Focusing on what to explore and how to help others using the technologies we pioneer seems to allows us to thrive more than when we are chasing the 💸 -- is the philosophy.
+
+<hr />
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
