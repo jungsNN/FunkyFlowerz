@@ -1,45 +1,3 @@
-
-// import { Canvas } from '@react-three/fiber'
-// import { Html, Preload, PresentationControls, Scroll,ScrollControls} from '@react-three/drei'
-// import { Suspense } from 'react'
-// import { Box, Col } from '@/components/Layout/styled'
-// import useStore from '@/utils/store'
-
-// const SCanvas = ({ children }) => {
-//   const dom = useStore((state) => state.dom);
-
-//   return (
-//       <Canvas
-//         flat
-//         dpr={[1, 2]} camera={{ fov: 25, zoom: 50, position: [0, 0, 8] }}
-//         onCreated={(state) => state.events.connect(dom.current)}
-//         gl={{
-//           // alpha: false,
-//           antialias: false,
-//           // stencil: false,
-//           // depth: false,
-//         }}
-//       >
-//         <ScrollControls damping={4} pages={2}>
-//           <Scroll html >
-//               <img height="100vh" src="https://ipfs.infura.io/ipfs/bafkreidacehf2j4dalrxu7zgjlpvuebbbq2cppahtnx2fnqlrn7psw76qu" alt="landing-page" />
-//           </Scroll>
-//         {/* <PresentationControls global zoom={0.9} rotation={[0, -Math.PI / 4, 0]} polar={[0, Math.PI / 4]} azimuth={[-Math.PI / 4, Math.PI / 4]}> */}
-//         <Suspense fallback={null}>
-//             {children}
-//             <Preload all />
-//           </Suspense>
-     
-//           {/* </PresentationControls> */}
-//         </ScrollControls>
-//         <color attach="background" args={['#000000']} />
-//       </Canvas>
-//   )
-// }
-
-// export default SCanvas
-
-
 import { Canvas } from '@react-three/fiber'
 import { Environment,  Preload,  Scroll,ScrollControls, } from '@react-three/drei'
 import useStore from '@/utils/store'
@@ -99,7 +57,7 @@ const SCanvas = ({children }) => {
                     <img src={`${baseUrl}/${mobileContents.cids.samples}`} alt="mobile-landing-sample-img" />
                     <Row gap="2rem" justify="start">
                       <img src={`${baseUrl}/${mobileContents.cids.heading}`} alt="mobile-landing-heading-img" />
-                      {Object.values(mobileContents.descriptions).map((d, i) => (
+                      {Object.values(mobileContents.descriptions).map((d: string, i) => (
                         <div style={{paddingLeft: '1rem', width: 'calc(100vw / 1.2)'}}  key={`description-${i}`}>
                           <p style={{color: 'white'}}>{d}</p>
                         </div>
