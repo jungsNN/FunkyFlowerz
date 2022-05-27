@@ -16,9 +16,9 @@ const SCanvas = dynamic(() => import('@/components/Three/layout/scroll'), {
 function Overlay() {
   return (
     <div style={{
-      position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'black', pointerEvents: 'none', width: '100%', height: '100%', minHeight: '50px', maxHeight: '50px'}}>
+      position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'var(--primary)', pointerEvents: 'none', width: '100%', height: '100%', minHeight: '50px', maxHeight: '50px'}}>
         <a href="https://freshbaked.io" style={{
-          position: 'absolute', top: 15, left: 50, fontSize: '13px', color: 'black'
+          position: 'absolute', top: 15, left: 20, fontSize: '13px', color: 'black'
         }}>
           Funky Flowerz X FreshBaked Collections
         </a>
