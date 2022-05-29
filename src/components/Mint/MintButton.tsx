@@ -62,14 +62,16 @@ const MintButton = ({children, width, color, bg}: MintButtonProps) => {
   }, [wallet]);
 
   useEffect(() => {
-    if (typeof solanaProvider?.publicKey !== 'undefined') {
+    if (solanaProvider && typeof solanaProvider.publicKey !== 'undefined') {
       // first checking window.solana
+      console.log('solana provider pubkey ', solanaProvider.publicKey)
       setPubkey(solanaProvider.publicKey)
     } else if (typeof wallet?.publicKey !== 'undefined') {
       // in case using a browser like opera which initially doesn't detect solana
+      console.log('wallet pubkey ', wallet.publicKey)
       setPubkey(wallet.publicKey)
     }
-  }, [solanaProvider?.publicKey, wallet?.publicKey]);
+  }, [solanaProvider, wallet?.publicKey]);
 
   // Solana Mint Button text
   const walletText = useCallback(() => {
@@ -83,10 +85,15 @@ const MintButton = ({children, width, color, bg}: MintButtonProps) => {
 
   // Connect to Solana wallet action
   const solanaConnect = useCallback(async () => {
-    if (solanaProvider) {
+    const displayingText = walletText();
+    // if connected, mint
+    if (displayingText === 'Mint') {
+      console.log('mint!')
+    }
+    else if (solanaProvider) {
       try {
         setIsConnecting(true);
-        solanaProvider.connect();
+        await solanaProvider.connect();
       } catch (e) {
         console.error(e);
       } finally {
