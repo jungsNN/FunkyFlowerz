@@ -9,15 +9,18 @@ import { Row } from '@/components/styled'
 const SCanvas = ({children }) => {
   const baseUrl = 'https://ipfs.infura.io/ipfs'
   const mobileContents = collectionData.funkyFlowerz;
+  // const [windowSize, setWindowSize] = useState({width: null, height: null});
   const [isMobile, setMobile] = useState(false);
 
-    const dom = useStore((state) => state.dom);
+  const dom = useStore((state) => state.dom);
 
   useEffect(() => {
-    const width = window?.innerWidth;
-    console.log('window width ', width);
-    setMobile(width < 1024);
+    if (typeof window !== 'undefined') { 
+      setMobile(window.innerWidth < 1024);
+      // setWindowSize({width: window.innerWidth, height: window.innerHeight});
+    }
   }, [])
+
 
   return (
       <Canvas
@@ -40,7 +43,7 @@ const SCanvas = ({children }) => {
     }}
     >
 
-        <ScrollControls damping={5} pages={2} style={{background: 'transparent',}}> 
+        <ScrollControls damping={5} pages={2.5} style={{background: 'transparent'}}> 
         
             {/* For Three/drei objects */}
           <Suspense fallback={<Loader />}>

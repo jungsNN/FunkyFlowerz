@@ -52,6 +52,7 @@
   
   body {
     overscroll-behavior: none;
+    min-height: 493px;
   }
   h1 {
     /* font-family: 'Zen Ma', sans-serif; */
