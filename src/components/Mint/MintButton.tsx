@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import * as anchor from "@project-serum/anchor";
 import { 
   CreateNftInput, 
@@ -7,7 +7,7 @@ import {
   mockStorage, 
   Signer, 
   walletAdapterIdentity } from "@metaplex-foundation/js-next";
-import { clusterApiUrl, Connection } from "@solana/web3.js";
+import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 import Wallet from "@project-serum/sol-wallet-adapter";
 // import { Keypair } from "@solana/web3.js";
 
@@ -21,7 +21,8 @@ interface MintButtonProps {
 const providerUrl = 'https://www.phantom.app';
 
 const MintButton = ({children, width, color, bg}: MintButtonProps) => {
-  const [solanaProvider, setSolanaProvider] = useState<Connection | null>(null);
+  const [solanaProvider, setSolanaProvider] = useState<any>(null);
+  const [pubkey, setPubkey] = useState<PublicKey | null>(null);
   const web3 = anchor.web3;
   const network = clusterApiUrl('devnet');
   const wallet = new Wallet(providerUrl, network);
@@ -53,9 +54,18 @@ const MintButton = ({children, width, color, bg}: MintButtonProps) => {
 
   }, [wallet]);
 
+  const walletText = useCallback(() => {
+    if (pubkey) {
+      return 'Mint';
+    } else if (solanaProvider) {
+      return 'Solana Connect';
+    }
+    return 'Get Phantom Wallet';
+  }, [pubkey, wallet, solanaProvider])
+
   
   return (
-    <button style={{ color: color ??  'white', width:width ?? '120px', height: '40px', background: bg ?? '#FFFFFF42'}}>Mint</button>
+    <button style={{ color: color ??  'white', width:width ?? '120px', height: '40px', background: bg ?? '#FFFFFF42'}}>{walletText()}</button>
   )
 }
 
