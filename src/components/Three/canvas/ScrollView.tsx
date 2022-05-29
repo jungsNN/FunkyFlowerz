@@ -1,4 +1,6 @@
+import { CoinbaseCheckout } from "@/components/Checkout";
 import { MintButton } from "@/components/Mint";
+import { Row } from "@/components/styled";
 import PixelQuestion from "@/components/svg/PixelQuestion";
 import { tempImgUrl } from "@/constants/urls";
 import { Scroll,Image,useIntersect, Html } from "@react-three/drei";
@@ -41,7 +43,16 @@ function Content({url, scale,...props}) {
           <div style={{display: 'grid', gridTemplateRows: '1fr', justifyContent: 'center', alignItems: 'center', width: 'calc(100vw / 3)', height: 'calc(100vw / 3)', background: '#FFFFFF42', opacity: '0.8'}}>
             <PixelQuestion width="calc(100vw / 4)" height="calc(100vw / 4)" />
           </div>
-          <MintButton />
+          <Row className="checkout-buttons" gap="2rem" items="center" justify="center">
+            <div className="mint-button">
+              <MintButton width="200px" bg="var(--primary)" color="#000000"><p>Mint</p></MintButton>
+            </div>
+            <div className="coinbase-checkout">
+              <MintButton width="200px" bg="#005dc5">
+                  <CoinbaseCheckout />
+              </MintButton>
+            </div>
+          </Row>
         </Html>
         <Image transparent opacity={0.2} ref={ref} scale={scale} url={url} />
     </group>

@@ -82,6 +82,8 @@ const Header = ({ title = titleDefault }) => {
         Be sure validate your Twitter card markup on the documentation site. */}
         <meta name='twitter:card' content='summary' />
         <meta name='twitter:site' content='@onirenaud' />
+        <script src="https://commerce.coinbase.com/v1/checkout.js?version=201807">
+      </script>
       </Head>
     </>
   )
