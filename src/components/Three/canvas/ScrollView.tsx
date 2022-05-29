@@ -1,3 +1,4 @@
+import { MintButton } from "@/components/Mint";
 import PixelQuestion from "@/components/svg/PixelQuestion";
 import { tempImgUrl } from "@/constants/urls";
 import { Scroll,Image,useIntersect, Html } from "@react-three/drei";
@@ -40,7 +41,7 @@ function Content({url, scale,...props}) {
           <div style={{display: 'grid', gridTemplateRows: '1fr', justifyContent: 'center', alignItems: 'center', width: 'calc(100vw / 3)', height: 'calc(100vw / 3)', background: '#FFFFFF42', opacity: '0.8'}}>
             <PixelQuestion width="calc(100vw / 4)" height="calc(100vw / 4)" />
           </div>
-          <button style={{ color: 'white', width:'120px', height: '40px', background: '#FFFFFF42'}}>Mint</button>
+          <MintButton />
         </Html>
         <Image transparent opacity={0.2} ref={ref} scale={scale} url={url} />
     </group>
