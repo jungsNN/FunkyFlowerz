@@ -18,6 +18,8 @@
 @import "./styles/Home.module.css";
 @import "./styles/canvas.css";
 
+@import "react-coinbase-commerce/dist/coinbase-commerce-button.css";
+
 @supports (font-variation-settings: normal) {
   html {
     font-family: 'Chainprinter', sans-serif;

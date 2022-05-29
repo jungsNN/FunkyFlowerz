@@ -1,16 +1,22 @@
 
+import CoinbaseCommerceButton from 'react-coinbase-commerce';
+
+type MessageData = {
+  event: 'charge_confirmed' | 'charge_failed' | 'payment_detected',
+  code: any;// <CHARGE_CODE>
+}
+
 const CoinbaseCheckout = () => {
   return (
-    <div>
-      <a className="donate-with-crypto"
-        href={`https://commerce.coinbase.com/checkout/${process.env.NEXT_COINBASE_CHECKOUT_ID}`}
-        target="_blank"
-        rel="noreferrer"
-        style={{color: '#e4ebff'}}
-        >
-        Coinbase Checkout
-      </a>
-  </div>
+    <div className="donate-with-crypto">      
+      <CoinbaseCommerceButton 
+          onChargeSuccess={(data: MessageData) => console.log(data)}
+          onChargeFailuted={(data: MessageData) => console.log(data)}
+          onPaymentDetected={(data: MessageData) => console.log(data)}
+          checkoutId={process.env.NEXT_COINBASE_CHECKOUT_TEST_ID}>
+            Coinbase Checkout
+      </CoinbaseCommerceButton>
+    </div>
   )
 }
 

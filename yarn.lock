@@ -5513,6 +5513,11 @@ raw-loader@^4.0.2:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
+react-coinbase-commerce@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-coinbase-commerce/-/react-coinbase-commerce-1.6.0.tgz#1b3bde9178c028cded2070b31a57ae110bb7b62b"
+  integrity sha512-FFN4wD4e5jA6BQIb5tHm74p9Fzei5FecPG3NQuOhUtVRuL65J9aDeBirgv9/KmUdepqjzZgVktxfFvo9vTkcBQ==
+
 react-colorful@^5.5.1:
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/react-colorful/-/react-colorful-5.5.1.tgz#29d9c4e496f2ca784dd2bb5053a3a4340cfaf784"
