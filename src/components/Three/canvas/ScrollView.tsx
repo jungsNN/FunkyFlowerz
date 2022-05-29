@@ -45,12 +45,12 @@ function Content({url, scale,...props}) {
           </div>
           <Row className="checkout-buttons" gap="2rem" items="center" justify="center">
             <div className="mint-button">
-              <MintButton width="200px" bg="var(--primary)" color="#000000"><p>Mint</p></MintButton>
+              <MintButton width="200px" bg="var(--primary)" color="#000000"  />
             </div>
             <div className="coinbase-checkout">
-              <MintButton width="200px" bg="#005dc5">
+              {/* <MintButton width="200px" bg="#005dc5"> */}
                   <CoinbaseCheckout />
-              </MintButton>
+              {/* </MintButton> */}
             </div>
           </Row>
         </Html>

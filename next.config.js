@@ -4,6 +4,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 const withOffline = require('next-offline')
+const withTM = require("next-transpile-modules")([
+  "@metaplex-foundation/js-next"
+])
 
 const nextConfig = {
   webpack(config, { isServer }) {
@@ -79,6 +82,7 @@ module.exports = plugins(
       },
     ],
     withBundleAnalyzer,
+    withTM,
   ],
   nextConfig
 )
