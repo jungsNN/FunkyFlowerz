@@ -77,9 +77,9 @@ const SCanvas = ({children }) => {
           ) : (
             <>
               {  /* @ts-ignore */}
-              <Scroll html style={{position: 'absolute', top: 0, right: 0, left: 0,}} >
+              {/* <Scroll html style={{position: 'absolute', top: 0, right: 0, left: 0,}} >
                 <img className="scroll-landing" width="100%" src={landingPage} alt="landing-page"/>
-              </Scroll>
+              </Scroll> */}
             </>
           ) }
         </ScrollControls>

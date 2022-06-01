@@ -2,7 +2,7 @@ import { CoinbaseCheckout } from "@/components/Checkout";
 import { MintButton } from "@/components/Mint";
 import { Row } from "@/components/styled";
 import PixelQuestion from "@/components/svg/PixelQuestion";
-import { tempImgUrl } from "@/constants/urls";
+import { landingPage, tempImgUrl } from "@/constants/urls";
 import { Scroll,Image,useIntersect, Html } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import React, { FC, useRef } from "react";
@@ -19,13 +19,33 @@ function ScrollContents() {
   console.log(w, h)
   return (
       <Scroll>
-        <Content url={tempImgUrl} scale={[w / 1.2, h, 1]} position={[0, -h / 2, 0]} />
+        <LandingContent url={landingPage} scale={[w, h, 1]} position={[0, h / 2, 0]} />
+        <MintContent url={tempImgUrl} scale={[w / 1.2, h, 1]} position={[0, -h / 2, 0]} />
         {/* <MintBox scale={0.1} /> */}
       </Scroll>
   )
 }
 
-function Content({url, scale,...props}) {
+function LandingContent({url, scale,...props}) {
+  const visible = useRef<boolean>(false);
+  const ref = useIntersect<any>((isVisible) => (visible.current = isVisible));
+  const { height } = useThree((state) => state.viewport);
+  useFrame((state, delta) => {
+    ref.current.position.y = THREE.MathUtils.damp(
+      ref.current.position.y, visible.current ? -height / 1.5 : -height / 2+1, 4, delta)
+      ref.current.material.zoom = THREE.MathUtils.damp(
+        ref.current.material.zoom, visible.current ? 1 : 1.5, 4, delta)
+  })
+
+  return (
+    <group { ...props} >
+        <Image ref={ref} scale={scale} url={url} />
+    </group>
+  )
+}
+
+
+function MintContent({url, scale,...props}) {
   const visible = useRef<boolean>(false);
   const ref = useIntersect<any>((isVisible) => (visible.current = isVisible));
   const { height } = useThree((state) => state.viewport);
@@ -55,6 +75,7 @@ function Content({url, scale,...props}) {
     </group>
   )
 }
+
 
 // function MintBox({ scale,...props}) {
 //   const visible = useRef<boolean>(false);

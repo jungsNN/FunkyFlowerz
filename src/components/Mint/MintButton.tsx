@@ -7,7 +7,7 @@ import {
   // CreateNftInput, 
   // MetaplexFile, 
   // Signer, 
- } from "@metaplex-foundation/js-next";
+} from "@metaplex-foundation/js-next";
 import { clusterApiUrl,  Connection,  Keypair,  PublicKey } from "@solana/web3.js";
 import Wallet from "@project-serum/sol-wallet-adapter";
 
