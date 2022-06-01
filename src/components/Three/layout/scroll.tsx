@@ -50,38 +50,6 @@ const SCanvas = ({children }) => {
             {children}
             <Preload all />
           </Suspense>
-              
-          {isMobile ? (
-            <>
-            {  /* @ts-ignore */}
-              <Scroll html style={{position: 'absolute', top: 0, right: 0, left: 0,}}>
-                <div style={{padding: '1rem', marginTop: '2rem'}}>
-                  <Row gap="3rem">
-                    <img src={`${baseUrl}/${mobileContents.cids.samples}`} alt="mobile-landing-sample-img" />
-                    <Row gap="2rem" justify="start">
-                      <img src={`${baseUrl}/${mobileContents.cids.heading}`} alt="mobile-landing-heading-img" />
-                      {Object.values(mobileContents.descriptions).map((d: string, i) => (
-                        <div style={{paddingLeft: '1rem', width: 'calc(100vw / 1.2)'}}  key={`description-${i}`}>
-                          <p style={{color: 'white'}}>{d}</p>
-                        </div>
-                      ))}
-                    </Row>
-                  </Row>
-                </div>
-              </Scroll>
-              {  /* @ts-ignore */}
-              {/* <Scroll html style={{position: 'absolute', top: '100%', right: 0, left: 0,}}>
-                <img src={`${baseUrl}/${mobileContents.cids.heading}`} alt="mobile-landing-heading-img" />
-              </Scroll> */}
-            </>
-          ) : (
-            <>
-              {  /* @ts-ignore */}
-              {/* <Scroll html style={{position: 'absolute', top: 0, right: 0, left: 0,}} >
-                <img className="scroll-landing" width="100%" src={landingPage} alt="landing-page"/>
-              </Scroll> */}
-            </>
-          ) }
         </ScrollControls>
         {/* <color attach="background" args={['#000000']} /> */}
       </Canvas>
