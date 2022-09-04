@@ -25,6 +25,9 @@ const theme = createTheme({
   palette: {
     type: "dark",
   },
+  typography: {
+    fontFamily: 'Raleway'
+  }
 });
 
 const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
