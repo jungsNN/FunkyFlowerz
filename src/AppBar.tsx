@@ -577,6 +577,17 @@ const AppBar = (props: AppBarProps) => {
   return (
     <Container style={{ marginTop: 20, marginBottom: isMobile ? 100 : 64}}>
       <Container>
+      <Paper
+            elevation={0}
+          style={{
+            paddingBottom: 10,
+            paddingTop: 10,
+            backgroundColor: "orange",
+            textAlign: "center",
+          }}
+        >
+            <Typography style={{color: '#000', fontWeight: "bold"}}>Minting is currently live on Devnet only</Typography>
+            </Paper>
         <Paper
             elevation={0}
           style={{
