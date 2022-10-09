@@ -1,4 +1,3 @@
-
 // import styled from "styled-components";
 import { Container, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -15,39 +14,41 @@ import FunkyFlowerzTitle from "./components/svgs/FunkyFlowerzTitle";
 //   error?: string;
 // }
 
-const FUNKY_FLOWERZ_QUOTE = "There are always flowers for those who want to see them.\n-- Matisse"
-const FUNKY_FLOWERS_DESC = "A collection of 2700 hand-made flowers from 9 species, including dozens of insect variants and mutations. 50% proceeds donated to environmental organizations."
+const FUNKY_FLOWERZ_QUOTE =
+  "There are always flowers for those who want to see them.\n-- Matisse";
+const FUNKY_FLOWERS_DESC =
+  "A collection of 2700 hand-made flowers from 9 species, including dozens of insect variants and mutations. 50% proceeds donated to environmental organizations.";
 
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-      window.addEventListener('resize', () => {
-        setIsMobile(window.innerWidth < 1024)
-    })
+    window.addEventListener("resize", () => {
+      setIsMobile(window.innerWidth < 1024);
+    });
 
     return () => {
-        window.removeEventListener('resize', () => {
-          setIsMobile(window.innerWidth < 1024)
-        })
-    }
-  }, [])
+      window.removeEventListener("resize", () => {
+        setIsMobile(window.innerWidth < 1024);
+      });
+    };
+  }, []);
 
   return (
-    <Container style={{paddingBottom: '10rem'}}>      
+    <Container style={{ paddingBottom: "10rem" }}>
       <Container style={{ position: "relative" }}>
         <Grid
           container
           direction={isMobile ? "column" : "row"}
           justifyContent="space-between"
           wrap="nowrap"
-          style={{gridGap: '35px'}}
+          style={{ gridGap: "35px" }}
         >
           <Grid
             container
             direction="column"
             justifyContent="space-between"
-            style={{gridGap: '35px', height: '100%'}}
+            style={{ gridGap: "35px", height: "100%" }}
           >
             <SplashTitle>
               <FunkyFlowerzTitle />
@@ -56,7 +57,9 @@ const Home = () => {
               <Typography>{FUNKY_FLOWERZ_QUOTE}</Typography>
             </SplashQuote>
             <FunkyFlowerzDescription>
-              <Typography style={{fontWeight: 700, marginBottom: 10}}>Collective Digital Art</Typography>
+              <Typography style={{ fontWeight: 700, marginBottom: 10 }}>
+                Collective Digital Art
+              </Typography>
               <Typography>{FUNKY_FLOWERS_DESC}</Typography>
             </FunkyFlowerzDescription>
           </Grid>
@@ -73,7 +76,7 @@ const Home = () => {
 };
 
 const SplashTitle = styled.div`
-  @media(max-width: 1023px) {
+  @media (max-width: 1023px) {
     svg {
       width: 100%;
       height: 100%;
@@ -96,8 +99,7 @@ const FunkyFlowerzDescription = styled.div`
 `;
 
 const SplashImage = styled.div`
-
-  @media(max-width: 1023px) {
+  @media (max-width: 1023px) {
     img {
       width: 100%;
       height: 100%;

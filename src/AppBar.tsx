@@ -3,13 +3,13 @@ import * as anchor from "@project-serum/anchor";
 
 import styled from "styled-components";
 import { Container, Link, Snackbar } from "@material-ui/core";
-import { alpha } from '@mui/material/styles';
+import { alpha } from "@mui/material/styles";
 import Alert from "@material-ui/lab/Alert";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Switch from '@mui/material/Switch';
+import Switch from "@mui/material/Switch";
 import Typography from "@material-ui/core/Typography";
 import {
   Commitment,
@@ -41,50 +41,56 @@ import useWindowSize from "./hooks/useWindowSize";
 
 /** Network Toggle Switch */
 const ColoredSwitch = styled(Switch)(() => ({
-    '& .MuiSwitch-switchBase.Mui-checked': {
-      color: colors.purple,
-      '&:hover': {
-        backgroundColor: alpha(colors.purple, 0.3),
-      },
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: colors.purple,
+    "&:hover": {
+      backgroundColor: alpha(colors.purple, 0.3),
     },
-    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-      backgroundColor: colors.purple,
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: colors.purple,
+  },
+  "& .MuiSwitch-switchBase": {
+    color: colors.orange,
+    "&:hover": {
+      backgroundColor: alpha(colors.orange, 0.3),
     },
-    '& .MuiSwitch-switchBase': {
-      color: colors.orange,
-      '&:hover': {
-        backgroundColor: alpha(colors.orange, 0.3),
-      },
-    },
-    '& .MuiSwitch-switchBase + .MuiSwitch-track': {
-      backgroundColor: colors.orange,
-    },
-  }));
+  },
+  "& .MuiSwitch-switchBase + .MuiSwitch-track": {
+    backgroundColor: colors.orange,
+  },
+}));
 
-const NetworkToggle = ({ isMobile, network, onToggle }: {
+const NetworkToggle = ({
+  isMobile,
+  network,
+  onToggle,
+}: {
   isMobile: boolean;
   network: string;
   onToggle: () => void;
 }) => {
-  const labelProps = { componentsProps: { typography: { fontSize: isMobile ? '10px' : '12px' } } };
+  const labelProps = {
+    componentsProps: { typography: { fontSize: isMobile ? "10px" : "12px" } },
+  };
   return (
     <FormGroup>
-      <FormControlLabel 
-        {...labelProps} 
+      <FormControlLabel
+        {...labelProps}
         control={
-          <ColoredSwitch 
-            checked={network === "mainnet-beta"} 
+          <ColoredSwitch
+            checked={network === "mainnet-beta"}
             size={isMobile ? "small" : "medium"}
             onChange={onToggle}
-            value={network} 
+            value={network}
           />
-        } 
+        }
         label={network}
         labelPlacement="bottom"
-        />
+      />
     </FormGroup>
   );
-}
+};
 
 export interface AppBarProps {
   candyMachineId?: anchor.web3.PublicKey;
@@ -119,11 +125,11 @@ const AppBar = (props: AppBarProps) => {
 
   const setIsMobile = () => {
     store.setIsMobile((windowWidth?.width ?? window.innerWidth) < 1024);
-  }
+  };
 
   useEffect(() => {
     setIsMobile();
-  }, [])
+  }, []);
 
   const rpcUrl = props.rpcHost;
   const wallet = useWallet();
@@ -169,7 +175,8 @@ const AppBar = (props: AppBarProps) => {
             props.candyMachineId,
             connection
           );
-          process.env.NODE_ENV === "development" && console.log("Candy machine state: ", cndy);
+          process.env.NODE_ENV === "development" &&
+            console.log("Candy machine state: ", cndy);
           let active = cndy?.state.goLiveDate
             ? cndy?.state.goLiveDate.toNumber() < new Date().getTime() / 1000
             : false;
@@ -542,263 +549,264 @@ const AppBar = (props: AppBarProps) => {
 
   const mintButton = () => (
     <MintButtonWrapper>
-        {candyMachine?.state.isActive &&
-        candyMachine?.state.gatekeeper &&
-        wallet.publicKey &&
-        wallet.signTransaction ? (
+      {candyMachine?.state.isActive &&
+      candyMachine?.state.gatekeeper &&
+      wallet.publicKey &&
+      wallet.signTransaction ? (
         <GatewayProvider
-            wallet={{
-            publicKey:
-                wallet.publicKey ||
-                new PublicKey(CANDY_MACHINE_PROGRAM),
+          wallet={{
+            publicKey: wallet.publicKey || new PublicKey(CANDY_MACHINE_PROGRAM),
             //@ts-ignore
             signTransaction: wallet.signTransaction,
-            }}
-            gatekeeperNetwork={
-            candyMachine?.state?.gatekeeper?.gatekeeperNetwork
-            }
-            clusterUrl={rpcUrl}
-            cluster={cluster}
-            options={{ autoShowModal: false }}
+          }}
+          gatekeeperNetwork={candyMachine?.state?.gatekeeper?.gatekeeperNetwork}
+          clusterUrl={rpcUrl}
+          cluster={cluster}
+          options={{ autoShowModal: false }}
         >
-            <MintButton
-                candyMachine={candyMachine}
-                isMinting={isUserMinting}
-                setIsMinting={(val) => setIsUserMinting(val)}
-                onMint={onMint}
-                isActive={
-                    isActive ||
-                    (isPresale && isWhitelistUser && isValidBalance)
-                }
-            />
-        </GatewayProvider>
-        ) : (
-        <MintButton
+          <MintButton
             candyMachine={candyMachine}
             isMinting={isUserMinting}
             setIsMinting={(val) => setIsUserMinting(val)}
             onMint={onMint}
             isActive={
-            isActive ||
-            (isPresale && isWhitelistUser && isValidBalance)
+              isActive || (isPresale && isWhitelistUser && isValidBalance)
             }
-            />
-        )}
+          />
+        </GatewayProvider>
+      ) : (
+        <MintButton
+          candyMachine={candyMachine}
+          isMinting={isUserMinting}
+          setIsMinting={(val) => setIsUserMinting(val)}
+          onMint={onMint}
+          isActive={
+            isActive || (isPresale && isWhitelistUser && isValidBalance)
+          }
+        />
+      )}
     </MintButtonWrapper>
-  )
+  );
 
   const mobileNavLinks = () => {
-    const navLinkTextStyle = { fontWeight: "bold", fontSize: '15px' };
+    const navLinkTextStyle = { fontWeight: "bold", fontSize: "15px" };
     return (
-        <div className="mobile-nav-links">
-            <div>
-                <FunkyFlowerzLogo width="35px" height="35px"/>
-            </div>
-            <div>
-                <Grid
-                    container
-                    direction="row"
-                    alignItems="center"
-                    style={{gridGap: '20px'}}
-                    >
-                    <Link
-                        href="/"
-                        color="textPrimary"
-                        style={navLinkTextStyle}
-                    >
-                        Home
-                    </Link>
-                    <Link
-                        href="/rarity"
-                        color="textPrimary"
-                        style={navLinkTextStyle}
-                    >
-                        Rarity
-                    </Link>
-                    <Link
-                        href="/team"
-                        color="textPrimary"
-                        style={navLinkTextStyle}
-                    >
-                        Team
-                    </Link>
-                </Grid>
-            </div>
-            <div style={{width: '96px'}}>
-              <NetworkToggle isMobile network={props.network} onToggle={props.toggleNetwork} />
-            </div>
+      <div className="mobile-nav-links">
+        <div>
+          <FunkyFlowerzLogo width="35px" height="35px" />
         </div>
-    )
-  }
+        <div>
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            style={{ gridGap: "20px" }}
+          >
+            <Link href="/" color="textPrimary" style={navLinkTextStyle}>
+              Home
+            </Link>
+            <Link href="/rarity" color="textPrimary" style={navLinkTextStyle}>
+              Rarity
+            </Link>
+            <Link href="/team" color="textPrimary" style={navLinkTextStyle}>
+              Team
+            </Link>
+          </Grid>
+        </div>
+        <div style={{ width: "96px" }}>
+          <NetworkToggle
+            isMobile
+            network={props.network}
+            onToggle={props.toggleNetwork}
+          />
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <Container style={{ marginTop: 20, marginBottom: isMobile ? 100 : 64}}>
+    <Container style={{ marginTop: 20, marginBottom: isMobile ? 100 : 64 }}>
       <Container>
         <Paper
-              elevation={0}
+          elevation={0}
+          style={{
+            paddingBottom: 10,
+            paddingTop: 10,
+            backgroundColor:
+              props.network === "devnet" ? colors.orange : colors.purple,
+            textAlign: "center",
+          }}
+        >
+          <Typography
             style={{
-              paddingBottom: 10,
-              paddingTop: 10,
-              backgroundColor: props.network === "devnet" ? colors.orange : colors.purple,
-              textAlign: "center",
+              color: props.network === "devnet" ? "#000" : "#fff",
+              fontWeight: "bold",
             }}
           >
-          <Typography style={{color: props.network === "devnet" ? '#000' : '#fff', fontWeight: "bold"}}>You are on {props.network}</Typography>
+            You are on {props.network}
+          </Typography>
         </Paper>
         <Paper
-            elevation={0}
+          elevation={0}
           style={{
             paddingBottom: 10,
             backgroundColor: "transparent",
-           
           }}
         >
-            <AppBarGrid isMobile={isMobile}>
-                {isMobile 
-                  ? mobileNavLinks()
-                  : <>
-                      <div>
-                          <FunkyFlowerzLogo />
-                      </div>
-                      <div>
-                          <Grid
-                              container
-                              direction="row"
-                              alignItems="center"
-                              style={{gridGap: '40px'}}
-                              >
-                              <Link
-                                  href="/"
-                                  color="textPrimary"
-                                  style={{ fontWeight: "bold" }}
-                              >
-                                  Home
-                              </Link>
-                              <Link
-                                  href="/rarity"
-                                  color="textPrimary"
-                                  style={{ fontWeight: "bold" }}
-                              >
-                                  Rarity
-                              </Link>
-                              <Link
-                                  href="/team"
-                                  color="textPrimary"
-                                  style={{ fontWeight: "bold" }}
-                              >
-                                  Team
-                              </Link>
-                          </Grid>
-                      </div>
-                      <div style={{width: '120px'}}>
-                        <NetworkToggle isMobile={false} network={props.network} onToggle={props.toggleNetwork} />
-                      </div>
-                    </>
-                  }
-                <MintContainer>
-                    {!wallet.connected ? (
-                        <ConnectButton>Connect Wallet</ConnectButton>
-                    ) : (
+          <AppBarGrid isMobile={isMobile}>
+            {isMobile ? (
+              mobileNavLinks()
+            ) : (
+              <>
+                <div>
+                  <FunkyFlowerzLogo />
+                </div>
+                <div>
+                  <Grid
+                    container
+                    direction="row"
+                    alignItems="center"
+                    style={{ gridGap: "40px" }}
+                  >
+                    <Link
+                      href="/"
+                      color="textPrimary"
+                      style={{ fontWeight: "bold" }}
+                    >
+                      Home
+                    </Link>
+                    <Link
+                      href="/rarity"
+                      color="textPrimary"
+                      style={{ fontWeight: "bold" }}
+                    >
+                      Rarity
+                    </Link>
+                    <Link
+                      href="/team"
+                      color="textPrimary"
+                      style={{ fontWeight: "bold" }}
+                    >
+                      Team
+                    </Link>
+                  </Grid>
+                </div>
+                <div style={{ width: "120px" }}>
+                  <NetworkToggle
+                    isMobile={false}
+                    network={props.network}
+                    onToggle={props.toggleNetwork}
+                  />
+                </div>
+              </>
+            )}
+            <MintContainer>
+              {!wallet.connected ? (
+                <ConnectButton>Connect Wallet</ConnectButton>
+              ) : (
+                <>
+                  {candyMachine && (
                     <>
-                    {candyMachine && (
-                        <>
-                            {mintButton()}
-                            <MintDetails>
-                                <Grid 
-                                    container 
-                                    direction="row"
+                      {mintButton()}
+                      <MintDetails>
+                        <Grid container direction="row">
+                          <Grid item xs={4}>
+                            <Typography variant="body2" color="textSecondary">
+                              Remaining
+                            </Typography>
+                            <Typography
+                              variant="h6"
+                              color="textPrimary"
+                              style={{
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {`${itemsRemaining}`}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Typography variant="body2" color="textSecondary">
+                              {isWhitelistUser && discountPrice
+                                ? "Discount Price"
+                                : "Price"}
+                            </Typography>
+                            <Typography
+                              variant="h6"
+                              color="textPrimary"
+                              style={{
+                                fontWeight: "bold",
+                                whiteSpace: "nowrap",
+                                wordBreak: "keep-all",
+                              }}
+                            >
+                              {isWhitelistUser && discountPrice
+                                ? `◎ ${formatNumber.asNumber(discountPrice)}`
+                                : `◎ ${formatNumber.asNumber(
+                                    candyMachine.state.price
+                                  )}`}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={4}>
+                            {isActive &&
+                            endDate &&
+                            Date.now() < endDate.getTime() ? (
+                              <>
+                                <MintCountdown
+                                  key="endSettings"
+                                  date={getCountdownDate(candyMachine)}
+                                  style={{ justifyContent: "flex-end" }}
+                                  status="COMPLETED"
+                                  onComplete={toggleMintButton}
+                                />
+                                <Typography
+                                  variant="caption"
+                                  align="center"
+                                  display="block"
+                                  style={{ fontWeight: "bold" }}
                                 >
-                                    <Grid item xs={4}>
-                                        <Typography variant="body2" color="textSecondary">
-                                            Remaining
-                                        </Typography>
-                                        <Typography
-                                            variant="h6"
-                                            color="textPrimary"
-                                            style={{
-                                                fontWeight: "bold",
-                                            }}
-                                            >
-                                            {`${itemsRemaining}`}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Typography variant="body2" color="textSecondary">
-                                            {isWhitelistUser && discountPrice
-                                                ? "Discount Price"
-                                                : "Price"}
-                                        </Typography>
-                                        <Typography
-                                            variant="h6"
-                                            color="textPrimary"
-                                            style={{ fontWeight: "bold", whiteSpace:'nowrap', wordBreak: 'keep-all'}}
-                                        >
-                                            {isWhitelistUser && discountPrice
-                                                ? `◎ ${formatNumber.asNumber(discountPrice)}`
-                                                : `◎ ${formatNumber.asNumber(
-                                                    candyMachine.state.price
-                                                )}`}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        {isActive && endDate && Date.now() < endDate.getTime() ? (
-                                        <>
-                                            <MintCountdown
-                                                key="endSettings"
-                                                date={getCountdownDate(candyMachine)}
-                                                style={{ justifyContent: "flex-end" }}
-                                                status="COMPLETED"
-                                                onComplete={toggleMintButton}
-                                            />
-                                            <Typography
-                                                variant="caption"
-                                                align="center"
-                                                display="block"
-                                                style={{ fontWeight: "bold" }}
-                                            >
-                                                TO END OF MINT
-                                            </Typography>
-                                        </>
-                                        ) : (
-                                        <>
-                                            <MintCountdown
-                                                key="goLive"
-                                                date={getCountdownDate(candyMachine)}
-                                                style={{ justifyContent: "flex-end" }}
-                                                status={
-                                                    candyMachine?.state?.isSoldOut ||
-                                                    (endDate && Date.now() > endDate.getTime())
-                                                    ? "COMPLETED"
-                                                    : isPresale
-                                                    ? "PRESALE"
-                                                    : "LIVE"
-                                                }
-                                                onComplete={toggleMintButton}
-                                            />
-                                                {isPresale &&
-                                                    candyMachine.state.goLiveDate &&
-                                                    candyMachine.state.goLiveDate.toNumber() >
-                                                        new Date().getTime() / 1000 && (
-                                                <Typography
-                                                    variant="caption"
-                                                    align="center"
-                                                    display="block"
-                                                    style={{ fontWeight: "bold" }}
-                                                >
-                                                    UNTIL PUBLIC MINT
-                                                </Typography>
-                                                )}
-                                            </>
-                                        )}
-                                        </Grid>
-                                    </Grid>
-                                </MintDetails>
-                            </>
-                        )}
+                                  TO END OF MINT
+                                </Typography>
+                              </>
+                            ) : (
+                              <>
+                                <MintCountdown
+                                  key="goLive"
+                                  date={getCountdownDate(candyMachine)}
+                                  style={{ justifyContent: "flex-end" }}
+                                  status={
+                                    candyMachine?.state?.isSoldOut ||
+                                    (endDate && Date.now() > endDate.getTime())
+                                      ? "COMPLETED"
+                                      : isPresale
+                                      ? "PRESALE"
+                                      : "LIVE"
+                                  }
+                                  onComplete={toggleMintButton}
+                                />
+                                {isPresale &&
+                                  candyMachine.state.goLiveDate &&
+                                  candyMachine.state.goLiveDate.toNumber() >
+                                    new Date().getTime() / 1000 && (
+                                    <Typography
+                                      variant="caption"
+                                      align="center"
+                                      display="block"
+                                      style={{ fontWeight: "bold" }}
+                                    >
+                                      UNTIL PUBLIC MINT
+                                    </Typography>
+                                  )}
+                              </>
+                            )}
+                          </Grid>
+                        </Grid>
+                      </MintDetails>
                     </>
-                )}
-                </MintContainer>
-            </AppBarGrid>
+                  )}
+                </>
+              )}
+            </MintContainer>
+          </AppBarGrid>
         </Paper>
       </Container>
       <Snackbar
@@ -838,19 +846,20 @@ const getCountdownDate = (
   );
 };
 
-const AppBarGrid = styled.div<{isMobile: boolean}>`
-    display: grid;
-    align-items: ${({isMobile}) => isMobile ? "unset" : "center"};
-    grid-template-rows: ${({isMobile}) => isMobile ? "1fr 1fr" : "unset"};
-    grid-template-columns: ${({isMobile}) => isMobile ? "unset" : "1fr auto auto auto"};
-    grid-gap: ${({isMobile}) => isMobile ? "20px" : "48px"};
+const AppBarGrid = styled.div<{ isMobile: boolean }>`
+  display: grid;
+  align-items: ${({ isMobile }) => (isMobile ? "unset" : "center")};
+  grid-template-rows: ${({ isMobile }) => (isMobile ? "1fr 1fr" : "unset")};
+  grid-template-columns: ${({ isMobile }) =>
+    isMobile ? "unset" : "1fr auto auto auto"};
+  grid-gap: ${({ isMobile }) => (isMobile ? "20px" : "48px")};
 
-    .mobile-nav-links {
-        display: grid;
-        grid-template-columns: 1fr auto auto;
-        align-items: center;
-        justify-content: space-between;
-    }
+  .mobile-nav-links {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;
 
 const ConnectButton = styled(WalletDialogButton)`
@@ -858,7 +867,7 @@ const ConnectButton = styled(WalletDialogButton)`
   height: 60px;
   margin-top: 10px;
   margin-bottom: 5px;
-  background: #FF5FDC;
+  background: #ff5fdc;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -866,22 +875,20 @@ const ConnectButton = styled(WalletDialogButton)`
 `;
 
 const MintButtonWrapper = styled.div`
-    min-width: 237px;
+  min-width: 237px;
 `; // add your owns styles here
 
-
 const MintContainer = styled.div`
-
-    position: relative;
-    min-width: 240px;
+  position: relative;
+  min-width: 240px;
 `;
 
 const MintDetails = styled.div`
-    width: 100%;
-    position: absolute;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-top: 16px;
+  width: 100%;
+  position: absolute;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 16px;
 `;
 
 export default AppBar;

@@ -20,7 +20,7 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 
 import { createTheme, ThemeProvider } from "@material-ui/core";
-import { BrowserRouter, Route, Navigate, Routes, } from "react-router-dom";
+import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import AppBar from "./AppBar";
 import Rarity from "./Rarity";
 import Team from "./Team";
@@ -31,8 +31,8 @@ const theme = createTheme({
     type: "dark",
   },
   typography: {
-    fontFamily: 'Raleway'
-  }
+    fontFamily: "Raleway",
+  },
 });
 
 const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
@@ -58,7 +58,8 @@ const candyMachineId = getCandyMachineId();
 const defaultNetwork = (process.env.REACT_APP_SOLANA_NETWORK ??
   "devnet") as WalletAdapterNetwork;
 const rpcHost =
-  process.env.REACT_APP_SOLANA_RPC_HOST ?? anchor.web3.clusterApiUrl(defaultNetwork);
+  process.env.REACT_APP_SOLANA_RPC_HOST ??
+  anchor.web3.clusterApiUrl(defaultNetwork);
 const connection = new anchor.web3.Connection(rpcHost);
 
 const App = () => {
@@ -75,7 +76,7 @@ const App = () => {
     ],
     []
   );
- 
+
   const handleToggleNetwork = useCallback(() => {
     const currentNetwork = store.network;
     store.setNetwork(currentNetwork === "devnet" ? "mainnet-beta" : "devnet");
@@ -86,7 +87,7 @@ const App = () => {
       <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect>
           <WalletDialogProvider>
-            <AppBar 
+            <AppBar
               candyMachineId={candyMachineId}
               connection={connection}
               txTimeout={DEFAULT_TIMEOUT}
@@ -94,13 +95,13 @@ const App = () => {
               network={network}
               error={error}
               toggleNetwork={handleToggleNetwork}
-              />
+            />
             <BrowserRouter>
               <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/rarity" element={<Rarity />} />
-                  <Route path="/team" element={<Team />} />
-                  <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/rarity" element={<Rarity />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </BrowserRouter>
           </WalletDialogProvider>
