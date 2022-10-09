@@ -1,18 +1,8 @@
-// import styled from "styled-components";
 import { Container, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import FunkyFlowerzTitle from "./components/svgs/FunkyFlowerzTitle";
-
-// export interface HomeProps {
-//   candyMachineId?: anchor.web3.PublicKey;
-//   connection: anchor.web3.Connection;
-//   txTimeout: number;
-//   rpcHost: string;
-//   network: WalletAdapterNetwork;
-//   error?: string;
-// }
+import FunkyFlowerzTitle from "../../components/svgs/FunkyFlowerzTitle";
 
 const FUNKY_FLOWERZ_QUOTE =
   "There are always flowers for those who want to see them.\n-- Matisse";

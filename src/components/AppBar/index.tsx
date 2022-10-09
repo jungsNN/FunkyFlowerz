@@ -28,16 +28,16 @@ import {
   getCollectionPDA,
   mintOneToken,
   SetupState,
-} from "./candy-machine";
-import { AlertState, formatNumber, getAtaForMint, toDate } from "./utils";
-import { MintCountdown } from "./MintCountdown";
-import { MintButton } from "./MintButton";
+} from "../../candy-machine";
+import { AlertState, formatNumber, getAtaForMint, toDate } from "../../utils";
+import { MintCountdown } from "../Mint/MintCountdown";
+import { MintButton } from "../Mint/MintButton";
 import { GatewayProvider } from "@civic/solana-gateway-react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import FunkyFlowerzLogo from "./components/svgs/FunkyFlowerzLogo";
-import colors from "./theme/colors";
-import useStore from "./states";
-import useWindowSize from "./hooks/useWindowSize";
+import FunkyFlowerzLogo from "../svgs/FunkyFlowerzLogo";
+import colors from "../../theme/colors";
+import useStore from "../../states";
+import useWindowSize from "../../hooks/useWindowSize";
 
 /** Network Toggle Switch */
 const ColoredSwitch = styled(Switch)(() => ({
@@ -602,7 +602,7 @@ const AppBar = (props: AppBarProps) => {
             alignItems="center"
             style={{ gridGap: "20px" }}
           >
-            <Link href="/" color="textPrimary" style={navLinkTextStyle}>
+            <Link href="/home" color="textPrimary" style={navLinkTextStyle}>
               Home
             </Link>
             <Link href="/rarity" color="textPrimary" style={navLinkTextStyle}>
@@ -669,7 +669,7 @@ const AppBar = (props: AppBarProps) => {
                     style={{ gridGap: "40px" }}
                   >
                     <Link
-                      href="/"
+                      href="/home"
                       color="textPrimary"
                       style={{ fontWeight: "bold" }}
                     >

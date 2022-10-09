@@ -1,7 +1,6 @@
 import "./App.css";
 import { useCallback, useMemo } from "react";
 import * as anchor from "@project-serum/anchor";
-import Home from "./Home";
 import { DEFAULT_TIMEOUT } from "./connection";
 import { clusterApiUrl } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
@@ -20,10 +19,11 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 
 import { createTheme, ThemeProvider } from "@material-ui/core";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AppBar from "./AppBar";
-import Rarity from "./Rarity";
-import Team from "./Team";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import AppBar from "./components/AppBar";
+import Home from "./pages/Home";
+import Rarity from "./pages/Rarity";
+import Team from "./pages/Team";
 import useStore from "./states";
 
 const theme = createTheme({
@@ -96,11 +96,12 @@ const App = () => {
               error={error}
               toggleNetwork={handleToggleNetwork}
             />
-            <BrowserRouter>
+            <BrowserRouter basename="/">
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/rarity" element={<Rarity />} />
-                <Route path="/team" element={<Team />} />
+                <Route path="home" element={<Home />} />
+                <Route path="rarity" element={<Rarity />} />
+                <Route path="team" element={<Team />} />
+                <Route path="" element={<Navigate to={"/home"} />} />
               </Routes>
             </BrowserRouter>
           </WalletDialogProvider>

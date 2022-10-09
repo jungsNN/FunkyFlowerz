@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
-import { CandyMachineAccount } from "./candy-machine";
+import { CandyMachineAccount } from "../../candy-machine";
 import { CircularProgress } from "@material-ui/core";
 import { GatewayStatus, useGateway } from "@civic/solana-gateway-react";
 import { useEffect, useState, useRef } from "react";
@@ -11,7 +11,7 @@ import {
   onGatewayTokenChange,
   removeAccountChangeListener,
 } from "@identity.com/solana-gateway-ts";
-import { CIVIC_GATEKEEPER_NETWORK } from "./utils";
+import { CIVIC_GATEKEEPER_NETWORK } from "../../utils";
 
 export const CTAButton = styled(Button)`
   width: 100%;

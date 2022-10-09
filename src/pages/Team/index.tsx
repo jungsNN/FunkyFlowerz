@@ -1,7 +1,7 @@
 import { Container, Grid, Typography } from "@material-ui/core";
 import styled from "styled-components";
-import TeamIvor from "./components/svgs/TeamIvor";
-import TeamJenny from "./components/svgs/TeamJenny";
+import TeamIvor from "../../components/svgs/TeamIvor";
+import TeamJenny from "../../components/svgs/TeamJenny";
 
 const IVOR =
   'Ivor Guest is a designer and art director based in NYC that created the art for Funky Flowerz. His inspiration came from Benyamin Ahmed\'s "Weird Whales" collection, mixed with his love for flowers and the game Pikmin.';
