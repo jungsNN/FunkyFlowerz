@@ -6,10 +6,14 @@
   "dependencies": {
     "@babel/runtime": "^7.15.5",
     "@civic/solana-gateway-react": "^0.9.2",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@identity.com/solana-gateway-ts": "^0.8.1",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
+    "@mui/material": "^5.10.8",
+    "@mui/styled-engine-sc": "^5.10.6",
     "@project-serum/anchor": "^0.17.0",
     "@solana/spl-token": "^0.1.8",
     "@solana/wallet-adapter-base": "^0.7.0",
@@ -28,7 +32,8 @@
     "react-scripts": "4.0.3",
     "styled-components": "^5.3.1",
     "typescript": "^4.1.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "zustand": "^4.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

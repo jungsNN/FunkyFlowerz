@@ -3,9 +3,13 @@ import * as anchor from "@project-serum/anchor";
 
 import styled from "styled-components";
 import { Container, Link, Snackbar } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
+import { alpha } from '@mui/material/styles';
 import Alert from "@material-ui/lab/Alert";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Switch from '@mui/material/Switch';
 import Typography from "@material-ui/core/Typography";
 import {
   Commitment,
@@ -31,6 +35,56 @@ import { MintButton } from "./MintButton";
 import { GatewayProvider } from "@civic/solana-gateway-react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import FunkyFlowerzLogo from "./components/svgs/FunkyFlowerzLogo";
+import colors from "./theme/colors";
+import useStore from "./states";
+import useWindowSize from "./hooks/useWindowSize";
+
+/** Network Toggle Switch */
+const ColoredSwitch = styled(Switch)(() => ({
+    '& .MuiSwitch-switchBase.Mui-checked': {
+      color: colors.purple,
+      '&:hover': {
+        backgroundColor: alpha(colors.purple, 0.3),
+      },
+    },
+    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+      backgroundColor: colors.purple,
+    },
+    '& .MuiSwitch-switchBase': {
+      color: colors.orange,
+      '&:hover': {
+        backgroundColor: alpha(colors.orange, 0.3),
+      },
+    },
+    '& .MuiSwitch-switchBase + .MuiSwitch-track': {
+      backgroundColor: colors.orange,
+    },
+  }));
+
+const NetworkToggle = ({ isMobile, network, onToggle }: {
+  isMobile: boolean;
+  network: string;
+  onToggle: () => void;
+}) => {
+  const labelProps = { componentsProps: { typography: { fontSize: isMobile ? '10px' : '12px' } } };
+  return (
+    <FormGroup>
+      <FormControlLabel 
+        {...labelProps} 
+        control={
+          <ColoredSwitch 
+            checked={network === "mainnet-beta"} 
+            size={isMobile ? "small" : "medium"}
+            onChange={onToggle}
+            value={network} 
+          />
+        } 
+        label={network}
+        labelPlacement="bottom"
+        />
+    </FormGroup>
+  );
+}
 
 export interface AppBarProps {
   candyMachineId?: anchor.web3.PublicKey;
@@ -39,10 +93,13 @@ export interface AppBarProps {
   rpcHost: string;
   network: WalletAdapterNetwork;
   error?: string;
+  toggleNetwork: () => void;
 }
 
 const AppBar = (props: AppBarProps) => {
-    const [isMobile, setIsMobile] = useState(false);
+  const store = useStore();
+  const windowWidth = useWindowSize();
+  const isMobile = useMemo(() => store.isMobile, [store.isMobile]);
   const [isUserMinting, setIsUserMinting] = useState(false);
   const [candyMachine, setCandyMachine] = useState<CandyMachineAccount>();
   const [alertState, setAlertState] = useState<AlertState>({
@@ -60,16 +117,12 @@ const AppBar = (props: AppBarProps) => {
   const [needTxnSplit, setNeedTxnSplit] = useState(true);
   const [setupTxn, setSetupTxn] = useState<SetupState>();
 
-  useEffect(() => {
-    if (window && typeof window !== 'undefined') {
-        window.addEventListener('resize', () => {
-            setIsMobile(window.innerWidth < 1024)
-        })
+  const setIsMobile = () => {
+    store.setIsMobile((windowWidth?.width ?? window.innerWidth) < 1024);
+  }
 
-        return () => {
-            window.removeEventListener('resize', () => {})
-        }
-    }
+  useEffect(() => {
+    setIsMobile();
   }, [])
 
   const rpcUrl = props.rpcHost;
@@ -116,7 +169,7 @@ const AppBar = (props: AppBarProps) => {
             props.candyMachineId,
             connection
           );
-          console.log("Candy machine state: ", cndy);
+          process.env.NODE_ENV === "development" && console.log("Candy machine state: ", cndy);
           let active = cndy?.state.goLiveDate
             ? cndy?.state.goLiveDate.toNumber() < new Date().getTime() / 1000
             : false;
@@ -535,40 +588,44 @@ const AppBar = (props: AppBarProps) => {
   )
 
   const mobileNavLinks = () => {
+    const navLinkTextStyle = { fontWeight: "bold", fontSize: '15px' };
     return (
         <div className="mobile-nav-links">
             <div>
-                <FunkyFlowerzLogo />
+                <FunkyFlowerzLogo width="35px" height="35px"/>
             </div>
             <div>
                 <Grid
                     container
                     direction="row"
                     alignItems="center"
-                    style={{gridGap: '40px'}}
+                    style={{gridGap: '20px'}}
                     >
                     <Link
                         href="/"
                         color="textPrimary"
-                        style={{ fontWeight: "bold" }}
+                        style={navLinkTextStyle}
                     >
                         Home
                     </Link>
                     <Link
                         href="/rarity"
                         color="textPrimary"
-                        style={{ fontWeight: "bold" }}
+                        style={navLinkTextStyle}
                     >
                         Rarity
                     </Link>
                     <Link
                         href="/team"
                         color="textPrimary"
-                        style={{ fontWeight: "bold" }}
+                        style={navLinkTextStyle}
                     >
                         Team
                     </Link>
                 </Grid>
+            </div>
+            <div style={{width: '96px'}}>
+              <NetworkToggle isMobile network={props.network} onToggle={props.toggleNetwork} />
             </div>
         </div>
     )
@@ -577,17 +634,17 @@ const AppBar = (props: AppBarProps) => {
   return (
     <Container style={{ marginTop: 20, marginBottom: isMobile ? 100 : 64}}>
       <Container>
-      <Paper
-            elevation={0}
-          style={{
-            paddingBottom: 10,
-            paddingTop: 10,
-            backgroundColor: "orange",
-            textAlign: "center",
-          }}
-        >
-            <Typography style={{color: '#000', fontWeight: "bold"}}>Minting is currently live on Devnet only</Typography>
-            </Paper>
+        <Paper
+              elevation={0}
+            style={{
+              paddingBottom: 10,
+              paddingTop: 10,
+              backgroundColor: props.network === "devnet" ? colors.orange : colors.purple,
+              textAlign: "center",
+            }}
+          >
+          <Typography style={{color: props.network === "devnet" ? '#000' : '#fff', fontWeight: "bold"}}>You are on {props.network}</Typography>
+        </Paper>
         <Paper
             elevation={0}
           style={{
@@ -596,45 +653,48 @@ const AppBar = (props: AppBarProps) => {
            
           }}
         >
-            <AppBarGrid>
-                {isMobile && (mobileNavLinks())}
-                {!isMobile && (
-                    <>
-                        <div>
-                            <FunkyFlowerzLogo />
-                        </div>
-                        <div>
-                            <Grid
-                                container
-                                direction="row"
-                                alignItems="center"
-                                style={{gridGap: '40px'}}
-                                >
-                                <Link
-                                    href="/"
-                                    color="textPrimary"
-                                    style={{ fontWeight: "bold" }}
-                                >
-                                    Home
-                                </Link>
-                                <Link
-                                    href="/rarity"
-                                    color="textPrimary"
-                                    style={{ fontWeight: "bold" }}
-                                >
-                                    Rarity
-                                </Link>
-                                <Link
-                                    href="/team"
-                                    color="textPrimary"
-                                    style={{ fontWeight: "bold" }}
-                                >
-                                    Team
-                                </Link>
-                            </Grid>
-                        </div>
+            <AppBarGrid isMobile={isMobile}>
+                {isMobile 
+                  ? mobileNavLinks()
+                  : <>
+                      <div>
+                          <FunkyFlowerzLogo />
+                      </div>
+                      <div>
+                          <Grid
+                              container
+                              direction="row"
+                              alignItems="center"
+                              style={{gridGap: '40px'}}
+                              >
+                              <Link
+                                  href="/"
+                                  color="textPrimary"
+                                  style={{ fontWeight: "bold" }}
+                              >
+                                  Home
+                              </Link>
+                              <Link
+                                  href="/rarity"
+                                  color="textPrimary"
+                                  style={{ fontWeight: "bold" }}
+                              >
+                                  Rarity
+                              </Link>
+                              <Link
+                                  href="/team"
+                                  color="textPrimary"
+                                  style={{ fontWeight: "bold" }}
+                              >
+                                  Team
+                              </Link>
+                          </Grid>
+                      </div>
+                      <div style={{width: '120px'}}>
+                        <NetworkToggle isMobile={false} network={props.network} onToggle={props.toggleNetwork} />
+                      </div>
                     </>
-                )}
+                  }
                 <MintContainer>
                     {!wallet.connected ? (
                         <ConnectButton>Connect Wallet</ConnectButton>
@@ -778,23 +838,18 @@ const getCountdownDate = (
   );
 };
 
-const AppBarGrid = styled.div`
+const AppBarGrid = styled.div<{isMobile: boolean}>`
     display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 40px;
+    align-items: ${({isMobile}) => isMobile ? "unset" : "center"};
+    grid-template-rows: ${({isMobile}) => isMobile ? "1fr 1fr" : "unset"};
+    grid-template-columns: ${({isMobile}) => isMobile ? "unset" : "1fr auto auto auto"};
+    grid-gap: ${({isMobile}) => isMobile ? "20px" : "48px"};
 
     .mobile-nav-links {
         display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    @media(min-width: 1024px) {
-        display: grid;
         grid-template-columns: 1fr auto auto;
         align-items: center;
-        grid-gap: 48px;
+        justify-content: space-between;
     }
 `;
 

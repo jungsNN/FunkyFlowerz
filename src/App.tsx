@@ -1,5 +1,5 @@
 import "./App.css";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import * as anchor from "@project-serum/anchor";
 import Home from "./Home";
 import { DEFAULT_TIMEOUT } from "./connection";
@@ -21,9 +21,10 @@ import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import { BrowserRouter, Route, Navigate, Routes, } from "react-router-dom";
+import AppBar from "./AppBar";
 import Rarity from "./Rarity";
 import Team from "./Team";
-import AppBar from "./AppBar";
+import useStore from "./states";
 
 const theme = createTheme({
   palette: {
@@ -54,15 +55,16 @@ if (process.env.REACT_APP_SOLANA_NETWORK === undefined) {
 }
 
 const candyMachineId = getCandyMachineId();
-const network = (process.env.REACT_APP_SOLANA_NETWORK ??
+const defaultNetwork = (process.env.REACT_APP_SOLANA_NETWORK ??
   "devnet") as WalletAdapterNetwork;
 const rpcHost =
-  process.env.REACT_APP_SOLANA_RPC_HOST ?? anchor.web3.clusterApiUrl("devnet");
+  process.env.REACT_APP_SOLANA_RPC_HOST ?? anchor.web3.clusterApiUrl(defaultNetwork);
 const connection = new anchor.web3.Connection(rpcHost);
 
 const App = () => {
+  const store = useStore();
+  const network = useMemo(() => store.network, [store.network]);
   const endpoint = useMemo(() => clusterApiUrl(network), []);
-
   const wallets = useMemo(
     () => [
       getPhantomWallet(),
@@ -73,6 +75,11 @@ const App = () => {
     ],
     []
   );
+ 
+  const handleToggleNetwork = useCallback(() => {
+    const currentNetwork = store.network;
+    store.setNetwork(currentNetwork === "devnet" ? "mainnet-beta" : "devnet");
+  }, [store.network]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -86,6 +93,7 @@ const App = () => {
               rpcHost={rpcHost}
               network={network}
               error={error}
+              toggleNetwork={handleToggleNetwork}
               />
             <BrowserRouter>
               <Routes>
