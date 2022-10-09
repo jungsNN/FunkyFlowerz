@@ -20,7 +20,7 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 
 import { createTheme, ThemeProvider } from "@material-ui/core";
-import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppBar from "./AppBar";
 import Rarity from "./Rarity";
 import Team from "./Team";
