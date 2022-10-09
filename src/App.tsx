@@ -101,7 +101,6 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/rarity" element={<Rarity />} />
                 <Route path="/team" element={<Team />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </BrowserRouter>
           </WalletDialogProvider>
