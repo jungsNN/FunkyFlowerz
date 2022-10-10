@@ -1,15 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import * as anchor from "@project-serum/anchor";
-
 import styled from "styled-components";
 import { Container, Link, Snackbar } from "@material-ui/core";
-import { alpha } from "@mui/material/styles";
 import Alert from "@material-ui/lab/Alert";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Switch from "@mui/material/Switch";
 import Typography from "@material-ui/core/Typography";
 import {
   Commitment,
@@ -35,63 +30,9 @@ import { MintButton } from "../Mint/MintButton";
 import { GatewayProvider } from "@civic/solana-gateway-react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import FunkyFlowerzLogo from "../svgs/FunkyFlowerzLogo";
-import colors from "../../theme/colors";
 import useStore from "../../states";
 import useWindowSize from "../../hooks/useWindowSize";
 import { Button } from "@mui/material";
-
-/** Network Toggle Switch */
-const ColoredSwitch = styled(Switch)(() => ({
-  "& .MuiSwitch-switchBase.Mui-checked": {
-    color: colors.purple,
-    "&:hover": {
-      backgroundColor: alpha(colors.purple, 0.3),
-    },
-  },
-  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-    backgroundColor: colors.purple,
-  },
-  "& .MuiSwitch-switchBase": {
-    color: colors.orange,
-    "&:hover": {
-      backgroundColor: alpha(colors.orange, 0.3),
-    },
-  },
-  "& .MuiSwitch-switchBase + .MuiSwitch-track": {
-    backgroundColor: colors.orange,
-  },
-}));
-
-const NetworkToggle = ({
-  isMobile,
-  network,
-  onToggle,
-}: {
-  isMobile: boolean;
-  network: string;
-  onToggle: () => void;
-}) => {
-  const labelProps = {
-    componentsProps: { typography: { fontSize: isMobile ? "10px" : "12px" } },
-  };
-  return (
-    <FormGroup>
-      <FormControlLabel
-        {...labelProps}
-        control={
-          <ColoredSwitch
-            checked={network === "mainnet-beta"}
-            size={isMobile ? "small" : "medium"}
-            onChange={onToggle}
-            value={network}
-          />
-        }
-        label={network}
-        labelPlacement="bottom"
-      />
-    </FormGroup>
-  );
-};
 
 export interface AppBarProps {
   candyMachineId?: anchor.web3.PublicKey;
@@ -615,13 +556,6 @@ const AppBar = (props: AppBarProps) => {
             </Link>
           </Grid>
         </div>
-        <div style={{ width: "96px" }}>
-          <NetworkToggle
-            isMobile
-            network={props.network}
-            onToggle={props.toggleNetwork}
-          />
-        </div>
       </div>
     );
   };
@@ -631,25 +565,6 @@ const AppBar = (props: AppBarProps) => {
   return (
     <Container style={{ marginTop: 20, marginBottom: isMobile ? 100 : 64 }}>
       <Container>
-        <Paper
-          elevation={0}
-          style={{
-            paddingBottom: 10,
-            paddingTop: 10,
-            backgroundColor:
-              props.network === "devnet" ? colors.orange : colors.purple,
-            textAlign: "center",
-          }}
-        >
-          <Typography
-            style={{
-              color: props.network === "devnet" ? "#000" : "#fff",
-              fontWeight: "bold",
-            }}
-          >
-            You are on {props.network}
-          </Typography>
-        </Paper>
         <Paper
           elevation={0}
           style={{
@@ -694,13 +609,6 @@ const AppBar = (props: AppBarProps) => {
                       Team
                     </Button>
                   </Grid>
-                </div>
-                <div style={{ width: "120px" }}>
-                  <NetworkToggle
-                    isMobile={false}
-                    network={props.network}
-                    onToggle={props.toggleNetwork}
-                  />
                 </div>
               </>
             )}
@@ -855,12 +763,12 @@ const AppBarGrid = styled.div<{ isMobile: boolean }>`
   align-items: ${({ isMobile }) => (isMobile ? "unset" : "center")};
   grid-template-rows: ${({ isMobile }) => (isMobile ? "1fr 1fr" : "unset")};
   grid-template-columns: ${({ isMobile }) =>
-    isMobile ? "unset" : "1fr auto auto auto"};
+    isMobile ? "unset" : "1fr auto auto"};
   grid-gap: ${({ isMobile }) => (isMobile ? "20px" : "48px")};
 
   .mobile-nav-links {
     display: grid;
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr auto;
     align-items: center;
     justify-content: space-between;
   }
