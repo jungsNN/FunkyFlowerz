@@ -38,6 +38,7 @@ import FunkyFlowerzLogo from "../svgs/FunkyFlowerzLogo";
 import colors from "../../theme/colors";
 import useStore from "../../states";
 import useWindowSize from "../../hooks/useWindowSize";
+import { Button } from "@mui/material";
 
 /** Network Toggle Switch */
 const ColoredSwitch = styled(Switch)(() => ({
@@ -99,6 +100,7 @@ export interface AppBarProps {
   rpcHost: string;
   network: WalletAdapterNetwork;
   error?: string;
+  togglePage: (page: string) => void;
   toggleNetwork: () => void;
 }
 
@@ -624,6 +626,8 @@ const AppBar = (props: AppBarProps) => {
     );
   };
 
+  const navButtonStyle = { fontWeight: "bold", color: "#fff" };
+
   return (
     <Container style={{ marginTop: 20, marginBottom: isMobile ? 100 : 64 }}>
       <Container>
@@ -668,27 +672,27 @@ const AppBar = (props: AppBarProps) => {
                     alignItems="center"
                     style={{ gridGap: "40px" }}
                   >
-                    <Link
-                      href="/home"
-                      color="textPrimary"
-                      style={{ fontWeight: "bold" }}
+                    <Button
+                      onClick={() => props.togglePage("home")}
+                      variant="text"
+                      style={navButtonStyle}
                     >
                       Home
-                    </Link>
-                    <Link
-                      href="/rarity"
-                      color="textPrimary"
-                      style={{ fontWeight: "bold" }}
+                    </Button>
+                    <Button
+                      onClick={() => props.togglePage("rarity")}
+                      variant="text"
+                      style={navButtonStyle}
                     >
                       Rarity
-                    </Link>
-                    <Link
-                      href="/team"
-                      color="textPrimary"
-                      style={{ fontWeight: "bold" }}
+                    </Button>
+                    <Button
+                      onClick={() => props.togglePage("team")}
+                      variant="text"
+                      style={navButtonStyle}
                     >
                       Team
-                    </Link>
+                    </Button>
                   </Grid>
                 </div>
                 <div style={{ width: "120px" }}>

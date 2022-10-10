@@ -1,5 +1,5 @@
 import "./App.css";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import * as anchor from "@project-serum/anchor";
 import { DEFAULT_TIMEOUT } from "./connection";
 import { clusterApiUrl } from "@solana/web3.js";
@@ -19,7 +19,6 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 
 import { createTheme, ThemeProvider } from "@material-ui/core";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AppBar from "./components/AppBar";
 import Home from "./pages/Home";
 import Rarity from "./pages/Rarity";
@@ -34,6 +33,12 @@ const theme = createTheme({
     fontFamily: "Raleway",
   },
 });
+
+const pages: { [key: string]: JSX.Element } = {
+  home: <Home />,
+  rarity: <Rarity />,
+  team: <Team />,
+};
 
 const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
   try {
@@ -64,6 +69,7 @@ const connection = new anchor.web3.Connection(rpcHost);
 
 const App = () => {
   const store = useStore();
+  const [currentPage, setCurrentPage] = useState("home");
   const network = useMemo(() => store.network, [store.network]);
   const endpoint = useMemo(() => clusterApiUrl(network), []);
   const wallets = useMemo(
@@ -82,6 +88,10 @@ const App = () => {
     store.setNetwork(currentNetwork === "devnet" ? "mainnet-beta" : "devnet");
   }, [store.network]);
 
+  const togglePage = (newPage: string) => {
+    setCurrentPage(newPage);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <ConnectionProvider endpoint={endpoint}>
@@ -94,16 +104,10 @@ const App = () => {
               rpcHost={rpcHost}
               network={network}
               error={error}
+              togglePage={togglePage}
               toggleNetwork={handleToggleNetwork}
             />
-            <BrowserRouter basename="/">
-              <Routes>
-                <Route path="home" element={<Home />} />
-                <Route path="rarity" element={<Rarity />} />
-                <Route path="team" element={<Team />} />
-                <Route path="" element={<Navigate to={"/home"} />} />
-              </Routes>
-            </BrowserRouter>
+            {pages[currentPage]}
           </WalletDialogProvider>
         </WalletProvider>
       </ConnectionProvider>

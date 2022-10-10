@@ -96,7 +96,8 @@ export const MintButton = ({
     ) {
       setIsMinting(true);
     }
-    console.log("change: ", GatewayStatus[gatewayStatus]);
+    process.env.NODE_ENV === "development" &&
+      console.log("change: ", GatewayStatus[gatewayStatus]);
   }, [waitForActiveToken, previousGatewayStatus, gatewayStatus]);
 
   useEffect(() => {
