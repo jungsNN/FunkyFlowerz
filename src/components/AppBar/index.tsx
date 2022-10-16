@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import * as anchor from "@project-serum/anchor";
 import styled from "styled-components";
-import { Container, Link, Snackbar } from "@material-ui/core";
+import { Container, Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -535,7 +535,9 @@ const AppBar = (props: AppBarProps) => {
     const navLinkTextStyle = { fontWeight: "bold", fontSize: "15px" };
     return (
       <div className="mobile-nav-links">
-        <div>
+        <div
+          className="home-logo"  
+          onClick={() => props.togglePage("home")}>
           <FunkyFlowerzLogo width="35px" height="35px" />
         </div>
         <div>
@@ -545,15 +547,24 @@ const AppBar = (props: AppBarProps) => {
             alignItems="center"
             style={{ gridGap: "20px" }}
           >
-            <Link href="/home" color="textPrimary" style={navLinkTextStyle}>
+            <Button
+              onClick={() => props.togglePage("home")}
+              variant="text"
+              style={navLinkTextStyle}>
               Home
-            </Link>
-            <Link href="/rarity" color="textPrimary" style={navLinkTextStyle}>
+            </Button>
+            <Button 
+              onClick={() => props.togglePage("home")}
+              variant="text" 
+              style={navLinkTextStyle}>
               Rarity
-            </Link>
-            <Link href="/team" color="textPrimary" style={navLinkTextStyle}>
+            </Button>
+            <Button
+              onClick={() => props.togglePage("home")}
+              variant="text"
+              style={navLinkTextStyle}>
               Team
-            </Link>
+            </Button>
           </Grid>
         </div>
       </div>
@@ -577,7 +588,10 @@ const AppBar = (props: AppBarProps) => {
               mobileNavLinks()
             ) : (
               <>
-                <div>
+                <div
+                  className="home-logo"
+                  onClick={() => props.togglePage("home")}
+                  >
                   <FunkyFlowerzLogo />
                 </div>
                 <div>
@@ -765,6 +779,10 @@ const AppBarGrid = styled.div<{ isMobile: boolean }>`
   grid-template-columns: ${({ isMobile }) =>
     isMobile ? "unset" : "1fr auto auto"};
   grid-gap: ${({ isMobile }) => (isMobile ? "20px" : "48px")};
+
+  .home-logo {
+    cursor: pointer;
+  }
 
   .mobile-nav-links {
     display: grid;
