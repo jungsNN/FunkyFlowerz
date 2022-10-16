@@ -37,7 +37,7 @@ const TitleWrapper = styled.div`
   svg {
     width: 100%;
     height: 100%;
-    max-width: calc(100vw / 2);
+    max-width: calc(100vw / 4);
   }
 `;
 
