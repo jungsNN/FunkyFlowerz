@@ -48,7 +48,7 @@ const Home = () => {
             </SplashQuote>
             <FunkyFlowerzDescription>
               <Typography style={{ fontWeight: 700, marginBottom: 10 }}>
-                Collective Digital Art
+                Collectible Digital Art
               </Typography>
               <Typography>{FUNKY_FLOWERS_DESC}</Typography>
             </FunkyFlowerzDescription>
