@@ -1,30 +1,18 @@
 import { Container, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import FunkyFlowerzTitle from "../../components/svgs/FunkyFlowerzTitle";
+import useStore from "../../states";
 
 const Home = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      setIsMobile(window.innerWidth < 1024);
-    });
-
-    return () => {
-      window.removeEventListener("resize", () => {
-        setIsMobile(window.innerWidth < 1024);
-      });
-    };
-  }, []);
-
+  const store = useStore();
+ 
   return (
     <Container style={{ paddingBottom: "10rem" }}>
       <Container style={{ position: "relative" }}>
         <Grid
           container
-          direction={isMobile ? "column" : "row"}
+          direction={store.isMobile ? "column" : "row"}
           justifyContent="space-between"
           wrap="nowrap"
           style={{ gridGap: "35px" }}
@@ -66,7 +54,7 @@ const Home = () => {
             </FunkyFlowerzDescription>
           </Grid>
           <SplashImage>
-            <img src="./funkyflowerz-top.png" alt="funkyflowerz top" />
+            <img src="./funky-flowerz-top.gif" alt="funkyflowerz top" width={store.isMobile ? "100%" : "507px"} height={store.isMobile ? "100%" : "507px"} />
           </SplashImage>
         </Grid>
         <Samples>
