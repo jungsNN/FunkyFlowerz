@@ -4,11 +4,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import FunkyFlowerzTitle from "../../components/svgs/FunkyFlowerzTitle";
 
-const FUNKY_FLOWERZ_QUOTE =
-  "There are always flowers for those who want to see them.\n-- Matisse";
-const FUNKY_FLOWERS_DESC =
-  "A collection of 2700 hand-made flowers from 9 species, including dozens of insect variants and mutations. 50% proceeds donated to environmental organizations.";
-
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -44,13 +39,30 @@ const Home = () => {
               <FunkyFlowerzTitle />
             </SplashTitle>
             <SplashQuote>
-              <Typography>{FUNKY_FLOWERZ_QUOTE}</Typography>
+              <Typography style={{lineHeight: '48px'}}>
+                <div>
+                There are always flowers for those who want to see them.
+                </div>
+                <div>
+                  -- Matisse
+                </div>
+              </Typography>
             </SplashQuote>
             <FunkyFlowerzDescription>
-              <Typography style={{ fontWeight: 700, marginBottom: 10 }}>
+              <Typography style={{ fontSize: '24px', fontWeight: 700, marginBottom: 10 }}>
                 Collectible Digital Art
               </Typography>
-              <Typography>{FUNKY_FLOWERS_DESC}</Typography>
+              <Typography style={{fontSize: '24px'}}>
+                <div>
+                A collection of 2700 hand-made flowers from 9 species,{" "}
+                </div>
+                <div>
+                including dozens of insect variants and mutations.{" "}
+                </div>
+                <div>
+                50% proceeds donated to environmental organizations.
+                </div>
+              </Typography>
             </FunkyFlowerzDescription>
           </Grid>
           <SplashImage>
@@ -83,9 +95,10 @@ const SplashQuote = styled.div`
 `;
 
 const FunkyFlowerzDescription = styled.div`
-  margin-top: 66px;
+  margin-top: calc(66px - 35px);
   font-size: 24px;
   line-height: 25px;
+  max-width: 680px;
 `;
 
 const SplashImage = styled.div`
