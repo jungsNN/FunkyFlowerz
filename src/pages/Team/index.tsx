@@ -4,7 +4,7 @@ import TeamIvor from "../../components/svgs/TeamIvor";
 import TeamJenny from "../../components/svgs/TeamJenny";
 
 const IVOR =
-  'Ivor Guest is a designer and art director based in NYC that created the art for Funky Flowerz. His inspiration came from Benyamin Ahmed\'s "Weird Whales" collection, mixed with his love for flowers and the game Pikmin.';
+  'Ivor Guest is a designer and art director based in New York, who created the art for Funky Flowerz. His inspiration came from Benyamin Ahmed\'s "Weird Whales" collection, mixed with his love for flowers and the game Pikmin.';
 const JENNY =
   "Jenny Jung is a software developer based in New York, who packaged the art and metadata into NFTs for this project. Her areas of expertise include Web3, frontend development, machine learning and IPFS.";
 const Team = () => {
