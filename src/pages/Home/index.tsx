@@ -6,7 +6,7 @@ import useStore from "../../states";
 
 const Home = () => {
   const store = useStore();
- 
+
   return (
     <Container style={{ paddingBottom: "10rem" }}>
       <Container style={{ position: "relative" }}>
@@ -27,34 +27,35 @@ const Home = () => {
               <FunkyFlowerzTitle />
             </SplashTitle>
             <SplashQuote>
-              <Typography style={{lineHeight: '48px'}}>
+              <Typography style={{ lineHeight: "48px" }}>
                 <div>
-                There are always flowers for those who want to see them.
+                  There are always flowers for those who want to see them.
                 </div>
-                <div>
-                  -- Matisse
-                </div>
+                <div>-- Matisse</div>
               </Typography>
             </SplashQuote>
             <FunkyFlowerzDescription>
-              <Typography style={{ fontSize: '24px', fontWeight: 700, marginBottom: 10 }}>
+              <Typography
+                style={{ fontSize: "24px", fontWeight: 700, marginBottom: 10 }}
+              >
                 Collectible Digital Art
               </Typography>
-              <Typography style={{fontSize: '24px'}}>
+              <Typography style={{ fontSize: "24px" }}>
                 <div>
-                A collection of 2700 hand-made flowers from 9 species,{" "}
+                  A collection of 2700 hand-made flowers from 9 species,{" "}
                 </div>
-                <div>
-                including dozens of insect variants and mutations.{" "}
-                </div>
-                <div>
-                50% proceeds donated to environmental organizations.
-                </div>
+                <div>including dozens of insect variants and mutations. </div>
+                <div>50% proceeds donated to environmental organizations.</div>
               </Typography>
             </FunkyFlowerzDescription>
           </Grid>
           <SplashImage>
-            <img src="./funky-flowerz-top.gif" alt="funkyflowerz top" width={store.isMobile ? "100%" : "507px"} height={store.isMobile ? "100%" : "507px"} />
+            <img
+              src="./funky-flowerz-top.gif"
+              alt="funkyflowerz top"
+              width={store.isMobile ? "100%" : "507px"}
+              height={store.isMobile ? "100%" : "507px"}
+            />
           </SplashImage>
         </Grid>
         <Samples>

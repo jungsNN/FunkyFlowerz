@@ -1,7 +1,7 @@
 interface SvgProps {
   width?: string;
   height?: string;
-} 
+}
 
 const TeamIvor = (props: { props?: SvgProps }) => {
   return (

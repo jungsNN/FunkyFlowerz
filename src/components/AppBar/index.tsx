@@ -535,9 +535,7 @@ const AppBar = (props: AppBarProps) => {
     const navLinkTextStyle = { fontWeight: "bold", fontSize: "15px" };
     return (
       <div className="mobile-nav-links">
-        <div
-          className="home-logo"  
-          onClick={() => props.togglePage("home")}>
+        <div className="home-logo" onClick={() => props.togglePage("home")}>
           <FunkyFlowerzLogo width="35px" height="35px" />
         </div>
         <div>
@@ -550,19 +548,22 @@ const AppBar = (props: AppBarProps) => {
             <Button
               onClick={() => props.togglePage("home")}
               variant="text"
-              style={navLinkTextStyle}>
+              style={navLinkTextStyle}
+            >
               Home
             </Button>
-            <Button 
+            <Button
               onClick={() => props.togglePage("home")}
-              variant="text" 
-              style={navLinkTextStyle}>
+              variant="text"
+              style={navLinkTextStyle}
+            >
               Rarity
             </Button>
             <Button
               onClick={() => props.togglePage("home")}
               variant="text"
-              style={navLinkTextStyle}>
+              style={navLinkTextStyle}
+            >
               Team
             </Button>
           </Grid>
@@ -591,7 +592,7 @@ const AppBar = (props: AppBarProps) => {
                 <div
                   className="home-logo"
                   onClick={() => props.togglePage("home")}
-                  >
+                >
                   <FunkyFlowerzLogo />
                 </div>
                 <div>
