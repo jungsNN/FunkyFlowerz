@@ -1,5 +1,6 @@
 import "./App.css";
-import { useMemo, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useMemo } from "react";
 import * as anchor from "@project-serum/anchor";
 import { DEFAULT_TIMEOUT } from "./connection";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
@@ -22,7 +23,6 @@ import AppBar from "./components/AppBar";
 import Home from "./pages/Home";
 import Rarity from "./pages/Rarity";
 import Team from "./pages/Team";
-import useStore from "./states";
 
 const theme = createTheme({
   palette: {
@@ -32,12 +32,6 @@ const theme = createTheme({
     fontFamily: "Raleway",
   },
 });
-
-const pages: { [key: string]: JSX.Element } = {
-  home: <Home />,
-  rarity: <Rarity />,
-  team: <Team />,
-};
 
 const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
   try {
@@ -67,8 +61,6 @@ const rpcHost =
 const connection = new anchor.web3.Connection(rpcHost);
 
 const App = () => {
-  const store = useStore();
-  const [currentPage, setCurrentPage] = useState("home");
   const wallets = useMemo(
     () => [
       getPhantomWallet(),
@@ -80,30 +72,27 @@ const App = () => {
     []
   );
 
-  const handleToggleNetwork = () => {
-    store.setNetwork(defaultNetwork === "devnet" ? "mainnet-beta" : "devnet");
-  };
-
-  const togglePage = (newPage: string) => {
-    setCurrentPage(newPage);
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <ConnectionProvider endpoint={rpcHost}>
         <WalletProvider wallets={wallets} autoConnect>
           <WalletDialogProvider>
-            <AppBar
-              candyMachineId={candyMachineId}
-              connection={connection}
-              txTimeout={DEFAULT_TIMEOUT}
-              rpcHost={rpcHost}
-              network={defaultNetwork}
-              error={error}
-              togglePage={togglePage}
-              toggleNetwork={handleToggleNetwork}
-            />
-            {pages[currentPage]}
+            <BrowserRouter>
+              <AppBar
+                candyMachineId={candyMachineId}
+                connection={connection}
+                txTimeout={DEFAULT_TIMEOUT}
+                rpcHost={rpcHost}
+                network={defaultNetwork}
+                error={error}
+              />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="rarity" element={<Rarity />} />
+                  <Route path="team" element={<Team />} />
+                  <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+              </BrowserRouter>
           </WalletDialogProvider>
         </WalletProvider>
       </ConnectionProvider>

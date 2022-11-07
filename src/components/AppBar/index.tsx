@@ -33,6 +33,7 @@ import FunkyFlowerzLogo from "../svgs/FunkyFlowerzLogo";
 import useStore from "../../states";
 import useWindowSize from "../../hooks/useWindowSize";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export interface AppBarProps {
   candyMachineId?: anchor.web3.PublicKey;
@@ -41,8 +42,6 @@ export interface AppBarProps {
   rpcHost: string;
   network: WalletAdapterNetwork;
   error?: string;
-  togglePage: (page: string) => void;
-  toggleNetwork: () => void;
 }
 
 const AppBar = (props: AppBarProps) => {
@@ -490,6 +489,8 @@ const AppBar = (props: AppBarProps) => {
     })();
   }, [refreshCandyMachineState]);
 
+  const navigate = useNavigate();
+
   const mintButton = () => (
     <MintButtonWrapper>
       {candyMachine?.state.isActive &&
@@ -530,12 +531,12 @@ const AppBar = (props: AppBarProps) => {
       )}
     </MintButtonWrapper>
   );
-
+  
   const mobileNavLinks = () => {
     const navLinkTextStyle = { fontWeight: "bold", fontSize: "15px", color: "white" };
     return (
       <div className="mobile-nav-links">
-        <div className="home-logo" onClick={() => props.togglePage("home")}>
+        <div className="home-logo" onClick={() => navigate("/")}>
           <FunkyFlowerzLogo width="35px" height="35px" />
         </div>
         <div>
@@ -546,21 +547,21 @@ const AppBar = (props: AppBarProps) => {
             style={{ gridGap: "20px" }}
           >
             <Button
-              onClick={() => props.togglePage("home")}
+              onClick={() => navigate("/")}
               variant="text"
               style={navLinkTextStyle}
             >
               Home
             </Button>
             <Button
-              onClick={() => props.togglePage("home")}
+              onClick={() => navigate("rarity")}
               variant="text"
               style={navLinkTextStyle}
             >
               Rarity
             </Button>
             <Button
-              onClick={() => props.togglePage("home")}
+              onClick={() => navigate("team")}
               variant="text"
               style={navLinkTextStyle}
             >
@@ -591,7 +592,7 @@ const AppBar = (props: AppBarProps) => {
               <>
                 <div
                   className="home-logo"
-                  onClick={() => props.togglePage("home")}
+                  onClick={() => navigate("/")}
                 >
                   <FunkyFlowerzLogo />
                 </div>
@@ -603,21 +604,21 @@ const AppBar = (props: AppBarProps) => {
                     style={{ gridGap: "60px" }}
                   >
                     <Button
-                      onClick={() => props.togglePage("home")}
+                      onClick={() => navigate("/")}
                       variant="text"
                       style={navButtonStyle}
                     >
                       Home
                     </Button>
                     <Button
-                      onClick={() => props.togglePage("rarity")}
+                      onClick={() => navigate("/rarity")}
                       variant="text"
                       style={navButtonStyle}
                     >
                       Rarity
                     </Button>
                     <Button
-                      onClick={() => props.togglePage("team")}
+                      onClick={() => navigate("/team")}
                       variant="text"
                       style={navButtonStyle}
                     >
