@@ -15,13 +15,13 @@ const Home = () => {
           direction={store.isMobile ? "column" : "row"}
           justifyContent="space-between"
           wrap="nowrap"
-          style={{ gridGap: "35px" }}
+          style={{ alignItems: "end", gridGap: "35px" }}
         >
           <Grid
             container
             direction="column"
             justifyContent="space-between"
-            style={{ gridGap: "35px", height: "100%" }}
+            style={{ gridGap: "30px", height: "100%" }}
           >
             <SplashTitle>
               <FunkyFlowerzTitle />
@@ -31,7 +31,7 @@ const Home = () => {
                 <div>
                   There are always flowers for those who want to see them.
                 </div>
-                <div>-- Matisse</div>
+                <div>- Matisse</div>
               </Typography>
             </SplashQuote>
             <FunkyFlowerzDescription>
@@ -40,7 +40,7 @@ const Home = () => {
               >
                 Collectible Digital Art
               </Typography>
-              <Typography style={{ fontSize: "24px" }}>
+              <Typography style={{ fontSize: "24px", lineHeight: "1.75rem" }}>
                 <div>
                   A collection of 2700 hand-made flowers from 9 species,{" "}
                 </div>
@@ -71,7 +71,7 @@ const SplashTitle = styled.div`
     svg {
       width: 100%;
       height: 100%;
-      max-height: 167px;
+      max-height: 160px;
     }
   }
 `;
@@ -84,9 +84,8 @@ const SplashQuote = styled.div`
 `;
 
 const FunkyFlowerzDescription = styled.div`
-  margin-top: calc(66px - 35px);
+  margin-top: calc(66px - 50px);
   font-size: 24px;
-  line-height: 25px;
   max-width: 680px;
 `;
 
