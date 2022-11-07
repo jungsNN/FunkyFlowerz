@@ -1,8 +1,7 @@
 import "./App.css";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import * as anchor from "@project-serum/anchor";
 import { DEFAULT_TIMEOUT } from "./connection";
-import { clusterApiUrl } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   getPhantomWallet,
@@ -70,23 +69,20 @@ const connection = new anchor.web3.Connection(rpcHost);
 const App = () => {
   const store = useStore();
   const [currentPage, setCurrentPage] = useState("home");
-  const network = useMemo(() => store.network, [store.network]);
-  const endpoint = useMemo(() => clusterApiUrl(network), []);
   const wallets = useMemo(
     () => [
       getPhantomWallet(),
       getSolflareWallet(),
       getSlopeWallet(),
-      getSolletWallet({ network }),
-      getSolletExtensionWallet({ network }),
+      getSolletWallet(),
+      getSolletExtensionWallet(),
     ],
     []
   );
 
-  const handleToggleNetwork = useCallback(() => {
-    const currentNetwork = store.network;
-    store.setNetwork(currentNetwork === "devnet" ? "mainnet-beta" : "devnet");
-  }, [store.network]);
+  const handleToggleNetwork = () => {
+    store.setNetwork(defaultNetwork === "devnet" ? "mainnet-beta" : "devnet");
+  };
 
   const togglePage = (newPage: string) => {
     setCurrentPage(newPage);
@@ -94,7 +90,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ConnectionProvider endpoint={endpoint}>
+      <ConnectionProvider endpoint={rpcHost}>
         <WalletProvider wallets={wallets} autoConnect>
           <WalletDialogProvider>
             <AppBar
@@ -102,7 +98,7 @@ const App = () => {
               connection={connection}
               txTimeout={DEFAULT_TIMEOUT}
               rpcHost={rpcHost}
-              network={network}
+              network={defaultNetwork}
               error={error}
               togglePage={togglePage}
               toggleNetwork={handleToggleNetwork}

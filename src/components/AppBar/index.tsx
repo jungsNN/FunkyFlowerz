@@ -532,7 +532,7 @@ const AppBar = (props: AppBarProps) => {
   );
 
   const mobileNavLinks = () => {
-    const navLinkTextStyle = { fontWeight: "bold", fontSize: "15px" };
+    const navLinkTextStyle = { fontWeight: "bold", fontSize: "15px", color: "white" };
     return (
       <div className="mobile-nav-links">
         <div className="home-logo" onClick={() => props.togglePage("home")}>
@@ -572,7 +572,7 @@ const AppBar = (props: AppBarProps) => {
     );
   };
 
-  const navButtonStyle = { fontWeight: "bold", color: "#fff" };
+  const navButtonStyle = { color: "#fff", fontSize: "16px", fontWeight: "bold" };
 
   return (
     <Container style={{ marginTop: 20, marginBottom: isMobile ? 100 : 64 }}>
@@ -600,7 +600,7 @@ const AppBar = (props: AppBarProps) => {
                     container
                     direction="row"
                     alignItems="center"
-                    style={{ gridGap: "40px" }}
+                    style={{ gridGap: "60px" }}
                   >
                     <Button
                       onClick={() => props.togglePage("home")}
@@ -632,7 +632,7 @@ const AppBar = (props: AppBarProps) => {
                 <ConnectButton>Connect Wallet</ConnectButton>
               ) : (
                 <>
-                  {candyMachine && (
+                  {!!candyMachine && (
                     <>
                       {mintButton()}
                       <MintDetails>
@@ -807,7 +807,7 @@ const ConnectButton = styled(WalletDialogButton)`
 
 const MintButtonWrapper = styled.div`
   min-width: 237px;
-`; // add your owns styles here
+`;
 
 const MintContainer = styled.div`
   position: relative;
