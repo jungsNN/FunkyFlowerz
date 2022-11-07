@@ -531,9 +531,13 @@ const AppBar = (props: AppBarProps) => {
       )}
     </MintButtonWrapper>
   );
-  
+
   const mobileNavLinks = () => {
-    const navLinkTextStyle = { fontWeight: "bold", fontSize: "15px", color: "white" };
+    const navLinkTextStyle = {
+      fontWeight: "bold",
+      fontSize: "15px",
+      color: "white",
+    };
     return (
       <div className="mobile-nav-links">
         <div className="home-logo" onClick={() => navigate("/")}>
@@ -573,7 +577,11 @@ const AppBar = (props: AppBarProps) => {
     );
   };
 
-  const navButtonStyle = { color: "#fff", fontSize: "16px", fontWeight: "bold" };
+  const navButtonStyle = {
+    color: "#fff",
+    fontSize: "16px",
+    fontWeight: "bold",
+  };
 
   return (
     <Container style={{ marginTop: 20, marginBottom: isMobile ? 100 : 64 }}>
@@ -590,10 +598,7 @@ const AppBar = (props: AppBarProps) => {
               mobileNavLinks()
             ) : (
               <>
-                <div
-                  className="home-logo"
-                  onClick={() => navigate("/")}
-                >
+                <div className="home-logo" onClick={() => navigate("/")}>
                   <FunkyFlowerzLogo />
                 </div>
                 <div>

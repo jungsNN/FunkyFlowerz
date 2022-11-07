@@ -86,13 +86,13 @@ const App = () => {
                 network={defaultNetwork}
                 error={error}
               />
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="rarity" element={<Rarity />} />
-                  <Route path="team" element={<Team />} />
-                  <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-              </BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="rarity" element={<Rarity />} />
+                <Route path="team" element={<Team />} />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </BrowserRouter>
           </WalletDialogProvider>
         </WalletProvider>
       </ConnectionProvider>
