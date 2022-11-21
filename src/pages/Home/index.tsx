@@ -2,13 +2,14 @@ import { Container, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import styled from "styled-components";
 import FunkyFlowerzTitle from "../../components/svgs/FunkyFlowerzTitle";
+import Page from "../../components/Page";
 import useStore from "../../states";
 
 const Home = () => {
   const store = useStore();
 
   return (
-    <Container style={{ paddingBottom: "10rem" }}>
+    <Page isMobile={store.isMobile}>
       <Container style={{ position: "relative" }}>
         <Grid
           container
@@ -21,7 +22,7 @@ const Home = () => {
             container
             direction="column"
             justifyContent="space-between"
-            style={{ gridGap: "30px", height: "100%" }}
+            style={{ alignItems: "start", gridGap: "30px", height: "100%" }}
           >
             <SplashTitle>
               <FunkyFlowerzTitle />
@@ -62,7 +63,7 @@ const Home = () => {
           <img src="./funkyflowerz-bg.png" alt="funky flowerz samples" />
         </Samples>
       </Container>
-    </Container>
+    </Page>
   );
 };
 
@@ -100,10 +101,16 @@ const SplashImage = styled.div`
 
 const Samples = styled(Container)`
   padding-top: 140px;
+  max-width: 608px;
+  width: calc(100vw / 2);
 
   img {
     width: 100%;
     height: 100%;
+  }
+
+  @media(max-width: 767px) {
+    width: 100%;
   }
 `;
 

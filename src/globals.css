@@ -1,0 +1,33 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+    :root {
+        --primary: #00DD00;
+        --purple: #6500FF;
+        --orange: #FF8000;
+    }
+    html,
+    body {
+        background: #002121;
+        margin: 0;
+        font-family: 'Raleway', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+
+    p {
+        color: #FFFFFF;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+}

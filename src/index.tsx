@@ -3,6 +3,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import "./index.css";
+import "./globals.css";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

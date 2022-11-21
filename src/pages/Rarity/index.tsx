@@ -1,14 +1,18 @@
-import { Container, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import styled from "styled-components";
+import Page from "../../components/Page";
 import RarityChartTitle from "../../components/svgs/RarityChartTitle";
 import SpecialEditionTitle from "../../components/svgs/SpecialEditionTitle";
 import SuperiorTraitTitle from "../../components/svgs/SuperiorTraitTitle";
+import useStore from "../../states";
 
 const Rarity = () => {
+  const store = useStore();
+
   return (
-    <Container style={{ paddingBottom: "10rem" }}>
-      <Grid container direction="column" style={{ gridGap: 140 }}>
-        <div className="rarity-chart">
+    <Page isMobile={store.isMobile}>
+      <Grid container direction="column" style={{ gridGap: store.isMobile ? '64px' : 140 }}>
+        <div className="grid grid-rows-2">
           <TitleWrapper>
             <RarityChartTitle />
           </TitleWrapper>
@@ -16,7 +20,7 @@ const Rarity = () => {
             <img src="./rarity-chart.png" alt="rarity-chart" />
           </RarityChart>
         </div>
-        <div className="special-editions">
+        <div className="grid grid-rows-2">
           <TitleWrapper>
             <SpecialEditionTitle />
           </TitleWrapper>
@@ -24,7 +28,7 @@ const Rarity = () => {
             <img src="./special-editions.png" alt="rarity-chart" />
           </SpecialEditions>
         </div>
-        <div className="superior-traits">
+        <div className="grid grid-rows-2">
           <TitleWrapper>
             <SuperiorTraitTitle />
           </TitleWrapper>
@@ -33,43 +37,66 @@ const Rarity = () => {
           </SuperiorTraits>
         </div>
       </Grid>
-    </Container>
+    </Page>
   );
 };
 
 const TitleWrapper = styled.div`
-  padding-left: 2rem;
+
   svg {
     width: 100%;
     height: 100%;
-    max-width: calc(100vw / 2);
+  }
+  
+  min-width: 845px;
+  max-width: 845px;
+  
+  @media(max-width: 1339px) {
+    min-width: calc(100vw / 1.6);
+    max-width: calc(100vw / 1.6);
+  }
+  
+
+  @media(max-width: 768px) {
+    min-width: calc(100vw / 1.5);
+    max-width: calc(100vw / 1.5);
   }
 `;
 
-const RarityChart = styled(Container)`
-  padding-top: 60px;
+const RarityChart = styled.div`
+  padding-top: 2.5rem;
 
   img {
     width: 100%;
     height: 100%;
   }
+
+  @media(max-width: 768px) {
+    padding-top: 1.5rem;
+  }
 `;
 
-const SpecialEditions = styled(Container)`
-  padding-top: 60px;
+const SpecialEditions = styled.div`
+  padding-top: 2.5rem;
 
   img {
     width: 100%;
     height: 100%;
   }
+  @media(max-width: 768px) {
+    padding-top: 1.5rem;
+  }
 `;
 
-const SuperiorTraits = styled(Container)`
-  padding-top: 60px;
+const SuperiorTraits = styled.div`
+  padding-top: 2.5rem;
 
   img {
     width: 100%;
     height: 100%;
+  }
+  @media(max-width: 479px) {
+    padding-top: 1.5rem;
   }
 `;
 
