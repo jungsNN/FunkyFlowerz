@@ -1,6 +1,10 @@
-# FreshBaked X Funky Flowerz
+# Funky Flowerz
 
-2700 Funky Flowerz NFT is now live on Solana mainnet!
-Get yours now
+2700 Funky Flowerz NFT 
 
-FreshBaked web app forked from Metaplex Candy Machine UI, and designed by Ivor Guest, the creator of Funky Flowerz.
+Minting is now live and tested on Solana mainnet!
+Get yourself a one-of-a-kind, pixelated flower, each hand-crafted by our artist & designer, Ivor Guest.
+
+## References
+
+React web app forked from Metaplex candy-ui, and redesigned by Ivor Guest.
