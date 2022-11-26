@@ -3,7 +3,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Switch from "@mui/material/Switch";
 import styled from "styled-components";
-import colors from "@/theme/colors";
+import colors from "theme/colors";
 
 const ColoredSwitch = styled(Switch)(() => ({
   "& .MuiSwitch-switchBase.Mui-checked": {

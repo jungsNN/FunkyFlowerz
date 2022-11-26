@@ -27,16 +27,16 @@ import {
   getCollectionPDA,
   mintOneToken,
   SetupState,
-} from "@/utils/candy-machine";
+} from "utils/candy-machine";
 import {
   AlertState,
   formatNumber,
   getAtaForMint,
   toDate,
-} from "@/utils/candy-utils";
+} from "utils/candy-utils";
 import { FunkyFlowerzLogo } from "../svgs";
 import { MintButton, MintCountdown } from "../Mint";
-import { useStore, useWindowSize } from "@/hooks";
+import { useStore, useWindowSize } from "hooks";
 
 export interface AppBarProps {
   candyMachineId?: anchor.web3.PublicKey;

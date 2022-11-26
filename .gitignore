@@ -13,3 +13,4 @@ build
 dist
 # Local Netlify folder
 .netlify
+.scraps.*
