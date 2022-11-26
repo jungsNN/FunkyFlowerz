@@ -43,12 +43,16 @@ export const Flex = styled.div<LayoutProps>`
 `;
 
 export const Grid = styled(MuiGrid)<
-  { align?: string; justify?: string } & GridProps
+  { align?: string; justify?: string } & GridProps & LayoutProps
 >`
   align-items: ${(props) => props.align ?? "center"};
+  display: ${(props) => props.display};
+  flex-direction: ${(props) => `${props.by ?? props.direction}`};
   justify-content: ${(props) => props.justify ?? "start"};
-  padding: ${(props) => `${props.p ?? 0}`};
+  grid-template-columns: ${(props) => props.gridCols ?? "unset"};
+  grid-template-rows: ${(props) => props.gridRows ?? "unset"};
   margin: ${(props) => `${props.m ?? 0}`};
+  padding: ${(props) => `${props.p ?? 0}`};
 `;
 
 export const Row = styled.div<LayoutProps>`
@@ -126,14 +130,14 @@ export const Text = styled.p<
     font-size: ${(props) =>
       props.size === "sm" ? "16px" : props.size === "lg" ? "32px" : "20px"};
     line-height: ${(props) =>
-      props.size === "sm" ? "20px" : props.size === "lg" ? "36px" : "24px"};
+      props.size === "sm" ? "20px" : props.size === "lg" ? "32px" : "24px"};
   }
 
-  ${(props) => props.theme.mediaQueries.mobile} {
+  ${(props) => props.theme.mediaQueries.tablet} {
     font-size: ${(props) =>
-      props.size === "sm" ? "12px" : props.size === "lg" ? "24px" : "18px"};
+      props.size === "sm" ? "16px" : props.size === "lg" ? "24px" : "18px"};
     line-height: ${(props) =>
-      props.size === "sm" ? "16px" : props.size === "lg" ? "28px" : "22px"};
+      props.size === "sm" ? "20px" : props.size === "lg" ? "24px" : "24px"};
   }
 `;
 
@@ -150,12 +154,12 @@ export const Title = styled.h1<
   line-height: 48px;
 
   ${(props) => props.theme.mediaQueries.desktop} {
-    font-size: ${(props) => (props.small ? "24px" : "36px")};
+    font-size: ${(props) => (props.small ? "20px" : "32px")};
     line-height: 40px;
   }
 
-  ${(props) => props.theme.mediaQueries.mobile} {
-    font-size: ${(props) => (props.small ? "16px" : "28px")};
+  ${(props) => props.theme.mediaQueries.tablet} {
+    font-size: ${(props) => (props.small ? "18px" : "28px")};
     line-height: 32px;
   }
 `;

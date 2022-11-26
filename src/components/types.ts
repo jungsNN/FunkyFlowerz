@@ -3,6 +3,7 @@ export interface LayoutProps {
   align?: string | "start";
   by?: "column" | "column-reverse" | "row" | "row-reverse";
   defaultGap?: string | "0px";
+  display?: string | "flex";
   gap?: string | undefined;
   gridRows?: string | "auto";
   gridCols?: string | "auto";

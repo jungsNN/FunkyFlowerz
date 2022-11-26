@@ -10,20 +10,20 @@ const Home = () => {
   return (
     <Container style={{ paddingBottom: "10rem" }}>
       <Container style={{ position: "relative" }}>
-        <Grid
+        <SplashHeader
           container
+          align={store.isMobile ? "center" : "end"}
           direction={store.isMobile ? "column-reverse" : "row"}
-          align="end"
-          justify="space-between"
-          wrap="nowrap"
-          gap="35px"
+          display={store.isMobile ? "flex" : "grid"}
+          gap={store.isMobile ? "48px" : "35px"}
+          gridCols="repeat(2, 1fr)"
         >
           <Grid
             container
             direction="column"
             align="start"
             justify="space-between"
-            gap="32px"
+            gap="35px"
           >
             <SplashTitle>
               <FunkyFlowerzTitle />
@@ -44,14 +44,9 @@ const Home = () => {
             </FunkyFlowerzDescription>
           </Grid>
           <SplashImage>
-            <img
-              src="./funky-flowerz-top.gif"
-              alt="funkyflowerz top"
-              width={store.isMobile ? "100%" : "507px"}
-              height={store.isMobile ? "100%" : "507px"}
-            />
+            <img src="./funky-flowerz-top.gif" alt="funkyflowerz top" />
           </SplashImage>
-        </Grid>
+        </SplashHeader>
         <Samples>
           <img src="./funkyflowerz-bg.png" alt="funky flowerz samples" />
         </Samples>
@@ -60,33 +55,49 @@ const Home = () => {
   );
 };
 
+const SplashHeader = styled(Grid)`
+  flex-wrap: nowrap;
+`;
+
 const SplashTitle = styled.div`
-  @media (max-width: 1023px) {
-    svg {
-      width: 100%;
-      height: 100%;
-      max-height: 160px;
-    }
+  width: 576px;
+  padding-right: 48px;
+
+  svg {
+    height: 100%;
+    width: 100%;
+  }
+
+  ${(props) => props.theme.mediaQueries.desktop} {
+    width: 484px;
+  }
+
+  ${(props) => props.theme.mediaQueries.tablet} {
+    padding-right: 0;
+    width: 441px;
+  }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    width: 100%;
   }
 `;
 
 const SplashQuote = styled.div``;
 
-const FunkyFlowerzDescription = styled.div`
-  margin-top: 16px;
-  max-width: 680px;
-
-  ${(props) => props.theme.mediaQueries.tablet} {
-    margin-top: 8px;
-  }
-`;
+const FunkyFlowerzDescription = styled.div``;
 
 const SplashImage = styled.div`
-  @media (max-width: 1023px) {
-    img {
-      width: 100%;
-      height: 100%;
-    }
+  width: 100%;
+  min-width: 225px;
+  max-width: 507px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  ${(props) => props.theme.mediaQueries.tablet} {
+    width: calc(100vw / 2.4);
   }
 `;
 
@@ -96,6 +107,10 @@ const Samples = styled(Container)`
   img {
     width: 100%;
     height: 100%;
+  }
+
+  ${(props) => props.theme.mediaQueries.tablet} {
+    padding-top: 100px;
   }
 `;
 

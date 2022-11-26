@@ -13,7 +13,7 @@ const breakpoints: Breakpoints = Object.values(breakpointMap).map(
 const mediaQueries: MediaQueries = {
   mobile: `@media (max-width: ${breakpointMap.mobile}px)`,
   tablet: `@media (max-width: ${breakpointMap.tablet}px)`,
-  desktop: `@media screen and (min-width: ${breakpointMap.tablet}px)`,
+  desktop: `@media (max-width: ${breakpointMap.desktop - 1}px)`,
   desktopXl: `@media screen and (min-width: ${breakpointMap.desktop}px)`,
 };
 
