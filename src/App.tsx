@@ -18,20 +18,13 @@ import {
 } from "@solana/wallet-adapter-react";
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 
-import { createTheme, ThemeProvider } from "@material-ui/core";
 import AppBar from "./components/AppBar";
 import Home from "./pages/Home";
 import Rarity from "./pages/Rarity";
 import Team from "./pages/Team";
-
-const theme = createTheme({
-  palette: {
-    type: "dark",
-  },
-  typography: {
-    fontFamily: "Raleway",
-  },
-});
+import { ThemeProvider } from "styled-components";
+import { theme } from "./theme/Theme.styled";
+import GlobalStyles from "./theme/Global";
 
 const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
   try {
@@ -74,6 +67,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyles />
       <ConnectionProvider endpoint={rpcHost}>
         <WalletProvider wallets={wallets} autoConnect>
           <WalletDialogProvider>
