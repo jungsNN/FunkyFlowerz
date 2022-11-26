@@ -130,7 +130,7 @@ export const Text = styled.p<
 
   ${(props) => props.theme.mediaQueries.desktop} {
     font-size: ${(props) =>
-      props.size === "sm" ? "16px" : props.size === "lg" ? "28px" : "20px"};
+      props.size === "sm" ? "16px" : props.size === "lg" ? "24px" : "20px"};
     line-height: ${(props) =>
       props.size === "sm" ? "20px" : props.size === "lg" ? "32px" : "24px"};
   }
@@ -139,7 +139,7 @@ export const Text = styled.p<
     font-size: ${(props) =>
       props.size === "sm" ? "16px" : props.size === "lg" ? "20px" : "16px"};
     line-height: ${(props) =>
-      props.size === "sm" ? "20px" : props.size === "lg" ? "24px" : "20px"};
+      props.size === "sm" ? "20px" : props.size === "lg" ? "28px" : "20px"};
   }
 `;
 

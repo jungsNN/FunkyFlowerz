@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FunkyFlowerzTitle } from "../../components/svgs";
 import { Container, Grid, Text, Title } from "../../components/shared";
-import { Page } from "../../components";
+import { FlowerSamples, Page } from "../../components";
 import { useStore } from "../../hooks";
 
 const Home = () => {
@@ -47,9 +47,7 @@ const Home = () => {
             <img src="./funky-flowerz-top.gif" alt="funkyflowerz top" />
           </SplashImage>
         </SplashHeader>
-        <Samples>
-          <img src="./funkyflowerz-bg.png" alt="funky flowerz samples" />
-        </Samples>
+        <FlowerSamples pt="128px" />
       </Container>
     </Page>
   );
@@ -102,29 +100,6 @@ const SplashImage = styled.div`
 
   ${(props) => props.theme.mediaQueries.mobile} {
     width: calc(100vw / 2.4);
-  }
-`;
-
-const Samples = styled(Container)`
-  padding-top: 128px;
-  max-width: 720px;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-
-  ${(props) => props.theme.mediaQueries.desktop} {
-    max-width: calc(100vw / 2);
-  }
-
-  ${(props) => props.theme.mediaQueries.tablet} {
-    padding-top: 96px;
-  }
-
-  ${(props) => props.theme.mediaQueries.mobile} {
-    padding-top: 64px;
-    max-width: calc(100vw / 1.6);
   }
 `;
 

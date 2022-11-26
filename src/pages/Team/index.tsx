@@ -1,8 +1,7 @@
-import { Grid, Typography } from "@material-ui/core";
 import styled, { useTheme } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Button, Page } from "../../components";
-import { Col, Row } from "../../components/shared";
+import { Button, FlowerSamples, Page } from "../../components";
+import { Col, Grid, Row, Text } from "../../components/shared";
 import {
   InstagramIcon,
   TeamIvor,
@@ -30,10 +29,10 @@ const Team = () => {
 
   return (
     <Page>
-      <Grid
+      <Section
         container
         direction="column"
-        style={{ gridGap: store.isMobile ? "72px" : 140 }}
+        style={{ gridGap: store.isMobile ? "72px" : "140px" }}
       >
         <Row className="team-ivor">
           <MemberHeader
@@ -53,7 +52,7 @@ const Team = () => {
             </SocialIcons>
           </MemberHeader>
           <MemberDescrition>
-            <Typography>{IVOR.bio}</Typography>
+            <Text size="lg">{IVOR.bio}</Text>
           </MemberDescrition>
         </Row>
         <Row className="team-jenny">
@@ -74,25 +73,34 @@ const Team = () => {
             </SocialIcons>
           </MemberHeader>
           <MemberDescrition>
-            <Typography>{JENNY.bio}</Typography>
+            <Text size="lg">{JENNY.bio}</Text>
           </MemberDescrition>
         </Row>
-      </Grid>
+        <FlowerSamples />
+      </Section>
     </Page>
   );
 };
+
+const Section = styled(Grid)`
+  grid-gap: 140px;
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    grid-gap: 72px;
+  }
+`;
 
 const TitleWrapper = styled.div`
   svg {
     width: 100%;
     height: 100%;
-    min-height: 72px;
-    max-height: 72px;
+    min-height: 48px;
+    max-height: 48px;
   }
   ${({ theme }) => theme.mediaQueries.tablet} {
     svg {
-      min-height: 48px;
-      max-height: 48px;
+      min-height: 32px;
+      max-height: 32px;
     }
   }
   ${({ theme }) => theme.mediaQueries.mobile} {
@@ -105,19 +113,12 @@ const TitleWrapper = styled.div`
 
 const MemberDescrition = styled.div`
   margin-top: 36px;
-  p {
-    font-size: 32px;
-  }
+
   ${({ theme }) => theme.mediaQueries.tablet} {
-    p {
-      font-size: 24px;
-    }
+    margin-top: 32px;
   }
   ${({ theme }) => theme.mediaQueries.mobile} {
     margin-top: 24px;
-    p {
-      font-size: 18px;
-    }
   }
 `;
 
