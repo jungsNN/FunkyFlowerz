@@ -23,8 +23,13 @@ import {
   getCollectionPDA,
   mintOneToken,
   SetupState,
-} from "../../candy-machine";
-import { AlertState, formatNumber, getAtaForMint, toDate } from "../../utils";
+} from "../../utils/candy-machine";
+import {
+  AlertState,
+  formatNumber,
+  getAtaForMint,
+  toDate,
+} from "../../utils/candy-utils";
 import { MintCountdown } from "../Mint/MintCountdown";
 import { MintButton } from "../Mint/MintButton";
 import { GatewayProvider } from "@civic/solana-gateway-react";

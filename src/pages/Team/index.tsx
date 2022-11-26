@@ -1,6 +1,7 @@
 import { Container, Grid, Typography } from "@material-ui/core";
-import useStore from "../../states";
 import styled, { useTheme } from "styled-components";
+import { useNavigate } from "react-router-dom";
+import useStore from "../../states";
 import { Col, Row } from "../../components/shared";
 import {
   InstagramIcon,
@@ -8,7 +9,6 @@ import {
   TeamJenny,
   TwitterIcon,
 } from "../../components/svgs";
-import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 
 const IVOR = {

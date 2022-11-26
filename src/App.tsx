@@ -2,7 +2,6 @@ import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useMemo } from "react";
 import * as anchor from "@project-serum/anchor";
-import { DEFAULT_TIMEOUT } from "./connection";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   getPhantomWallet,
@@ -18,6 +17,7 @@ import {
 } from "@solana/wallet-adapter-react";
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 
+import { DEFAULT_TIMEOUT } from "./utils/connection";
 import AppBar from "./components/AppBar";
 import Home from "./pages/Home";
 import Rarity from "./pages/Rarity";
