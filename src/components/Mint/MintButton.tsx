@@ -11,7 +11,7 @@ import {
   onGatewayTokenChange,
   removeAccountChangeListener,
 } from "@identity.com/solana-gateway-ts";
-import { CIVIC_GATEKEEPER_NETWORK } from "../../utils/candy-utils";
+import { CIVIC_GATEKEEPER_NETWORK } from "@/utils/candy-utils";
 
 export const CTAButton = styled(Button)`
   width: 100%;
