@@ -1,15 +1,15 @@
 export interface AppTheme {
-    siteWidth: number;
-    isDark: boolean;
-    colors: Colors;
-    breakpoints: Breakpoints;
-    mediaQueries: MediaQueries;
-    spacing: Spacing;
-    zIndices: ZIndices;
-    radii: Radii;
-    sizes: Sizes;
-    shadows?: Shadows;
-  }
+  siteWidth: number;
+  isDark: boolean;
+  colors: Colors;
+  breakpoints: Breakpoints;
+  mediaQueries: MediaQueries;
+  spacing: Spacing;
+  zIndices: ZIndices;
+  radii: Radii;
+  sizes: Sizes;
+  shadows?: Shadows;
+}
 
 export type Breakpoints = string[];
 
@@ -54,13 +54,13 @@ export type Colors = {
   buttonText?: string;
   border?: string;
   disabled?: string;
-}
+};
 
 export type ElevationShadows = {
   default: string;
   card: string;
   hover: string;
-}
+};
 
 export type BaseFonts = {
   fontFamily: string;
@@ -70,7 +70,7 @@ export type BaseFonts = {
   lineHeight: string;
   letterSpacing?: string;
   textTransform?: string;
-}
+};
 
 export type Fonts = {
   h1Regular: BaseFonts;
@@ -80,8 +80,7 @@ export type Fonts = {
   label: BaseFonts;
   uppercaseRegular: BaseFonts;
   uppercaseBold: BaseFonts;
-
-}
+};
 
 export interface Shadows extends ElevationShadows {
   default: string;
@@ -100,4 +99,4 @@ export type Sizes = {
     default: string;
     sm: string;
   };
-}
+};

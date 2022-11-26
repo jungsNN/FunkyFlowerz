@@ -6,22 +6,24 @@ export const breakpointMap: { [key: string]: number } = {
   desktop: 1440,
 };
 
-const breakpoints: Breakpoints = Object.values(breakpointMap).map((breakpoint) => `${breakpoint}px`);
+const breakpoints: Breakpoints = Object.values(breakpointMap).map(
+  (breakpoint) => `${breakpoint}px`,
+);
 
 const mediaQueries: MediaQueries = {
   mobile: `@media (max-width: ${breakpointMap.mobile}px)`,
   tablet: `@media (max-width: ${breakpointMap.tablet}px)`,
   desktop: `@media screen and (min-width: ${breakpointMap.tablet}px)`,
-  desktopXl: `@media screen and (min-width: ${breakpointMap.desktop}px)`
+  desktopXl: `@media screen and (min-width: ${breakpointMap.desktop}px)`,
 };
 
 const spacing: Spacing = [0, 4, 8, 16, 24, 32, 48, 64];
 
 const radii = {
-    default: "8px",
-    small: "4px",
-    circle: "50%",
-    };
+  default: "8px",
+  small: "4px",
+  circle: "50%",
+};
 
 const zIndices = {
   dropdown: 10,
@@ -30,16 +32,16 @@ const zIndices = {
 
 const sizes = {
   card: {
-    default: 'calc(100vw / 4)',
-    small: 'calc(100vw / 6)',
-    mobile:  '100%',
-    tablet: 'calc(100vw / 4)'
+    default: "calc(100vw / 4)",
+    small: "calc(100vw / 6)",
+    mobile: "100%",
+    tablet: "calc(100vw / 4)",
   },
   button: {
-    default: '160px',
-    sm: '64',
-  }
-}
+    default: "160px",
+    sm: "64",
+  },
+};
 
 export const layouts = {
   siteWidth: 1200,

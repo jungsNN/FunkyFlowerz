@@ -1,10 +1,9 @@
-import { createGlobalStyle } from 'styled-components'
-import { AppTheme } from './types'
+import { createGlobalStyle } from "styled-components";
+import { AppTheme } from "./types";
 
-declare module 'styled-components' {
+declare module "styled-components" {
   export interface DefaultTheme extends AppTheme {}
 }
-
 
 export const GlobalStyles = createGlobalStyle`
   *,
@@ -15,8 +14,8 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    background-color: ${props => props.theme.colors.bg}; 
-    color: ${props => props.theme.colors.textPrimary};
+    background-color: ${(props) => props.theme.colors.bg}; 
+    color: ${(props) => props.theme.colors.textPrimary};
     font-family: "Lato", "Roboto", "Noto Sans SC Sliced", "Helvetica", "Arial",  sans-serif;
     overflow-x: hidden;
   }
@@ -30,6 +29,6 @@ export const GlobalStyles = createGlobalStyle`
   .active{
       border: 3px solid hsl(0, 0%, 87%);
       }
-`
+`;
 
 export default GlobalStyles;

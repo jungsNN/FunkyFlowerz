@@ -30,6 +30,7 @@ const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
   try {
     return new anchor.web3.PublicKey(process.env.REACT_APP_CANDY_MACHINE_ID!);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log("Failed to construct CandyMachineId", e);
     return undefined;
   }
@@ -62,7 +63,7 @@ const App = () => {
       getSolletWallet(),
       getSolletExtensionWallet(),
     ],
-    []
+    [],
   );
 
   return (

@@ -115,7 +115,7 @@ const AppBar = (props: AppBarProps) => {
           const cndy = await getCandyMachineState(
             anchorWallet,
             props.candyMachineId,
-            connection
+            connection,
           );
           process.env.NODE_ENV === "development" &&
             console.log("Candy machine state: ", cndy);
@@ -152,7 +152,7 @@ const AppBar = (props: AppBarProps) => {
             }
             // retrieves the whitelist token
             const mint = new anchor.web3.PublicKey(
-              cndy.state.whitelistMintSettings.mint
+              cndy.state.whitelistMintSettings.mint,
             );
             const token = (
               await getAtaForMint(mint, anchorWallet.publicKey)
@@ -174,7 +174,7 @@ const AppBar = (props: AppBarProps) => {
                 active = false;
               }
               console.log(
-                "There was a problem fetching whitelist token balance"
+                "There was a problem fetching whitelist token balance",
               );
               console.log(e);
             }
@@ -204,7 +204,7 @@ const AppBar = (props: AppBarProps) => {
             }
           } else {
             const balance = new anchor.BN(
-              await connection.getBalance(anchorWallet.publicKey)
+              await connection.getBalance(anchorWallet.publicKey),
             );
             const valid = balance.gte(userPrice);
             setIsValidBalance(valid);
@@ -225,7 +225,7 @@ const AppBar = (props: AppBarProps) => {
           if (cndy?.state.endSettings?.endSettingType.amount) {
             const limit = Math.min(
               cndy.state.endSettings.number.toNumber(),
-              cndy.state.itemsAvailable
+              cndy.state.itemsAvailable,
             );
             if (cndy.state.itemsRedeemed < limit) {
               setItemsRemaining(limit - cndy.state.itemsRedeemed);
@@ -243,7 +243,7 @@ const AppBar = (props: AppBarProps) => {
 
           const [collectionPDA] = await getCollectionPDA(props.candyMachineId);
           const collectionPDAAccount = await connection.getAccountInfo(
-            collectionPDA
+            collectionPDA,
           );
 
           setIsActive((cndy.state.isActive = active));
@@ -300,12 +300,12 @@ const AppBar = (props: AppBarProps) => {
         });
       }
     },
-    [anchorWallet, props.candyMachineId, props.error, props.rpcHost]
+    [anchorWallet, props.candyMachineId, props.error, props.rpcHost],
   );
 
   const onMint = async (
     beforeTransactions: Transaction[] = [],
-    afterTransactions: Transaction[] = []
+    afterTransactions: Transaction[] = [],
   ) => {
     try {
       setIsUserMinting(true);
@@ -319,7 +319,7 @@ const AppBar = (props: AppBarProps) => {
           });
           setupMint = await createAccountsForMint(
             candyMachine,
-            wallet.publicKey
+            wallet.publicKey,
           );
           let status: any = { err: true };
           if (setupMint.transaction) {
@@ -327,7 +327,7 @@ const AppBar = (props: AppBarProps) => {
               setupMint.transaction,
               props.txTimeout,
               props.connection,
-              true
+              true,
             );
           }
           if (status && !status.err) {
@@ -360,7 +360,7 @@ const AppBar = (props: AppBarProps) => {
           wallet.publicKey,
           beforeTransactions,
           afterTransactions,
-          setupMint ?? setupTxn
+          setupMint ?? setupTxn,
         );
 
         let status: any = { err: true };
@@ -370,13 +370,13 @@ const AppBar = (props: AppBarProps) => {
             mintResult.mintTxId,
             props.txTimeout,
             props.connection,
-            true
+            true,
           );
 
           metadataStatus =
             await candyMachine.program.provider.connection.getAccountInfo(
               mintResult.metadataKey,
-              "processed"
+              "processed",
             );
           console.log("Metadata status: ", !!metadataStatus);
         }
@@ -675,7 +675,7 @@ const AppBar = (props: AppBarProps) => {
                               {isWhitelistUser && discountPrice
                                 ? `◎ ${formatNumber.asNumber(discountPrice)}`
                                 : `◎ ${formatNumber.asNumber(
-                                    candyMachine.state.price
+                                    candyMachine.state.price,
                                   )}`}
                             </Typography>
                           </Grid>
@@ -761,7 +761,7 @@ const AppBar = (props: AppBarProps) => {
 };
 
 const getCountdownDate = (
-  candyMachine: CandyMachineAccount
+  candyMachine: CandyMachineAccount,
 ): Date | undefined => {
   if (
     candyMachine.state.isActive &&
@@ -775,7 +775,7 @@ const getCountdownDate = (
       ? candyMachine.state.goLiveDate
       : candyMachine.state.isPresale
       ? new anchor.BN(new Date().getTime() / 1000)
-      : undefined
+      : undefined,
   );
 };
 

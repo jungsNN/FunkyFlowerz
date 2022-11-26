@@ -3,7 +3,7 @@ import colors from "./colors";
 import layouts from "./layouts";
 
 export const theme: DefaultTheme = {
-    ...layouts,
-    isDark: false,
-    colors: colors
-}
+  ...layouts,
+  isDark: false,
+  colors: colors,
+};

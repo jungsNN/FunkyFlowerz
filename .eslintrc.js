@@ -10,6 +10,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
+    'plugin:prettier/recommended',
     "prettier"
   ],
   globals: {
@@ -31,6 +32,8 @@ module.exports = {
     },
   },
   rules: {
+    // Possible errors
+    'no-console': 'warn',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
     "react/react-in-jsx-scope": "off",
