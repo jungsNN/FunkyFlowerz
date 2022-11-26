@@ -90,7 +90,6 @@ const FunkyFlowerzDescription = styled.div``;
 const SplashImage = styled.div`
   width: 100%;
   min-width: 225px;
-  max-width: 507px;
 
   img {
     width: 100%;
