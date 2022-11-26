@@ -116,3 +116,5 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
     return null;
   }
 };
+
+export default MintCountdown;
