@@ -37,8 +37,8 @@ import {
 import { MintCountdown } from "@/components/Mint/MintCountdown";
 import { MintButton } from "@/components/Mint/MintButton";
 import FunkyFlowerzLogo from "@/components/svgs/FunkyFlowerzLogo";
-import useStore from "../../hooks/useStore";
-import useWindowSize from "../../hooks/useWindowSize";
+import useStore from "@/hooks/useStore";
+import useWindowSize from "@/hooks/useWindowSize";
 
 export interface AppBarProps {
   candyMachineId?: anchor.web3.PublicKey;

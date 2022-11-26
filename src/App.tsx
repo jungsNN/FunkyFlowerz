@@ -1,4 +1,3 @@
-import "./App.css";
 import * as anchor from "@project-serum/anchor";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useMemo } from "react";
@@ -16,11 +15,12 @@ import {
   WalletProvider,
 } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
-import { DEFAULT_TIMEOUT } from "./utils/connection";
-import AppBar from "./components/AppBar";
-import { Home, Rarity, Team } from "./pages";
-import { theme } from "./theme/Theme.styled";
-import GlobalStyles from "./theme/Global";
+import { DEFAULT_TIMEOUT } from "@/utils/connection";
+import AppBar from "@/components/AppBar";
+import { Home, Rarity, Team } from "@/pages";
+import { theme } from "@/theme/Theme.styled";
+import GlobalStyles from "@/theme/Global";
+import "./App.css";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 

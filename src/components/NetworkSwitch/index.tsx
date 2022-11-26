@@ -1,6 +1,6 @@
+import { alpha } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-import { alpha } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import styled from "styled-components";
 import colors from "@/theme/colors";
