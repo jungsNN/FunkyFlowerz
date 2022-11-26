@@ -1,8 +1,8 @@
 import { Container, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import styled from "styled-components";
-import FunkyFlowerzTitle from "../../components/svgs/FunkyFlowerzTitle";
-import useStore from "../../states";
+import FunkyFlowerzTitle from "@/components/svgs/FunkyFlowerzTitle";
+import useStore from "../../hooks/useStore";
 
 const Home = () => {
   const store = useStore();

@@ -1,6 +1,6 @@
 {
-  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -15,7 +15,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "outDir": "./dist",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["lint-staged.config.js", "src"]
+  "include": ["lint-staged.config.js", "src", "src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

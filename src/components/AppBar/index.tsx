@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Button } from "@mui/material";
 import * as anchor from "@project-serum/anchor";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Container, Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import { Container, Snackbar } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -12,8 +14,10 @@ import {
   PublicKey,
   Transaction,
 } from "@solana/web3.js";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { GatewayProvider } from "@civic/solana-gateway-react";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
 import {
   awaitTransactionSignatureConfirmation,
   CANDY_MACHINE_PROGRAM,
@@ -23,22 +27,18 @@ import {
   getCollectionPDA,
   mintOneToken,
   SetupState,
-} from "../../utils/candy-machine";
+} from "@/utils/candy-machine";
 import {
   AlertState,
   formatNumber,
   getAtaForMint,
   toDate,
-} from "../../utils/candy-utils";
-import { MintCountdown } from "../Mint/MintCountdown";
-import { MintButton } from "../Mint/MintButton";
-import { GatewayProvider } from "@civic/solana-gateway-react";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import FunkyFlowerzLogo from "../svgs/FunkyFlowerzLogo";
-import useStore from "../../states";
+} from "@/utils/candy-utils";
+import { MintCountdown } from "@/components/Mint/MintCountdown";
+import { MintButton } from "@/components/Mint/MintButton";
+import FunkyFlowerzLogo from "@/components/svgs/FunkyFlowerzLogo";
+import useStore from "../../hooks/useStore";
 import useWindowSize from "../../hooks/useWindowSize";
-import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 export interface AppBarProps {
   candyMachineId?: anchor.web3.PublicKey;

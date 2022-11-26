@@ -26,6 +26,12 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   settings: {
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx", ".d.ts"]
+      },
+      typescript: {}
+    },
     react: {
       pragma: 'React',
       version: '17.0.2',

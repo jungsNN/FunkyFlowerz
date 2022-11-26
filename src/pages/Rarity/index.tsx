@@ -1,8 +1,8 @@
 import { Container, Grid } from "@material-ui/core";
 import styled from "styled-components";
-import RarityChartTitle from "../../components/svgs/RarityChartTitle";
-import SpecialEditionTitle from "../../components/svgs/SpecialEditionTitle";
-import SuperiorTraitTitle from "../../components/svgs/SuperiorTraitTitle";
+import RarityChartTitle from "@/components/svgs/RarityChartTitle";
+import SpecialEditionTitle from "@/components/svgs/SpecialEditionTitle";
+import SuperiorTraitTitle from "@/components/svgs/SuperiorTraitTitle";
 
 const Rarity = () => {
   return (
