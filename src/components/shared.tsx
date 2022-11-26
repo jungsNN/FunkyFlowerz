@@ -157,7 +157,7 @@ export const Title = styled.h1<
 
   ${(props) => props.theme.mediaQueries.desktop} {
     font-size: ${(props) => (props.small ? "18px" : "28px")};
-    line-height: 32px;
+    line-height: 36px;
   }
 
   ${(props) => props.theme.mediaQueries.tablet} {
