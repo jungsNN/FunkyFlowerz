@@ -69,7 +69,7 @@ const AppBar = (props: AppBarProps) => {
   const [setupTxn, setSetupTxn] = useState<SetupState>();
 
   const setIsMobile = () => {
-    store.setIsMobile((windowWidth?.width ?? window.innerWidth) < 1024);
+    store.setIsMobile((windowWidth?.width ?? window.innerWidth) < 768);
   };
 
   useEffect(() => {

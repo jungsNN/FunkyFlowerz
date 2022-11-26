@@ -1,6 +1,6 @@
 import { Grid as MuiGrid } from "@mui/material";
-import { GridProps } from "@mui/material/Grid";
-import { TypographyProps } from "@mui/material/Typography";
+import type { GridProps } from "@mui/material/Grid";
+import type { TypographyProps } from "@mui/material/Typography";
 import styled from "styled-components";
 import { LayoutProps } from "./types";
 
@@ -34,20 +34,22 @@ export const Col = styled.div<LayoutProps>`
 
 export const Container = styled.div<{
   height?: string;
-  items?: string | "unset";
-  maxHeight?: string;
-  minHeight?: string;
-  maxWidth?: string;
-  minWidth?: string;
+  maxH?: string;
+  minH?: string;
+  maxW?: string;
+  minW?: string;
   width?: string;
 }>`
-  ${(props) => props.height};
-  ${(props) => props.maxHeight};
-  ${(props) => props.minHeight};
-  ${(props) => props.maxWidth};
-  ${(props) => props.minWidth};
-  ${(props) => props.width};
-  ${(props) => props.items};
+  box-sizing: border-box;
+  display: block;
+  height: ${(props) => props.height};
+  max-height: ${(props) => props.maxH};
+  min-width: ${(props) => props.minH};
+  max-width: ${(props) => props.maxW ?? "1440px"};
+  min-width: ${(props) => props.minW};
+  width: ${(props) => props.width ?? "100%"};
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const Flex = styled.div<LayoutProps>`
@@ -128,16 +130,16 @@ export const Text = styled.p<
 
   ${(props) => props.theme.mediaQueries.desktop} {
     font-size: ${(props) =>
-      props.size === "sm" ? "16px" : props.size === "lg" ? "32px" : "20px"};
+      props.size === "sm" ? "16px" : props.size === "lg" ? "28px" : "20px"};
     line-height: ${(props) =>
       props.size === "sm" ? "20px" : props.size === "lg" ? "32px" : "24px"};
   }
 
   ${(props) => props.theme.mediaQueries.tablet} {
     font-size: ${(props) =>
-      props.size === "sm" ? "16px" : props.size === "lg" ? "24px" : "18px"};
+      props.size === "sm" ? "16px" : props.size === "lg" ? "20px" : "16px"};
     line-height: ${(props) =>
-      props.size === "sm" ? "20px" : props.size === "lg" ? "24px" : "24px"};
+      props.size === "sm" ? "20px" : props.size === "lg" ? "24px" : "20px"};
   }
 `;
 
@@ -154,12 +156,12 @@ export const Title = styled.h1<
   line-height: 48px;
 
   ${(props) => props.theme.mediaQueries.desktop} {
-    font-size: ${(props) => (props.small ? "20px" : "32px")};
-    line-height: 40px;
+    font-size: ${(props) => (props.small ? "18px" : "28px")};
+    line-height: 32px;
   }
 
   ${(props) => props.theme.mediaQueries.tablet} {
-    font-size: ${(props) => (props.small ? "18px" : "28px")};
-    line-height: 32px;
+    font-size: ${(props) => (props.small ? "16px" : "24px")};
+    line-height: 25px;
   }
 `;

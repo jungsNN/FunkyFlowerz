@@ -79,11 +79,11 @@ const Section = styled(Grid)`
 
   ${(props) => props.theme.mediaQueries.desktop} {
     grid-gap: 48px;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  ${(props) => props.theme.mediaQueries.desktop} {
+  ${(props) => props.theme.mediaQueries.tablet} {
     grid-gap: 32px;
   }
 

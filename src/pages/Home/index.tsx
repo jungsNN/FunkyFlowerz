@@ -1,7 +1,6 @@
-import { Container } from "@material-ui/core";
 import styled from "styled-components";
 import { FunkyFlowerzTitle } from "../../components/svgs";
-import { Grid, Text, Title } from "../../components/shared";
+import { Container, Grid, Text, Title } from "../../components/shared";
 import { Page } from "../../components";
 import { useStore } from "../../hooks";
 
@@ -58,10 +57,16 @@ const Home = () => {
 
 const SplashHeader = styled(Grid)`
   flex-wrap: nowrap;
+  padding-left: 0;
+  padding-right: 0;
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 `;
 
 const SplashTitle = styled.div`
-  width: 576px;
   padding-right: 48px;
 
   svg {
@@ -70,16 +75,7 @@ const SplashTitle = styled.div`
   }
 
   ${(props) => props.theme.mediaQueries.desktop} {
-    width: 484px;
-  }
-
-  ${(props) => props.theme.mediaQueries.tablet} {
-    padding-right: 0;
-    width: 441px;
-  }
-
-  ${(props) => props.theme.mediaQueries.mobile} {
-    width: 100%;
+    padding-right: 32px;
   }
 `;
 
@@ -89,28 +85,46 @@ const FunkyFlowerzDescription = styled.div``;
 
 const SplashImage = styled.div`
   width: 100%;
-  min-width: 225px;
 
   img {
     width: 100%;
     height: 100%;
+    max-width: 507px;
+    max-height: 507px;
   }
 
-  ${(props) => props.theme.mediaQueries.tablet} {
+  ${(props) => props.theme.mediaQueries.desktop} {
+    img {
+      max-width: 392px;
+      max-height: 392px;
+    }
+  }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
     width: calc(100vw / 2.4);
   }
 `;
 
 const Samples = styled(Container)`
-  padding-top: 140px;
+  padding-top: 128px;
+  max-width: 720px;
 
   img {
     width: 100%;
     height: 100%;
   }
 
+  ${(props) => props.theme.mediaQueries.desktop} {
+    max-width: calc(100vw / 2);
+  }
+
   ${(props) => props.theme.mediaQueries.tablet} {
-    padding-top: 100px;
+    padding-top: 96px;
+  }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    padding-top: 64px;
+    max-width: calc(100vw / 1.6);
   }
 `;
 
