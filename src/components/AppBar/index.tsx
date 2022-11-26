@@ -36,8 +36,7 @@ import {
 } from "@/utils/candy-utils";
 import { FunkyFlowerzLogo } from "../svgs";
 import { MintButton, MintCountdown } from "../Mint";
-import useStore from "@/hooks/useStore";
-import useWindowSize from "@/hooks/useWindowSize";
+import { useStore, useWindowSize } from "@/hooks";
 
 export interface AppBarProps {
   candyMachineId?: anchor.web3.PublicKey;

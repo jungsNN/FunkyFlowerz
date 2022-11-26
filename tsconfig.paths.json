@@ -2,13 +2,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/components": ["./src/components/index.ts"],
-      "@/components/svgs": ["./src/components/svgs/index.ts"],
-      "@/components/shared": ["./src/components/shared.tsx"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/pages": ["./src/pages/index.ts"],
-      "@/utils/*": ["./src/utils/*"],
-      "@/theme/*": ["./src/theme/*"]
+      "@/components": ["src/components/index.ts"],
+      "@/components/svgs": ["src/components/svgs/index.ts"],
+      "@/components/shared": ["src/components/shared.tsx"],
+      "@/hooks": ["src/hooks/index.ts"],
+      "@/pages": ["src/pages/index.ts"],
+      "@/utils/*": ["src/utils/*"],
+      "@/theme/*": ["src/theme/*"]
     }
   }
 }
