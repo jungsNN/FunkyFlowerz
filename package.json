@@ -37,9 +37,6 @@
   },
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
-    "lint": "prettier -c 'src/**/*.{ts,tsx}' && npm run lint:eslint",
-    "lint:eslint": "eslint 'src/**/*.{ts,tsx}'",
-    "lint:fix": "prettier --write 'src/**/*.{ts,tsx}' && eslint --fix 'src/**/*.{ts,tsx}'",
     "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -76,6 +73,8 @@
     "@typescript-eslint/parser": "^5.30.6",
     "eslint": "^7.11.0",
     "eslint-plugin-react": "^7.30.1",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.4",
     "prettier": "^2.7.1"
   }
 }
