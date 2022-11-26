@@ -1,13 +1,13 @@
-import { Button } from "@mui/material";
 import * as anchor from "@project-serum/anchor";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import Alert from "@material-ui/lab/Alert";
+import { Button } from "@mui/material";
 import { Container, Snackbar } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import styled from "styled-components";
 import {
   Commitment,
   Connection,
@@ -16,7 +16,7 @@ import {
 } from "@solana/web3.js";
 import { GatewayProvider } from "@civic/solana-gateway-react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
+import { WalletModalButton } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
 import {
   awaitTransactionSignatureConfirmation,
@@ -804,7 +804,7 @@ const AppBarGrid = styled.div<{ isMobile: boolean }>`
   }
 `;
 
-const ConnectButton = styled(WalletDialogButton)`
+const ConnectButton = styled(WalletModalButton)`
   width: 100%;
   height: 60px;
   margin-top: 10px;

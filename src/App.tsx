@@ -1,7 +1,8 @@
 import "./App.css";
+import * as anchor from "@project-serum/anchor";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useMemo } from "react";
-import * as anchor from "@project-serum/anchor";
+import { ThemeProvider } from "styled-components";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   getPhantomWallet,
@@ -10,21 +11,18 @@ import {
   getSolletExtensionWallet,
   getSolletWallet,
 } from "@solana/wallet-adapter-wallets";
-
 import {
   ConnectionProvider,
   WalletProvider,
 } from "@solana/wallet-adapter-react";
-import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
-
+import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { DEFAULT_TIMEOUT } from "./utils/connection";
 import AppBar from "./components/AppBar";
-import Home from "./pages/Home";
-import Rarity from "./pages/Rarity";
-import Team from "./pages/Team";
-import { ThemeProvider } from "styled-components";
+import { Home, Rarity, Team } from "./pages";
 import { theme } from "./theme/Theme.styled";
 import GlobalStyles from "./theme/Global";
+
+require("@solana/wallet-adapter-react-ui/styles.css");
 
 const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
   try {
@@ -71,7 +69,7 @@ const App = () => {
       <GlobalStyles />
       <ConnectionProvider endpoint={rpcHost}>
         <WalletProvider wallets={wallets} autoConnect>
-          <WalletDialogProvider>
+          <WalletModalProvider>
             <BrowserRouter>
               <AppBar
                 candyMachineId={candyMachineId}
@@ -88,7 +86,7 @@ const App = () => {
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </BrowserRouter>
-          </WalletDialogProvider>
+          </WalletModalProvider>
         </WalletProvider>
       </ConnectionProvider>
     </ThemeProvider>
