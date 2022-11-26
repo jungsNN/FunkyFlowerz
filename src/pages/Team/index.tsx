@@ -1,7 +1,7 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import styled, { useTheme } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components";
+import { Button, Page } from "../../components";
 import { Col, Row } from "../../components/shared";
 import {
   InstagramIcon,
@@ -29,7 +29,7 @@ const Team = () => {
   const navigate = useNavigate();
 
   return (
-    <Container style={{ paddingBottom: "10rem" }}>
+    <Page>
       <Grid
         container
         direction="column"
@@ -78,7 +78,7 @@ const Team = () => {
           </MemberDescrition>
         </Row>
       </Grid>
-    </Container>
+    </Page>
   );
 };
 

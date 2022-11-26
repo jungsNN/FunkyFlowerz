@@ -2,13 +2,14 @@ import { Container } from "@material-ui/core";
 import styled from "styled-components";
 import { FunkyFlowerzTitle } from "../../components/svgs";
 import { Grid, Text, Title } from "../../components/shared";
+import { Page } from "../../components";
 import { useStore } from "../../hooks";
 
 const Home = () => {
   const store = useStore();
 
   return (
-    <Container style={{ paddingBottom: "10rem" }}>
+    <Page>
       <Container style={{ position: "relative" }}>
         <SplashHeader
           container
@@ -51,7 +52,7 @@ const Home = () => {
           <img src="./funkyflowerz-bg.png" alt="funky flowerz samples" />
         </Samples>
       </Container>
-    </Container>
+    </Page>
   );
 };
 

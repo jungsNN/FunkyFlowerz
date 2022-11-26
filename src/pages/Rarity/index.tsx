@@ -1,5 +1,6 @@
 import { Container, Grid } from "@material-ui/core";
 import styled from "styled-components";
+import { Page } from "../../components";
 import {
   RarityChartTitle,
   SpecialEditionTitle,
@@ -8,7 +9,7 @@ import {
 
 const Rarity = () => {
   return (
-    <Container style={{ paddingBottom: "10rem" }}>
+    <Page>
       <Grid container direction="column" style={{ gridGap: 140 }}>
         <div className="rarity-chart">
           <TitleWrapper>
@@ -35,7 +36,7 @@ const Rarity = () => {
           </SuperiorTraits>
         </div>
       </Grid>
-    </Container>
+    </Page>
   );
 };
 
