@@ -1,8 +1,8 @@
-import { Container, Typography } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
+import { Container } from "@material-ui/core";
 import styled from "styled-components";
-import { FunkyFlowerzTitle } from "components/svgs";
-import { useStore } from "hooks";
+import { FunkyFlowerzTitle } from "../../components/svgs";
+import { Grid, Text, Title } from "../../components/shared";
+import { useStore } from "../../hooks";
 
 const Home = () => {
   const store = useStore();
@@ -12,41 +12,35 @@ const Home = () => {
       <Container style={{ position: "relative" }}>
         <Grid
           container
-          direction={store.isMobile ? "column" : "row"}
-          justifyContent="space-between"
+          direction={store.isMobile ? "column-reverse" : "row"}
+          align="end"
+          justify="space-between"
           wrap="nowrap"
-          style={{ alignItems: "end", gridGap: "35px" }}
+          gap="35px"
         >
           <Grid
             container
             direction="column"
-            justifyContent="space-between"
-            style={{ gridGap: "30px", height: "100%" }}
+            align="start"
+            justify="space-between"
+            gap="32px"
           >
             <SplashTitle>
               <FunkyFlowerzTitle />
             </SplashTitle>
             <SplashQuote>
-              <Typography style={{ lineHeight: "48px" }}>
-                <div>
-                  There are always flowers for those who want to see them.
-                </div>
-                <div>- Matisse</div>
-              </Typography>
+              <Title>
+                There are always flowers for those who want to see them.
+              </Title>
+              <Title>- Matisse</Title>
             </SplashQuote>
             <FunkyFlowerzDescription>
-              <Typography
-                style={{ fontSize: "24px", fontWeight: 700, marginBottom: 10 }}
-              >
-                Collectible Digital Art
-              </Typography>
-              <Typography style={{ fontSize: "24px", lineHeight: "1.75rem" }}>
-                <div>
-                  A collection of 2700 hand-made flowers from 9 species,{" "}
-                </div>
-                <div>including dozens of insect variants and mutations. </div>
-                <div>50% proceeds donated to environmental organizations.</div>
-              </Typography>
+              <Title small>Collectible Digital Art</Title>
+              <Text>
+                A collection of 2700 hand-made flowers from 9 species, including
+                dozens of insect variants and mutations. 50% proceeds donated to
+                environmental organizations.
+              </Text>
             </FunkyFlowerzDescription>
           </Grid>
           <SplashImage>
@@ -76,17 +70,15 @@ const SplashTitle = styled.div`
   }
 `;
 
-const SplashQuote = styled.div`
-  p {
-    font-size: 40px;
-    font-height: 48px;
-  }
-`;
+const SplashQuote = styled.div``;
 
 const FunkyFlowerzDescription = styled.div`
-  margin-top: calc(66px - 50px);
-  font-size: 24px;
+  margin-top: 16px;
   max-width: 680px;
+
+  ${(props) => props.theme.mediaQueries.tablet} {
+    margin-top: 8px;
+  }
 `;
 
 const SplashImage = styled.div`

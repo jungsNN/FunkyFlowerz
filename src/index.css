@@ -1,16 +1,51 @@
+@font-face {
+  font-family: "Gotham";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./theme/fonts/GothamMedium.ttf");
+  src: url("./theme/fonts/GothamMedium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gotham";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./theme/fonts/GothamBold.ttf");
+  src: url("./theme/fonts/GothamBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gotham";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./theme/fonts/GothamBook.ttf");
+  src: url("./theme/fonts/GothamBook.ttf") format("truetype");
+}
+
 body {
   background: #002121;
+  color: #ffffff;
+  font-family: "Gotham", "Courier", sans-serif;
   margin: 0;
-  font-family: 'Raleway', sans-serif;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.bold {
+  font-weight: 700;
+}
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 p {
-  color: #FFFFFF;
+  color: #ffffff;
+  font-weight: 400;
+}
+
+h1 {
+  font-weight: 400;
 }

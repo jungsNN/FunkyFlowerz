@@ -10,8 +10,8 @@ import {
   onGatewayTokenChange,
   removeAccountChangeListener,
 } from "@identity.com/solana-gateway-ts";
-import { CandyMachineAccount } from "utils/candy-machine";
-import { CIVIC_GATEKEEPER_NETWORK } from "utils/candy-utils";
+import { CandyMachineAccount } from "../../utils/candy-machine";
+import { CIVIC_GATEKEEPER_NETWORK } from "../../utils/candy-utils";
 
 export const CTAButton = styled(Button)`
   width: 100%;
@@ -65,7 +65,7 @@ export const MintButton = ({
     const mint = async () => {
       await removeAccountChangeListener(
         connection.connection,
-        webSocketSubscriptionId,
+        webSocketSubscriptionId
       );
       await onMint();
 
@@ -132,7 +132,7 @@ export const MintButton = ({
             const gatewayToken = await findGatewayToken(
               connection.connection,
               wallet.publicKey!,
-              candyMachine.state.gatekeeper.gatekeeperNetwork,
+              candyMachine.state.gatekeeper.gatekeeperNetwork
             );
 
             if (gatewayToken?.isValid()) {
@@ -140,13 +140,13 @@ export const MintButton = ({
             } else {
               window.open(
                 `https://verify.encore.fans/?gkNetwork=${network}`,
-                "_blank",
+                "_blank"
               );
 
               const gatewayTokenAddress =
                 await getGatewayTokenAddressForOwnerAndGatekeeperNetwork(
                   wallet.publicKey!,
-                  candyMachine.state.gatekeeper.gatekeeperNetwork,
+                  candyMachine.state.gatekeeper.gatekeeperNetwork
                 );
 
               setWebSocketSubscriptionId(
@@ -154,8 +154,8 @@ export const MintButton = ({
                   connection.connection,
                   gatewayTokenAddress,
                   () => setVerified(true),
-                  "confirmed",
-                ),
+                  "confirmed"
+                )
               );
             }
           } else {

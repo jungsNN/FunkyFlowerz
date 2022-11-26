@@ -7,7 +7,7 @@ export const breakpointMap: { [key: string]: number } = {
 };
 
 const breakpoints: Breakpoints = Object.values(breakpointMap).map(
-  (breakpoint) => `${breakpoint}px`,
+  (breakpoint) => `${breakpoint}px`
 );
 
 const mediaQueries: MediaQueries = {

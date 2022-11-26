@@ -1,3 +1,6 @@
+import { Grid as MuiGrid } from "@mui/material";
+import { GridProps } from "@mui/material/Grid";
+import { TypographyProps } from "@mui/material/Typography";
 import styled from "styled-components";
 import { LayoutProps } from "./types";
 
@@ -37,6 +40,15 @@ export const Flex = styled.div<LayoutProps>`
   padding-left: ${(props) => props.pl};
   padding-right: ${(props) => props.pr};
   padding-top: ${(props) => props.pt};
+`;
+
+export const Grid = styled(MuiGrid)<
+  { align?: string; justify?: string } & GridProps
+>`
+  align-items: ${(props) => props.align ?? "center"};
+  justify-content: ${(props) => props.justify ?? "start"};
+  padding: ${(props) => `${props.p ?? 0}`};
+  margin: ${(props) => `${props.m ?? 0}`};
 `;
 
 export const Row = styled.div<LayoutProps>`
@@ -92,5 +104,58 @@ export const Col = styled.div<LayoutProps>`
         : props.defaultGap
         ? `calc((${props.defaultGap} - ${props.adjustVal}) - 8px)`
         : "0px"};
+  }
+`;
+
+export const Text = styled.p<
+  {
+    bold?: boolean;
+    size?: "sm" | "lg" | "default";
+    color?: string;
+  } & TypographyProps
+>`
+  color: ${(props) => props.color ?? "#ffffff"};
+  font-family: "Gotham", sans-serif;
+  font-size: ${(props) =>
+    props.size === "sm" ? "18px" : props.size === "lg" ? "32px" : "24px"};
+  font-weight: ${(props) => (props.bold ? "700" : "400")};
+  line-height: ${(props) =>
+    props.size === "sm" ? "22px" : props.size === "lg" ? "36px" : "28px"};
+
+  ${(props) => props.theme.mediaQueries.desktop} {
+    font-size: ${(props) =>
+      props.size === "sm" ? "16px" : props.size === "lg" ? "32px" : "20px"};
+    line-height: ${(props) =>
+      props.size === "sm" ? "20px" : props.size === "lg" ? "36px" : "24px"};
+  }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    font-size: ${(props) =>
+      props.size === "sm" ? "12px" : props.size === "lg" ? "24px" : "18px"};
+    line-height: ${(props) =>
+      props.size === "sm" ? "16px" : props.size === "lg" ? "28px" : "22px"};
+  }
+`;
+
+export const Title = styled.h1<
+  {
+    small?: boolean;
+    color?: string;
+  } & TypographyProps
+>`
+  color: ${(props) => props.color ?? "#ffffff"};
+  font-family: "Gotham", sans-serif;
+  font-size: ${(props) => (props.small ? "24px" : "40px")};
+  font-weight: ${(props) => (props.small ? "700" : "400")};
+  line-height: 48px;
+
+  ${(props) => props.theme.mediaQueries.desktop} {
+    font-size: ${(props) => (props.small ? "24px" : "36px")};
+    line-height: 40px;
+  }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    font-size: ${(props) => (props.small ? "16px" : "28px")};
+    line-height: 32px;
   }
 `;

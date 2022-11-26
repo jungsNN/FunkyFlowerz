@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: "bold",
       fontSize: 18,
     },
-  }),
+  })
 );
 
 interface MintCountdownProps {

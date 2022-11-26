@@ -4,7 +4,7 @@ import {
   RarityChartTitle,
   SpecialEditionTitle,
   SuperiorTraitTitle,
-} from "components/svgs";
+} from "../../components/svgs";
 
 const Rarity = () => {
   return (

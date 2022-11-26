@@ -24,7 +24,7 @@ export const DEFAULT_TIMEOUT = 60000;
 
 export const getErrorForTransaction = async (
   connection: Connection,
-  txid: string,
+  txid: string
 ) => {
   // wait for all confirmation before geting transaction
   await connection.confirmTransaction(txid, "max");
@@ -62,7 +62,7 @@ export async function sendTransactionsWithManualRetry(
   connection: Connection,
   wallet: any,
   instructions: TransactionInstruction[][],
-  signers: Keypair[][],
+  signers: Keypair[][]
 ): Promise<(string | undefined)[]> {
   let stopPoint = 0;
   let tries = 0;
@@ -93,7 +93,7 @@ export async function sendTransactionsWithManualRetry(
           wallet,
           instructions[0],
           filteredSigners[0],
-          "single",
+          "single"
         );
         ids.push(id.txid);
         stopPoint = 1;
@@ -104,7 +104,7 @@ export async function sendTransactionsWithManualRetry(
           instructions,
           filteredSigners,
           SequenceType.StopOnFailure,
-          "single",
+          "single"
         );
         ids = ids.concat(txs.map((t) => t.txid));
       }
@@ -117,7 +117,7 @@ export async function sendTransactionsWithManualRetry(
       "retrying from instruction",
       instructions[stopPoint],
       "instructions length is",
-      instructions.length,
+      instructions.length
     );
     lastInstructionsLength = instructions.length;
   }
@@ -136,7 +136,7 @@ export const sendTransactions = async (
   failCallback: (reason: string, ind: number) => boolean = (txid, ind) => false,
   block?: BlockhashAndFeeCalculator,
   beforeTransactions: Transaction[] = [],
-  afterTransactions: Transaction[] = [],
+  afterTransactions: Transaction[] = []
 ): Promise<{ number: number; txs: { txid: string; slot: number }[] }> => {
   if (!wallet.publicKey) throw new WalletNotConnectedError();
 
@@ -160,7 +160,7 @@ export const sendTransactions = async (
     transaction.setSigners(
       // fee payed by the wallet owner
       wallet.publicKey,
-      ...signers.map((s) => s.publicKey),
+      ...signers.map((s) => s.publicKey)
     );
 
     if (signers.length > 0) {
@@ -172,13 +172,13 @@ export const sendTransactions = async (
   unsignedTxns.push(...afterTransactions);
 
   const partiallySignedTransactions = unsignedTxns.filter((t) =>
-    t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey)),
+    t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey))
   );
   const fullySignedTransactions = unsignedTxns.filter(
-    (t) => !t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey)),
+    (t) => !t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey))
   );
   let signedTxns = await wallet.signAllTransactions(
-    partiallySignedTransactions,
+    partiallySignedTransactions
   );
   signedTxns = fullySignedTransactions.concat(signedTxns);
   const pendingTxns: Promise<{ txid: string; slot: number }>[] = [];
@@ -187,7 +187,7 @@ export const sendTransactions = async (
     "Signed txns length",
     signedTxns.length,
     "vs handed in length",
-    instructionSet.length,
+    instructionSet.length
   );
   for (let i = 0; i < signedTxns.length; i++) {
     const signedTxnPromise = sendSignedTransaction({
@@ -198,7 +198,7 @@ export const sendTransactions = async (
     if (sequenceType !== SequenceType.Parallel) {
       try {
         await signedTxnPromise.then(({ txid, slot }) =>
-          successCallback(txid, i),
+          successCallback(txid, i)
         );
         pendingTxns.push(signedTxnPromise);
       } catch (e) {
@@ -234,7 +234,7 @@ export const sendTransaction = async (
   awaitConfirmation = true,
   commitment: Commitment = "singleGossip",
   includesFeePayer: boolean = false,
-  block?: BlockhashAndFeeCalculator,
+  block?: BlockhashAndFeeCalculator
 ) => {
   if (!wallet.publicKey) throw new WalletNotConnectedError();
 
@@ -254,7 +254,7 @@ export const sendTransaction = async (
       transaction.setSigners(
         // fee payed by the wallet owner
         wallet.publicKey,
-        ...signers.map((s) => s.publicKey),
+        ...signers.map((s) => s.publicKey)
       );
     }
 
@@ -280,7 +280,7 @@ export const sendTransaction = async (
       txid,
       DEFAULT_TIMEOUT,
       connection,
-      commitment,
+      commitment
     );
 
     if (!confirmation)
@@ -306,7 +306,7 @@ export const sendTransactionWithRetry = async (
   commitment: Commitment = "singleGossip",
   includesFeePayer: boolean = false,
   block?: BlockhashAndFeeCalculator,
-  beforeSend?: () => void,
+  beforeSend?: () => void
 ) => {
   if (!wallet.publicKey) throw new WalletNotConnectedError();
 
@@ -322,7 +322,7 @@ export const sendTransactionWithRetry = async (
     transaction.setSigners(
       // fee payed by the wallet owner
       wallet.publicKey,
-      ...signers.map((s) => s.publicKey),
+      ...signers.map((s) => s.publicKey)
     );
   }
 
@@ -369,7 +369,7 @@ export async function sendSignedTransaction({
     rawTransaction,
     {
       skipPreflight: true,
-    },
+    }
   );
 
   console.log("Started awaiting confirmation for", txid);
@@ -389,7 +389,7 @@ export async function sendSignedTransaction({
       timeout,
       connection,
       "recent",
-      true,
+      true
     );
 
     if (!confirmation)
@@ -418,7 +418,7 @@ export async function sendSignedTransaction({
           const line = simulateResult.logs[i];
           if (line.startsWith("Program log: ")) {
             throw new Error(
-              "Transaction failed: " + line.slice("Program log: ".length),
+              "Transaction failed: " + line.slice("Program log: ".length)
             );
           }
         }
@@ -437,12 +437,12 @@ export async function sendSignedTransaction({
 async function simulateTransaction(
   connection: Connection,
   transaction: Transaction,
-  commitment: Commitment,
+  commitment: Commitment
 ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
   // @ts-ignore
   transaction.recentBlockhash = await connection._recentBlockhash(
     // @ts-ignore
-    connection._disableBlockhashCaching,
+    connection._disableBlockhashCaching
   );
 
   const signData = transaction.serializeMessage();
@@ -465,7 +465,7 @@ async function awaitTransactionSignatureConfirmation(
   timeout: number,
   connection: Connection,
   commitment: Commitment = "recent",
-  queryStatus = false,
+  queryStatus = false
 ): Promise<SignatureStatus | null | void> {
   let done = false;
   let status: SignatureStatus | null | void = {
@@ -501,7 +501,7 @@ async function awaitTransactionSignatureConfirmation(
             resolve(status);
           }
         },
-        commitment,
+        commitment
       );
     } catch (e) {
       done = true;

@@ -16,10 +16,10 @@ import {
 } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { AppBar } from "./components";
-import { Home, Rarity, Team } from "pages";
-import { DEFAULT_TIMEOUT } from "utils/connection";
-import { theme } from "theme/Theme.styled";
-import GlobalStyles from "theme/Global";
+import { Home, Rarity, Team } from "./pages";
+import { DEFAULT_TIMEOUT } from "./utils/connection";
+import { theme } from "./theme/Theme.styled";
+import GlobalStyles from "./theme/Global";
 import "./App.css";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
@@ -61,7 +61,7 @@ const App = () => {
       getSolletWallet(),
       getSolletExtensionWallet(),
     ],
-    [],
+    []
   );
 
   return (

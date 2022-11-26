@@ -38,8 +38,8 @@
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",
-    "format:fix": "prettier --write \"./src/**/*.{ts,tsx}\"",
-    "format:check": "prettier -c \"./src/**/*.{ts,tsx}\"",
+    "format:fix": "prettier --write .",
+    "format:check": "prettier -c .",
     "lint": "eslint src --fix --ext js,ts,tsx",
     "lint-staged": "lint-staged --config lint-staged.config.js",
     "prepare": "husky install",
