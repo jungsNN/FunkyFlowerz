@@ -1,7 +1,7 @@
 import { Container, Grid, Typography } from "@material-ui/core";
 import styled, { useTheme } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Button from "@/components/Button";
+import { Button } from "@/components";
 import { Col, Row } from "@/components/shared";
 import {
   InstagramIcon,

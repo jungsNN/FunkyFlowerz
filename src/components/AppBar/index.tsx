@@ -34,9 +34,8 @@ import {
   getAtaForMint,
   toDate,
 } from "@/utils/candy-utils";
-import { MintCountdown } from "@/components/Mint/MintCountdown";
-import { MintButton } from "@/components/Mint/MintButton";
-import FunkyFlowerzLogo from "@/components/svgs/FunkyFlowerzLogo";
+import { MintButton, MintCountdown } from "@/components";
+import { FunkyFlowerzLogo } from "@/components/svgs";
 import useStore from "@/hooks/useStore";
 import useWindowSize from "@/hooks/useWindowSize";
 

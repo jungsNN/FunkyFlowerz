@@ -15,9 +15,9 @@ import {
   WalletProvider,
 } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
-import AppBar from "@/components/AppBar";
-import { DEFAULT_TIMEOUT } from "@/utils/connection";
+import { AppBar } from "./components";
 import { Home, Rarity, Team } from "@/pages";
+import { DEFAULT_TIMEOUT } from "@/utils/connection";
 import { theme } from "@/theme/Theme.styled";
 import GlobalStyles from "@/theme/Global";
 import "./App.css";

@@ -2,7 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["./src/components/*"],
+      "@/components": ["./src/components/index.ts"],
+      "@/components/svgs": ["./src/components/svgs/index.ts"],
+      "@/components/shared": ["./src/components/shared.tsx"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/pages": ["./src/pages/index.ts"],
       "@/utils/*": ["./src/utils/*"],
