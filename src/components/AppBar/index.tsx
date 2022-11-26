@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import { Button } from "@mui/material";
 import { Container, Snackbar } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
@@ -37,6 +36,7 @@ import {
 import { FunkyFlowerzLogo } from "../svgs";
 import { MintButton, MintCountdown } from "../Mint";
 import { useStore, useWindowSize } from "../../hooks";
+import { Grid } from "../shared";
 
 export interface AppBarProps {
   candyMachineId?: anchor.web3.PublicKey;
@@ -587,7 +587,9 @@ const AppBar = (props: AppBarProps) => {
   };
 
   return (
-    <Container style={{ marginTop: 20, marginBottom: isMobile ? 100 : 64 }}>
+    <Container
+      style={{ marginTop: 20, marginBottom: store.isMobile ? "48px" : "64px" }}
+    >
       <Container>
         <Paper
           elevation={0}
@@ -605,12 +607,7 @@ const AppBar = (props: AppBarProps) => {
                   <FunkyFlowerzLogo />
                 </div>
                 <div>
-                  <Grid
-                    container
-                    direction="row"
-                    alignItems="center"
-                    style={{ gridGap: "60px" }}
-                  >
+                  <NavbarMenu container display="grid">
                     <Button
                       onClick={() => navigate("/")}
                       variant="text"
@@ -632,7 +629,7 @@ const AppBar = (props: AppBarProps) => {
                     >
                       Team
                     </Button>
-                  </Grid>
+                  </NavbarMenu>
                 </div>
               </>
             )}
@@ -788,10 +785,17 @@ const AppBarGrid = styled.div<{ isMobile: boolean }>`
   grid-template-rows: ${({ isMobile }) => (isMobile ? "1fr 1fr" : "unset")};
   grid-template-columns: ${({ isMobile }) =>
     isMobile ? "unset" : "1fr auto auto"};
-  grid-gap: ${({ isMobile }) => (isMobile ? "20px" : "48px")};
+  grid-gap: ${({ isMobile }) => (isMobile ? "16px" : "48px")};
 
   .home-logo {
     cursor: pointer;
+    width: 48px;
+    height: 48px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .mobile-nav-links {
@@ -799,6 +803,10 @@ const AppBarGrid = styled.div<{ isMobile: boolean }>`
     grid-template-columns: 1fr auto;
     align-items: center;
     justify-content: space-between;
+  }
+
+  ${(props) => props.theme.mediaQueries.tablet} {
+    grid-gap: 32px;
   }
 `;
 
@@ -821,6 +829,10 @@ const MintButtonWrapper = styled.div`
 const MintContainer = styled.div`
   position: relative;
   min-width: 240px;
+
+  ${(props) => props.theme.mediaQueries.tablet} {
+    min-width: 196px;
+  }
 `;
 
 const MintDetails = styled.div`
@@ -829,6 +841,17 @@ const MintDetails = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   margin-top: 16px;
+`;
+
+const NavbarMenu = styled(Grid)`
+  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 64px;
+  justify-content: flex-end;
+
+  ${(props) => props.theme.mediaQueries.tablet} {
+    grid-gap: 48px;
+  }
 `;
 
 export default AppBar;

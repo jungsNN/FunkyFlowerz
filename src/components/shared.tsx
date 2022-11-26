@@ -164,4 +164,8 @@ export const Title = styled.h1<
     font-size: ${(props) => (props.small ? "16px" : "24px")};
     line-height: 25px;
   }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    line-height: 26px;
+  }
 `;
