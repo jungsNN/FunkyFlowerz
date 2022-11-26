@@ -1,5 +1,5 @@
-import { Container, Grid } from "@material-ui/core";
 import styled from "styled-components";
+import { Grid } from "../../components/shared";
 import { Page } from "../../components";
 import {
   RarityChartTitle,
@@ -10,69 +10,87 @@ import {
 const Rarity = () => {
   return (
     <Page>
-      <Grid container direction="column" style={{ gridGap: 140 }}>
-        <div className="rarity-chart">
+      <Container container direction="column">
+        <Section>
           <TitleWrapper>
             <RarityChartTitle />
           </TitleWrapper>
-          <RarityChart>
-            <img src="./rarity-chart.png" alt="rarity-chart" />
-          </RarityChart>
-        </div>
-        <div className="special-editions">
+          <img src="./rarity-chart.png" alt="rarity-chart" />
+        </Section>
+        <Section>
           <TitleWrapper>
             <SpecialEditionTitle />
           </TitleWrapper>
-          <SpecialEditions>
-            <img src="./special-editions.png" alt="rarity-chart" />
-          </SpecialEditions>
-        </div>
-        <div className="superior-traits">
+          <img src="./special-editions.png" alt="rarity-chart" />
+        </Section>
+        <Section>
           <TitleWrapper>
             <SuperiorTraitTitle />
           </TitleWrapper>
-          <SuperiorTraits>
-            <img src="./superior-traits.png" alt="rarity-chart" />
-          </SuperiorTraits>
-        </div>
-      </Grid>
+          <img src="./superior-traits.png" alt="rarity-chart" />
+        </Section>
+      </Container>
     </Page>
   );
 };
 
+const Container = styled(Grid)`
+  grid-gap: 144px;
+
+  ${(props) => props.theme.mediaQueries.desktop} {
+    grid-gap: 128px;
+  }
+
+  ${(props) => props.theme.mediaQueries.tablet} {
+    grid-gap: 96px;
+  }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    grid-gap: 64px;
+  }
+`;
+
 const TitleWrapper = styled.div`
-  padding-left: 2rem;
+  width: 100%;
+  min-width: 192px;
+  max-width: calc(100vw / 1.5);
+
   svg {
     width: 100%;
     height: 100%;
-    max-width: calc(100vw / 2);
+  }
+
+  ${(props) => props.theme.mediaQueries.desktopXl} {
+    max-width: 896px;
   }
 `;
 
-const RarityChart = styled(Container)`
-  padding-top: 60px;
+const Section = styled(Grid)`
+  display: grid;
+  flex-direction: row;
+  grid-gap: 64px;
+  padding-left: 32px;
+  padding-right: 32px;
 
   img {
     width: 100%;
     height: 100%;
   }
-`;
 
-const SpecialEditions = styled(Container)`
-  padding-top: 60px;
-
-  img {
-    width: 100%;
-    height: 100%;
+  ${(props) => props.theme.mediaQueries.desktop} {
+    grid-gap: 48px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
-`;
 
-const SuperiorTraits = styled(Container)`
-  padding-top: 60px;
+  ${(props) => props.theme.mediaQueries.desktop} {
+    grid-gap: 32px;
+  }
 
-  img {
-    width: 100%;
-    height: 100%;
+  ${(props) => props.theme.mediaQueries.mobile} {
+    grid-gap: 24px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 `;
 

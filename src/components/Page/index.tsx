@@ -25,7 +25,7 @@ const Wrapper = styled(Flex)`
     padding-right: 128px;
   }
 
-  ${(props) => props.theme.mediaQueries.tablet} {
+  ${(props) => props.theme.mediaQueries.mobile} {
     padding-left: 24px;
     padding-right: 24px;
   }
