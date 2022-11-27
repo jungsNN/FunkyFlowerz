@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { WalletModalButton } from "@solana/wallet-adapter-react-ui";
 import Button from "../Button";
 import { MoreIcon, WalletIcon } from "../svgs";
-import { Grid, Text } from "../shared";
+import { Grid } from "../shared";
 import SideDrawer from "../SideDrawer";
 import Wallet from "../Wallet";
 
@@ -44,7 +43,7 @@ const Menu = ({ onNavigate }: { onNavigate: (path: string) => void }) => {
     </NavLinks>
   );
 };
-
+// "#1976d2
 const MobileNavBar = ({
   onNavigate,
 }: {
@@ -60,28 +59,14 @@ const MobileNavBar = ({
       gridCols="repeat(2, 1fr)"
       justify="justify-between"
     >
-      <Wallet
-        customButton={
-          <MobileIconWallet>
-            <div style={{ height: "40px" }}>
-              <WalletIcon stroke="#FF5FDC" bg="black" />
-            </div>
-            <Text
-              bold
-              color="#ffffffd1"
-              style={{ fontSize: "10px", marginTop: "2px" }}
-            >
-              Connect
-            </Text>
-          </MobileIconWallet>
-        }
-      />
+      <Button fullWidth={false}>
+        <WalletIcon stroke="dodgerblue" />
+      </Button>
       <SideDrawer
         actionButton={
           <MoreIcon
             height="48px"
             stroke="#ffffffd1"
-            bg="black"
             width="48px"
             variant="rounded-filled"
           />
@@ -130,24 +115,8 @@ const NavLinks = styled(Grid)`
   }
 `;
 
-const MobileIconWallet = styled(WalletModalButton)`
-  padding: 0;
-  margin: 0;
-  background: transparent;
-  border: none;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MobileWallet = styled(Wallet)`
-  ${(props) => props.theme.mediaQueries.mobile} {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 48px;
-    min-width: 0;
-  }
-`;
+const MobileWallet = styled(Wallet)``;
+// @media (max-width: 374px) {}
+// width: 160px;
 
 export default NavBar;

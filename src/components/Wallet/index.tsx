@@ -7,7 +7,8 @@ import {
 } from "@solana/web3.js";
 import { GatewayProvider } from "@civic/solana-gateway-react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { WalletModalButton } from "@solana/wallet-adapter-react-ui";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import styled from "styled-components";
@@ -28,17 +29,13 @@ import {
   getCountdownDate,
   toDate,
 } from "../../utils/candy-utils";
-import ConnectButton from "./ConnectButton";
-import { Grid, Text } from "../shared";
-import { MintButton, MintContainer, MintCountdown } from "../Mint";
+import colors from "../../theme/colors";
+import { Grid, Text, Title } from "../shared";
+import { MintButton, MintCountdown } from "../Mint";
+import { WalletIcon } from "../svgs";
 import { useStore } from "../../hooks";
 
-interface WalletProps {
-  customButton?: React.ReactNode;
-}
-
-const Wallet: React.FC<WalletProps> = (props) => {
-  const { customButton, ...rest } = props;
+const Wallet: React.FC = () => {
   const store = useStore();
   const candy = store.connection;
   const [isUserMinting, setIsUserMinting] = useState(false);
@@ -521,9 +518,19 @@ const Wallet: React.FC<WalletProps> = (props) => {
 
   return (
     <>
-      <MintContainer {...rest}>
+      <MintContainer>
         {!wallet.connected ? (
-          customButton ?? <ConnectButton isMobile={store.isMobile} />
+          <ConnectButton>
+            {store.isMobile && (
+              <Grid display="grid" gap="4px" gridFlow="column" justify="center">
+                <Title small style={{ marginTop: "8px" }}>
+                  Connect
+                </Title>
+                <WalletIcon width="32px" height="32px" bg={colors.pink} />
+              </Grid>
+            )}
+            {!store.isMobile && "Connect Wallet"}
+          </ConnectButton>
         ) : (
           <>
             {!!candyMachine && (
@@ -643,17 +650,46 @@ const Wallet: React.FC<WalletProps> = (props) => {
   );
 };
 
+const ConnectButton = styled(WalletModalButton)`
+  width: 100%;
+  padding: 32px 24px;
+  background: #ff5fdc;
+  color: white;
+  font-family: inherit;
+  font-weight: 700;
+  border-radius: 20px;
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    border-radius: 16px;
+    padding: 16px 8px;
+    max-width: 128px;
+
+    > & * {
+      p {
+        margin-top: 8px;
+      }
+    }
+  }
+`;
+
 const MintButtonWrapper = styled.div`
   min-width: 237px;
 `;
 
-// const StyledMintContainer = styled(MintContainer)`
-//   ${(props) => props.theme.mediaQueries.mobile} {
-//     display: flex;
-//     justify-content: flex-end;
-//     padding-right: 48px;
-//   }
-// `;
+const MintContainer = styled.div`
+  position: relative;
+  min-width: 240px;
+
+  ${(props) => props.theme.mediaQueries.tablet} {
+    min-width: 196px;
+  }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 48px;
+  }
+`;
 
 const MintDetails = styled.div`
   width: 100%;
