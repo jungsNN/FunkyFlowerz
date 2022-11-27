@@ -37,7 +37,7 @@
   },
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts --openssl-legacy-provider build",
+    "build": "react-scripts --openssl-legacy-provider build || react-scripts build",
     "format:fix": "prettier --write .",
     "format:check": "prettier -c .",
     "lint": "eslint src --fix --ext js,ts,tsx",
