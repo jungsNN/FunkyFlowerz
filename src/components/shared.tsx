@@ -79,6 +79,7 @@ export const Grid = styled(MuiGrid)<
   display: ${(props) => props.display};
   flex-direction: ${(props) => `${props.by ?? props.direction}`};
   justify-content: ${(props) => props.justify ?? "start"};
+  grid-auto-flow: ${(props) => props.gridFlow};
   grid-template-columns: ${(props) => props.gridCols ?? "unset"};
   grid-template-rows: ${(props) => props.gridRows ?? "unset"};
   margin: ${(props) => `${props.m ?? 0}`};

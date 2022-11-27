@@ -2,7 +2,6 @@ import * as anchor from "@project-serum/anchor";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
-import { Button } from "@mui/material";
 import { Container, Snackbar } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -34,9 +33,10 @@ import {
   toDate,
 } from "../../utils/candy-utils";
 import { FunkyFlowerzLogo } from "../svgs";
-import { MintButton, MintCountdown } from "../Mint";
-import { useStore, useWindowSize } from "../../hooks";
 import { Grid } from "../shared";
+import { MintButton, MintCountdown } from "../Mint";
+import NavBar from "../NavBar";
+import { useStore, useWindowSize } from "../../hooks";
 
 export interface AppBarProps {
   candyMachineId?: anchor.web3.PublicKey;
@@ -535,56 +535,160 @@ const AppBar = (props: AppBarProps) => {
     </MintButtonWrapper>
   );
 
-  const mobileNavLinks = () => {
-    const navLinkTextStyle = {
-      fontWeight: "bold",
-      fontSize: "15px",
-      color: "white",
-    };
+  const mintContainer = () => {
     return (
-      <div className="mobile-nav-links">
-        <div className="home-logo" onClick={() => navigate("/")}>
-          <FunkyFlowerzLogo width="35px" height="35px" />
-        </div>
-        <div>
-          <Grid
-            container
-            direction="row"
-            alignItems="center"
-            style={{ gridGap: "20px" }}
-          >
-            <Button
-              onClick={() => navigate("/")}
-              variant="text"
-              style={navLinkTextStyle}
-            >
-              Home
-            </Button>
-            <Button
-              onClick={() => navigate("rarity")}
-              variant="text"
-              style={navLinkTextStyle}
-            >
-              Rarity
-            </Button>
-            <Button
-              onClick={() => navigate("team")}
-              variant="text"
-              style={navLinkTextStyle}
-            >
-              Team
-            </Button>
-          </Grid>
-        </div>
-      </div>
+      <MintContainer>
+        {!wallet.connected ? (
+          <ConnectButton>Connect Wallet</ConnectButton>
+        ) : (
+          <>
+            {!!candyMachine && (
+              <>
+                {mintButton()}
+                <MintDetails>
+                  <Grid container direction="row">
+                    <Grid item xs={4}>
+                      <Typography variant="body2" color="textSecondary">
+                        Remaining
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        color="textPrimary"
+                        style={{
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {`${itemsRemaining}`}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography variant="body2" color="textSecondary">
+                        {isWhitelistUser && discountPrice
+                          ? "Discount Price"
+                          : "Price"}
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        color="textPrimary"
+                        style={{
+                          fontWeight: "bold",
+                          whiteSpace: "nowrap",
+                          wordBreak: "keep-all",
+                        }}
+                      >
+                        {isWhitelistUser && discountPrice
+                          ? `◎ ${formatNumber.asNumber(discountPrice)}`
+                          : `◎ ${formatNumber.asNumber(
+                              candyMachine.state.price
+                            )}`}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      {isActive && endDate && Date.now() < endDate.getTime() ? (
+                        <>
+                          <MintCountdown
+                            key="endSettings"
+                            date={getCountdownDate(candyMachine)}
+                            style={{ justifyContent: "flex-end" }}
+                            status="COMPLETED"
+                            onComplete={toggleMintButton}
+                          />
+                          <Typography
+                            variant="caption"
+                            align="center"
+                            display="block"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            TO END OF MINT
+                          </Typography>
+                        </>
+                      ) : (
+                        <>
+                          <MintCountdown
+                            key="goLive"
+                            date={getCountdownDate(candyMachine)}
+                            style={{ justifyContent: "flex-end" }}
+                            status={
+                              candyMachine?.state?.isSoldOut ||
+                              (endDate && Date.now() > endDate.getTime())
+                                ? "COMPLETED"
+                                : isPresale
+                                ? "PRESALE"
+                                : "LIVE"
+                            }
+                            onComplete={toggleMintButton}
+                          />
+                          {isPresale &&
+                            candyMachine.state.goLiveDate &&
+                            candyMachine.state.goLiveDate.toNumber() >
+                              new Date().getTime() / 1000 && (
+                              <Typography
+                                variant="caption"
+                                align="center"
+                                display="block"
+                                style={{ fontWeight: "bold" }}
+                              >
+                                UNTIL PUBLIC MINT
+                              </Typography>
+                            )}
+                        </>
+                      )}
+                    </Grid>
+                  </Grid>
+                </MintDetails>
+              </>
+            )}
+          </>
+        )}
+      </MintContainer>
     );
   };
 
-  const navButtonStyle = {
-    color: "#fff",
-    fontSize: "16px",
-    fontWeight: "bold",
-  };
+  // const mobileNavLinks = () => {
+  //   const navLinkTextStyle = {
+  //     fontWeight: "bold",
+  //     fontSize: "15px",
+  //     color: "white",
+  //   };
+  //   return (
+  //     <div className="mobile-nav-links">
+  //       <Grid
+  //         container
+  //         direction="row"
+  //         alignItems="center"
+  //         style={{ gridGap: "20px" }}
+  //       >
+  //         <Button
+  //           onClick={() => navigate("/")}
+  //           variant="text"
+  //           style={navLinkTextStyle}
+  //         >
+  //           Home
+  //         </Button>
+  //         <Button
+  //           onClick={() => navigate("rarity")}
+  //           variant="text"
+  //           style={navLinkTextStyle}
+  //         >
+  //           Rarity
+  //         </Button>
+  //         <Button
+  //           onClick={() => navigate("team")}
+  //           variant="text"
+  //           style={navLinkTextStyle}
+  //         >
+  //           Team
+  //         </Button>
+  //       </Grid>
+  //     </div>
+  //   );
+  // };
+
+  // const navButtonStyle = {
+  //   color: "#fff",
+  //   fontSize: "16px",
+  //   fontWeight: "bold",
+  // };
 
   return (
     <Container
@@ -598,16 +702,25 @@ const AppBar = (props: AppBarProps) => {
             backgroundColor: "transparent",
           }}
         >
-          <AppBarGrid isMobile={isMobile}>
-            {isMobile ? (
-              mobileNavLinks()
-            ) : (
-              <>
-                <div className="home-logo" onClick={() => navigate("/")}>
-                  <FunkyFlowerzLogo />
-                </div>
-                <div>
-                  <NavbarMenu container display="grid">
+          <AppBarGrid display="grid" isMobile={isMobile}>
+            <div className="home-logo" onClick={() => navigate("/")}>
+              <FunkyFlowerzLogo />
+            </div>
+            <Grid display="grid" gap="32px" gridFlow="column">
+              <NavBar
+                isMobile={store.isMobile}
+                onNavigate={(path: string) => navigate(path)}
+              />
+              {/* {isMobile ? (
+                <Grid item align="center" display="grid" gap="32px" justify="justify-between">
+                  <Button>
+                    <WalletIcon />
+                  </Button>
+                  {mobileNavLinks()}
+                </Grid>
+              ) : (
+                <>
+                  <NavbarMenu container display="grid" by="column">
                     <Button
                       onClick={() => navigate("/")}
                       variant="text"
@@ -630,115 +743,10 @@ const AppBar = (props: AppBarProps) => {
                       Team
                     </Button>
                   </NavbarMenu>
-                </div>
-              </>
-            )}
-            <MintContainer>
-              {!wallet.connected ? (
-                <ConnectButton>Connect Wallet</ConnectButton>
-              ) : (
-                <>
-                  {!!candyMachine && (
-                    <>
-                      {mintButton()}
-                      <MintDetails>
-                        <Grid container direction="row">
-                          <Grid item xs={4}>
-                            <Typography variant="body2" color="textSecondary">
-                              Remaining
-                            </Typography>
-                            <Typography
-                              variant="h6"
-                              color="textPrimary"
-                              style={{
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {`${itemsRemaining}`}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={4}>
-                            <Typography variant="body2" color="textSecondary">
-                              {isWhitelistUser && discountPrice
-                                ? "Discount Price"
-                                : "Price"}
-                            </Typography>
-                            <Typography
-                              variant="h6"
-                              color="textPrimary"
-                              style={{
-                                fontWeight: "bold",
-                                whiteSpace: "nowrap",
-                                wordBreak: "keep-all",
-                              }}
-                            >
-                              {isWhitelistUser && discountPrice
-                                ? `◎ ${formatNumber.asNumber(discountPrice)}`
-                                : `◎ ${formatNumber.asNumber(
-                                    candyMachine.state.price
-                                  )}`}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={4}>
-                            {isActive &&
-                            endDate &&
-                            Date.now() < endDate.getTime() ? (
-                              <>
-                                <MintCountdown
-                                  key="endSettings"
-                                  date={getCountdownDate(candyMachine)}
-                                  style={{ justifyContent: "flex-end" }}
-                                  status="COMPLETED"
-                                  onComplete={toggleMintButton}
-                                />
-                                <Typography
-                                  variant="caption"
-                                  align="center"
-                                  display="block"
-                                  style={{ fontWeight: "bold" }}
-                                >
-                                  TO END OF MINT
-                                </Typography>
-                              </>
-                            ) : (
-                              <>
-                                <MintCountdown
-                                  key="goLive"
-                                  date={getCountdownDate(candyMachine)}
-                                  style={{ justifyContent: "flex-end" }}
-                                  status={
-                                    candyMachine?.state?.isSoldOut ||
-                                    (endDate && Date.now() > endDate.getTime())
-                                      ? "COMPLETED"
-                                      : isPresale
-                                      ? "PRESALE"
-                                      : "LIVE"
-                                  }
-                                  onComplete={toggleMintButton}
-                                />
-                                {isPresale &&
-                                  candyMachine.state.goLiveDate &&
-                                  candyMachine.state.goLiveDate.toNumber() >
-                                    new Date().getTime() / 1000 && (
-                                    <Typography
-                                      variant="caption"
-                                      align="center"
-                                      display="block"
-                                      style={{ fontWeight: "bold" }}
-                                    >
-                                      UNTIL PUBLIC MINT
-                                    </Typography>
-                                  )}
-                              </>
-                            )}
-                          </Grid>
-                        </Grid>
-                      </MintDetails>
-                    </>
-                  )}
                 </>
-              )}
-            </MintContainer>
+              )} */}
+              {!isMobile && mintContainer()}
+            </Grid>
           </AppBarGrid>
         </Paper>
       </Container>
@@ -779,13 +787,11 @@ const getCountdownDate = (
   );
 };
 
-const AppBarGrid = styled.div<{ isMobile: boolean }>`
-  display: grid;
-  align-items: ${({ isMobile }) => (isMobile ? "unset" : "center")};
-  grid-template-rows: ${({ isMobile }) => (isMobile ? "1fr 1fr" : "unset")};
-  grid-template-columns: ${({ isMobile }) =>
-    isMobile ? "unset" : "1fr auto auto"};
-  grid-gap: ${({ isMobile }) => (isMobile ? "16px" : "48px")};
+const AppBarGrid = styled(Grid)<{ isMobile: boolean }>`
+  align-items: center;
+  grid-template-columns: auto auto;
+  grid-gap: 48px;
+  justify-content: space-between;
 
   .home-logo {
     cursor: pointer;
@@ -796,13 +802,6 @@ const AppBarGrid = styled.div<{ isMobile: boolean }>`
       width: 100%;
       height: 100%;
     }
-  }
-
-  .mobile-nav-links {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    justify-content: space-between;
   }
 
   ${(props) => props.theme.mediaQueries.tablet} {
@@ -843,15 +842,15 @@ const MintDetails = styled.div`
   margin-top: 16px;
 `;
 
-const NavbarMenu = styled(Grid)`
-  align-items: center;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 64px;
-  justify-content: flex-end;
+// const NavbarMenu = styled(Grid)`
+//   align-items: center;
+//   grid-template-columns: repeat(3, 1fr);
+//   grid-gap: 64px;
+//   justify-content: flex-end;
 
-  ${(props) => props.theme.mediaQueries.tablet} {
-    grid-gap: 48px;
-  }
-`;
+//   ${(props) => props.theme.mediaQueries.tablet} {
+//     grid-gap: 48px;
+//   }
+// `;
 
 export default AppBar;
