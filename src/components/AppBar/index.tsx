@@ -25,8 +25,8 @@ const AppBar = () => {
   return (
     <Container
       style={{
-        marginTop: "32px",
-        marginBottom: store.isMobile ? "48px" : "64px",
+        marginTop: store.isMobile ? "16px" : "32px",
+        marginBottom: store.isMobile ? "32px" : "64px",
       }}
     >
       <Container>

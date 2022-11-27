@@ -58,11 +58,18 @@ export default function SideDrawer(props: SideDrawerProps) {
               onClick={toggleDrawer(false)}
               style={{
                 position: "absolute",
-                top: "calc(100vh / 2 - 20px)",
+                top: "calc(100vh / 2 - 18px)",
                 justifyContent: "flex-start",
               }}
             >
-              {<DragEdge width="40px" height="40px" stroke={colors.primary} />}
+              {
+                <DragEdge
+                  width="24px"
+                  height="32px"
+                  stroke="#005b5b"
+                  bg="none"
+                />
+              }
             </Button>
           </Box>
         </Drawer>

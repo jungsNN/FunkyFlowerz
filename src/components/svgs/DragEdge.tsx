@@ -25,7 +25,7 @@ const DragEdge: React.FC<DragEdgeProps> = (props) => {
       <path
         d="M2 3L2 13"
         stroke={stroke ?? "#BEDFFF"}
-        strokeWidth="1.5"
+        strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
