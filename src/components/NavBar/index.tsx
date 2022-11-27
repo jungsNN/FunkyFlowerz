@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { useState } from "react";
 import Button from "../Button";
-import { HamburgerMenuIcon, WalletIcon } from "../svgs";
+import { MoreIcon, WalletIcon } from "../svgs";
 import { Grid } from "../shared";
+import SideDrawer from "../SideDrawer";
+import Wallet from "../Wallet";
 
 interface NavBarProps {
   isMobile: boolean;
@@ -42,10 +43,12 @@ const Menu = ({ onNavigate }: { onNavigate: (path: string) => void }) => {
     </NavLinks>
   );
 };
-
-const MobileNavBar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+// "#1976d2
+const MobileNavBar = ({
+  onNavigate,
+}: {
+  onNavigate: (path: string) => void;
+}) => {
   return (
     <Grid
       item
@@ -56,15 +59,29 @@ const MobileNavBar = () => {
       gridCols="repeat(2, 1fr)"
       justify="justify-between"
     >
-      <Button>
-        <WalletIcon />
+      <Button fullWidth={false}>
+        <WalletIcon stroke="dodgerblue" />
       </Button>
-      <Button
-        style={{ zIndex: "20" }}
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      <SideDrawer
+        actionButton={
+          <MoreIcon
+            height="48px"
+            stroke="#ffffffd1"
+            width="48px"
+            variant="rounded-filled"
+          />
+        }
       >
-        <HamburgerMenuIcon color="white" />
-      </Button>
+        <Grid
+          direction="column"
+          align="center"
+          justify="space-between"
+          pt="48px"
+        >
+          <MobileWallet />
+          <Menu onNavigate={onNavigate} />
+        </Grid>
+      </SideDrawer>
     </Grid>
   );
 };
@@ -73,7 +90,11 @@ const NavBar: React.FC<NavBarProps> = (props) => {
   const isMobile = props.isMobile;
   const onNavigate = props.onNavigate;
 
-  return isMobile ? <MobileNavBar /> : <Menu onNavigate={onNavigate} />;
+  return isMobile ? (
+    <MobileNavBar onNavigate={onNavigate} />
+  ) : (
+    <Menu onNavigate={onNavigate} />
+  );
 };
 
 const NavLinks = styled(Grid)`
@@ -85,6 +106,17 @@ const NavLinks = styled(Grid)`
   ${(props) => props.theme.mediaQueries.tablet} {
     grid-gap: 40px;
   }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    grid-template-columns: auto;
+    grid-template-rows: repeat(3, 1fr);
+    padding-right: 48px;
+    padding-top: 48px;
+  }
 `;
+
+const MobileWallet = styled(Wallet)``;
+// @media (max-width: 374px) {}
+// width: 160px;
 
 export default NavBar;

@@ -6,6 +6,7 @@ import {
   SYSVAR_RENT_PUBKEY,
   TransactionInstruction,
 } from "@solana/web3.js";
+import { CandyMachineAccount } from "./candy-machine";
 
 export interface AlertState {
   open: boolean;
@@ -20,6 +21,25 @@ export const toDate = (value?: anchor.BN) => {
   }
 
   return new Date(value.toNumber() * 1000);
+};
+
+export const getCountdownDate = (
+  candyMachine: CandyMachineAccount
+): Date | undefined => {
+  if (
+    candyMachine.state.isActive &&
+    candyMachine.state.endSettings?.endSettingType.date
+  ) {
+    return toDate(candyMachine.state.endSettings.number);
+  }
+
+  return toDate(
+    candyMachine.state.goLiveDate
+      ? candyMachine.state.goLiveDate
+      : candyMachine.state.isPresale
+      ? new anchor.BN(new Date().getTime() / 1000)
+      : undefined
+  );
 };
 
 const numberFormater = new Intl.NumberFormat("en-US", {

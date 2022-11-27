@@ -1,6 +1,6 @@
 import * as anchor from "@project-serum/anchor";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { ThemeProvider } from "styled-components";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
@@ -17,10 +17,10 @@ import {
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { AppBar } from "./components";
 import { Home, Rarity, Team } from "./pages";
-import { DEFAULT_TIMEOUT } from "./utils/connection";
 import { theme } from "./theme/Theme.styled";
 import GlobalStyles from "./theme/Global";
 import "./App.css";
+import { useStore } from "./hooks";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
@@ -53,6 +53,7 @@ const rpcHost =
 const connection = new anchor.web3.Connection(rpcHost);
 
 const App = () => {
+  const store = useStore();
   const wallets = useMemo(
     () => [
       getPhantomWallet(),
@@ -61,8 +62,19 @@ const App = () => {
       getSolletWallet(),
       getSolletExtensionWallet(),
     ],
-    []
+    [defaultNetwork]
   );
+
+  useEffect(() => {
+    store.setConnection({
+      candyMachineId,
+      connection,
+      defaultNetwork,
+      error,
+      network: defaultNetwork,
+      rpcHost,
+    });
+  }, [candyMachineId, connection, defaultNetwork, error, rpcHost]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -72,12 +84,12 @@ const App = () => {
           <WalletModalProvider>
             <BrowserRouter>
               <AppBar
-                candyMachineId={candyMachineId}
-                connection={connection}
-                txTimeout={DEFAULT_TIMEOUT}
-                rpcHost={rpcHost}
-                network={defaultNetwork}
-                error={error}
+              // candyMachineId={candyMachineId}
+              // connection={connection}
+              // txTimeout={DEFAULT_TIMEOUT}
+              // rpcHost={rpcHost}
+              // network={defaultNetwork}
+              // error={error}
               />
               <Routes>
                 <Route path="/" element={<Home />} />

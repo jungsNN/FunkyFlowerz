@@ -37,6 +37,7 @@ export type Colors = {
   orange: string;
   primary: string;
   purple: string;
+  pink: string;
   secondary?: string;
   tertiary?: string;
   textPrimary?: string;

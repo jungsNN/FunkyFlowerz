@@ -1,7 +1,9 @@
+export { default as CloseIcon } from "./CloseIcon";
 export { default as FunkyFlowerzLogo } from "./FunkyFlowerzLogo";
 export { default as FunkyFlowerzTitle } from "./FunkyFlowerzTitle";
 export { default as HamburgerMenuIcon } from "./HamburgerMenu";
 export { default as InstagramIcon } from "./Instagram";
+export { default as MoreIcon } from "./MoreIcon";
 export { default as RarityChartTitle } from "./RarityChartTitle";
 export { default as SpecialEditionTitle } from "./SpecialEditionTitle";
 export { default as SuperiorTraitTitle } from "./SuperiorTraitTitle";
