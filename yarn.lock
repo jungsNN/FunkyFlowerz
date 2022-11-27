@@ -2876,11 +2876,6 @@
     "@ledgerhq/hw-transport-webhid" "^6.7.0"
     "@types/w3c-web-hid" "^1.0.2"
 
-"@solana/wallet-adapter-material-ui@^0.13.1":
-  version "0.13.1"
-  resolved "https://registry.npmjs.org/@solana/wallet-adapter-material-ui/-/wallet-adapter-material-ui-0.13.1.tgz"
-  integrity sha512-Dxr7sf3lGcHKGODRmozSXmwd99zvLHdmcv4L1gSN2BCf6BgVcM8cYrhQcffoKpT+TNgfcY2I2Yjukpd1xeGpng==
-
 "@solana/wallet-adapter-mathwallet@^0.7.0":
   version "0.7.0"
   resolved "https://registry.npmjs.org/@solana/wallet-adapter-mathwallet/-/wallet-adapter-mathwallet-0.7.0.tgz"

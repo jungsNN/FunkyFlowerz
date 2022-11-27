@@ -78,6 +78,10 @@ const Wallet: React.FC<WalletProps> = (props) => {
     } as anchor.Wallet;
   }, [wallet]);
 
+  useEffect(() => {
+    console.log({ store });
+  }, [store]);
+
   const refreshCandyMachineState = useCallback(
     async (commitment: Commitment = "confirmed") => {
       if (!anchorWallet) {
