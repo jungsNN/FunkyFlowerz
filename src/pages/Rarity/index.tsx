@@ -53,7 +53,7 @@ const Container = styled(Grid)`
 const TitleWrapper = styled.div`
   width: 100%;
   min-width: 192px;
-  max-width: calc(100vw / 1.5);
+  max-width: calc(100vw / 1.8);
 
   svg {
     width: 100%;
@@ -61,7 +61,7 @@ const TitleWrapper = styled.div`
   }
 
   ${(props) => props.theme.mediaQueries.desktopXl} {
-    max-width: 896px;
+    max-width: 720px;
   }
 `;
 
