@@ -15,7 +15,7 @@ const StyledMintContainer = styled.div`
   }
 
   ${(props) => props.theme.mediaQueries.mobile} {
-    min-width: 0;
+    min-width: 40px;
   }
 `;
 

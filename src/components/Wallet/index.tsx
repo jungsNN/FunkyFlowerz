@@ -22,32 +22,32 @@ import {
   SetupState,
 } from "../../utils/candy-machine";
 import {
-  AlertState,
   formatNumber,
   getAtaForMint,
   getCountdownDate,
   toDate,
 } from "../../utils/candy-utils";
 import ConnectButton from "./ConnectButton";
+import { ConnectionProps } from "../../models/connection";
 import { Grid, Text } from "../shared";
 import { MintButton, MintContainer, MintCountdown } from "../Mint";
 import { useStore } from "../../hooks";
 
-interface WalletProps {
+interface WalletProps extends ConnectionProps {
   customButton?: React.ReactNode;
 }
 
 const Wallet: React.FC<WalletProps> = (props) => {
   const { customButton, ...rest } = props;
   const store = useStore();
-  const candy = store.connection;
+  const error = useMemo(() => store.connection.error, []);
   const [isUserMinting, setIsUserMinting] = useState(false);
   const [candyMachine, setCandyMachine] = useState<CandyMachineAccount>();
-  const [alertState, setAlertState] = useState<AlertState>({
-    open: false,
-    message: "",
-    severity: undefined,
-  });
+  // const [alertState, setAlertState] = useState<AlertState>({
+  //   open: false,
+  //   message: "",
+  //   severity: undefined,
+  // });
   const [isActive, setIsActive] = useState(false);
   const [endDate, setEndDate] = useState<Date>();
   const [itemsRemaining, setItemsRemaining] = useState<number>();
@@ -58,9 +58,9 @@ const Wallet: React.FC<WalletProps> = (props) => {
   const [needTxnSplit, setNeedTxnSplit] = useState(true);
   const [setupTxn, setSetupTxn] = useState<SetupState>();
 
-  const rpcUrl = candy.rpcHost;
+  const rpcUrl = rest.rpcHost;
   const wallet = useWallet();
-  const cluster = candy.network;
+  const cluster = rest.network;
   const anchorWallet = useMemo(() => {
     if (
       !wallet ||
@@ -71,6 +71,11 @@ const Wallet: React.FC<WalletProps> = (props) => {
       return;
     }
 
+    store.setConnection({
+      ...store.connection,
+      connected: true,
+    });
+
     return {
       publicKey: wallet.publicKey,
       signAllTransactions: wallet.signAllTransactions,
@@ -78,32 +83,31 @@ const Wallet: React.FC<WalletProps> = (props) => {
     } as anchor.Wallet;
   }, [wallet]);
 
-  useEffect(() => {
-    console.log({ store });
-  }, [store]);
-
   const refreshCandyMachineState = useCallback(
     async (commitment: Commitment = "confirmed") => {
       if (!anchorWallet) {
         return;
       }
-      if (candy.error !== undefined) {
-        setAlertState({
-          open: true,
-          message: candy.error,
-          severity: "error",
-          hideDuration: null,
+      if (error !== undefined) {
+        store.setConnection({
+          ...store.connection,
+          error: {
+            open: true,
+            message: error.message,
+            severity: "error",
+            hideDuration: null,
+          },
         });
         return;
       }
 
-      const connection = new Connection(candy.rpcHost!, commitment);
+      const connection = new Connection(rest.rpcHost!, commitment);
 
-      if (candy.candyMachineId) {
+      if (rest.candyMachineId) {
         try {
           const cndy = await getCandyMachineState(
             anchorWallet,
-            candy.candyMachineId,
+            rest.candyMachineId,
             connection
           );
           process.env.NODE_ENV === "development" &&
@@ -230,7 +234,7 @@ const Wallet: React.FC<WalletProps> = (props) => {
             active = false;
           }
 
-          const [collectionPDA] = await getCollectionPDA(candy.candyMachineId);
+          const [collectionPDA] = await getCollectionPDA(rest.candyMachineId);
           const collectionPDAAccount = await connection.getAccountInfo(
             collectionPDA
           );
@@ -251,45 +255,55 @@ const Wallet: React.FC<WalletProps> = (props) => {
           setNeedTxnSplit(txnEstimate > 1230);
         } catch (e) {
           if (e instanceof Error) {
-            if (
-              e.message === `Account does not exist ${candy.candyMachineId}`
-            ) {
-              setAlertState({
-                open: true,
-                message: `Couldn't fetch candy machine state from candy machine with address: ${candy.candyMachineId}, using rpc: ${candy.rpcHost}! You probably typed the REACT_APP_CANDY_MACHINE_ID value in wrong in your .env file, or you are using the wrong RPC!`,
-                severity: "error",
-                hideDuration: null,
+            if (e.message === `Account does not exist ${rest.candyMachineId}`) {
+              store.setConnection({
+                ...store.connection,
+                error: {
+                  open: true,
+                  message: `Couldn't fetch candy machine state from candy machine with address: ${rest.candyMachineId}, using rpc: ${rest.rpcHost}! You probably typed the REACT_APP_CANDY_MACHINE_ID value in wrong in your .env file, or you are using the wrong RPC!`,
+                  severity: "error",
+                  hideDuration: null,
+                },
               });
             } else if (
               e.message.startsWith("failed to get info about account")
             ) {
-              setAlertState({
-                open: true,
-                message: `Couldn't fetch candy machine state with rpc: ${candy.rpcHost}! This probably means you have an issue with the REACT_APP_SOLANA_RPC_HOST value in your .env file, or you are not using a custom RPC!`,
-                severity: "error",
-                hideDuration: null,
+              store.setConnection({
+                ...store.connection,
+                error: {
+                  open: true,
+                  message: `Couldn't fetch candy machine state with rpc: ${rest.rpcHost}! This probably means you have an issue with the REACT_APP_SOLANA_RPC_HOST value in your .env file, or you are not using a custom RPC!`,
+                  severity: "error",
+                  hideDuration: null,
+                },
               });
             }
           } else {
-            setAlertState({
-              open: true,
-              message: `${e}`,
-              severity: "error",
-              hideDuration: null,
+            store.setConnection({
+              ...store.connection,
+              error: {
+                open: true,
+                message: `${e}`,
+                severity: "error",
+                hideDuration: null,
+              },
             });
           }
           console.log(e);
         }
       } else {
-        setAlertState({
-          open: true,
-          message: `Your REACT_APP_CANDY_MACHINE_ID value in the .env file doesn't look right! Make sure you enter it in as plain base-58 address!`,
-          severity: "error",
-          hideDuration: null,
+        store.setConnection({
+          ...store.connection,
+          error: {
+            open: true,
+            message: `Your REACT_APP_CANDY_MACHINE_ID value in the .env file doesn't look right! Make sure you enter it in as plain base-58 address!`,
+            severity: "error",
+            hideDuration: null,
+          },
         });
       }
     },
-    [anchorWallet, candy.candyMachineId, candy.error, candy.rpcHost]
+    [anchorWallet, rest.candyMachineId, rest.error, rest.rpcHost]
   );
 
   const onMint = async (
@@ -301,10 +315,13 @@ const Wallet: React.FC<WalletProps> = (props) => {
       if (wallet.connected && candyMachine?.program && wallet.publicKey) {
         let setupMint: SetupState | undefined;
         if (needTxnSplit && setupTxn === undefined) {
-          setAlertState({
-            open: true,
-            message: "Please sign account setup transaction",
-            severity: "info",
+          store.setConnection({
+            ...store.connection,
+            error: {
+              open: true,
+              message: "Please sign account setup transaction",
+              severity: "info",
+            },
           });
           setupMint = await createAccountsForMint(
             candyMachine,
@@ -314,33 +331,42 @@ const Wallet: React.FC<WalletProps> = (props) => {
           if (setupMint.transaction) {
             status = await awaitTransactionSignatureConfirmation(
               setupMint.transaction,
-              candy.txTimeout!,
-              candy.connection!,
+              rest.txTimeout!,
+              rest.connection!,
               true
             );
           }
           if (status && !status.err) {
             setSetupTxn(setupMint);
-            setAlertState({
-              open: true,
-              message:
-                "Setup transaction succeeded! Please sign minting transaction",
-              severity: "info",
+            store.setConnection({
+              ...store.connection,
+              error: {
+                open: true,
+                message:
+                  "Setup transaction succeeded! Please sign minting transaction",
+                severity: "info",
+              },
             });
           } else {
-            setAlertState({
-              open: true,
-              message: "Mint failed! Please try again!",
-              severity: "error",
+            store.setConnection({
+              ...store.connection,
+              error: {
+                open: true,
+                message: "Mint failed! Please try again!",
+                severity: "error",
+              },
             });
             setIsUserMinting(false);
             return;
           }
         } else {
-          setAlertState({
-            open: true,
-            message: "Please sign minting transaction",
-            severity: "info",
+          store.setConnection({
+            ...store.connection,
+            error: {
+              open: true,
+              message: "Please sign minting transaction",
+              severity: "info",
+            },
           });
         }
 
@@ -357,8 +383,8 @@ const Wallet: React.FC<WalletProps> = (props) => {
         if (mintResult) {
           status = await awaitTransactionSignatureConfirmation(
             mintResult.mintTxId,
-            candy.txTimeout!,
-            candy.connection!,
+            rest.txTimeout!,
+            rest.connection!,
             true
           );
 
@@ -378,27 +404,36 @@ const Wallet: React.FC<WalletProps> = (props) => {
           setIsActive((candyMachine.state.isActive = remaining > 0));
           candyMachine.state.isSoldOut = remaining === 0;
           setSetupTxn(undefined);
-          setAlertState({
-            open: true,
-            message: "Congratulations! Mint succeeded!",
-            severity: "success",
-            hideDuration: 7000,
+          store.setConnection({
+            ...store.connection,
+            error: {
+              open: true,
+              message: "Congratulations! Mint succeeded!",
+              severity: "success",
+              hideDuration: 7000,
+            },
           });
           refreshCandyMachineState("processed");
         } else if (status && !status.err) {
-          setAlertState({
-            open: true,
-            message:
-              "Mint likely failed! Anti-bot SOL 0.01 fee potentially charged! Check the explorer to confirm the mint failed and if so, make sure you are eligible to mint before trying again.",
-            severity: "error",
-            hideDuration: 8000,
+          store.setConnection({
+            ...store.connection,
+            error: {
+              open: true,
+              message:
+                "Mint likely failed! Anti-bot SOL 0.01 fee potentially charged! Check the explorer to confirm the mint failed and if so, make sure you are eligible to mint before trying again.",
+              severity: "error",
+              hideDuration: 8000,
+            },
           });
           refreshCandyMachineState();
         } else {
-          setAlertState({
-            open: true,
-            message: "Mint failed! Please try again!",
-            severity: "error",
+          store.setConnection({
+            ...store.connection,
+            error: {
+              open: true,
+              message: "Mint failed! Please try again!",
+              severity: "error",
+            },
           });
           refreshCandyMachineState();
         }
@@ -424,10 +459,13 @@ const Wallet: React.FC<WalletProps> = (props) => {
         }
       }
 
-      setAlertState({
-        open: true,
-        message,
-        severity: "error",
+      store.setConnection({
+        ...store.connection,
+        error: {
+          open: true,
+          message,
+          severity: "error",
+        },
       });
       // updates the candy machine state to reflect the latest
       // information on chain
@@ -464,8 +502,8 @@ const Wallet: React.FC<WalletProps> = (props) => {
     refreshCandyMachineState();
   }, [
     anchorWallet,
-    candy.candyMachineId,
-    candy.connection,
+    rest.candyMachineId,
+    rest.connection,
     refreshCandyMachineState,
   ]);
 
@@ -533,114 +571,122 @@ const Wallet: React.FC<WalletProps> = (props) => {
             {!!candyMachine && (
               <>
                 {mintButton()}
-                <MintDetails>
-                  <Grid container direction="row">
-                    <Grid item xs={4}>
-                      <Text variant="body2" color="textSecondary">
-                        Remaining
-                      </Text>
-                      <Text
-                        variant="h6"
-                        color="textPrimary"
-                        style={{
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {`${itemsRemaining}`}
-                      </Text>
+                {!store.isMobile && (
+                  <MintDetails>
+                    <Grid container direction="row">
+                      <Grid item xs={4}>
+                        <Text size="sm" variant="body2" color="textSecondary">
+                          Remaining
+                        </Text>
+                        <Text bold size="sm" variant="h6">
+                          {`${itemsRemaining}`}
+                        </Text>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Text size="sm" variant="body2" color="textSecondary">
+                          {isWhitelistUser && discountPrice
+                            ? "Discount Price"
+                            : "Price"}
+                        </Text>
+                        <Text
+                          bold
+                          size="sm"
+                          variant="h6"
+                          style={{
+                            whiteSpace: "nowrap",
+                            wordBreak: "keep-all",
+                          }}
+                        >
+                          {isWhitelistUser && discountPrice
+                            ? `◎ ${formatNumber.asNumber(discountPrice)}`
+                            : `◎ ${formatNumber.asNumber(
+                                candyMachine.state.price
+                              )}`}
+                        </Text>
+                      </Grid>
+                      <Grid item xs={4}>
+                        {isActive &&
+                        endDate &&
+                        Date.now() < endDate.getTime() ? (
+                          <>
+                            <MintCountdown
+                              key="endSettings"
+                              date={getCountdownDate(candyMachine)}
+                              style={{ justifyContent: "flex-end" }}
+                              status="COMPLETED"
+                              onComplete={toggleMintButton}
+                            />
+                            <Text
+                              bold
+                              variant="caption"
+                              align="center"
+                              display="block"
+                            >
+                              TO END OF MINT
+                            </Text>
+                          </>
+                        ) : (
+                          <>
+                            <MintCountdown
+                              key="goLive"
+                              date={getCountdownDate(candyMachine)}
+                              style={{ justifyContent: "flex-end" }}
+                              status={
+                                candyMachine?.state?.isSoldOut ||
+                                (endDate && Date.now() > endDate.getTime())
+                                  ? "COMPLETED"
+                                  : isPresale
+                                  ? "PRESALE"
+                                  : "LIVE"
+                              }
+                              onComplete={toggleMintButton}
+                            />
+                            {isPresale &&
+                              candyMachine.state.goLiveDate &&
+                              candyMachine.state.goLiveDate.toNumber() >
+                                new Date().getTime() / 1000 && (
+                                <Text
+                                  bold
+                                  variant="caption"
+                                  align="center"
+                                  display="block"
+                                >
+                                  UNTIL PUBLIC MINT
+                                </Text>
+                              )}
+                          </>
+                        )}
+                      </Grid>
                     </Grid>
-                    <Grid item xs={4}>
-                      <Text variant="body2" color="textSecondary">
-                        {isWhitelistUser && discountPrice
-                          ? "Discount Price"
-                          : "Price"}
-                      </Text>
-                      <Text
-                        variant="h6"
-                        color="textPrimary"
-                        style={{
-                          fontWeight: "bold",
-                          whiteSpace: "nowrap",
-                          wordBreak: "keep-all",
-                        }}
-                      >
-                        {isWhitelistUser && discountPrice
-                          ? `◎ ${formatNumber.asNumber(discountPrice)}`
-                          : `◎ ${formatNumber.asNumber(
-                              candyMachine.state.price
-                            )}`}
-                      </Text>
-                    </Grid>
-                    <Grid item xs={4}>
-                      {isActive && endDate && Date.now() < endDate.getTime() ? (
-                        <>
-                          <MintCountdown
-                            key="endSettings"
-                            date={getCountdownDate(candyMachine)}
-                            style={{ justifyContent: "flex-end" }}
-                            status="COMPLETED"
-                            onComplete={toggleMintButton}
-                          />
-                          <Text
-                            variant="caption"
-                            align="center"
-                            display="block"
-                            style={{ fontWeight: "bold" }}
-                          >
-                            TO END OF MINT
-                          </Text>
-                        </>
-                      ) : (
-                        <>
-                          <MintCountdown
-                            key="goLive"
-                            date={getCountdownDate(candyMachine)}
-                            style={{ justifyContent: "flex-end" }}
-                            status={
-                              candyMachine?.state?.isSoldOut ||
-                              (endDate && Date.now() > endDate.getTime())
-                                ? "COMPLETED"
-                                : isPresale
-                                ? "PRESALE"
-                                : "LIVE"
-                            }
-                            onComplete={toggleMintButton}
-                          />
-                          {isPresale &&
-                            candyMachine.state.goLiveDate &&
-                            candyMachine.state.goLiveDate.toNumber() >
-                              new Date().getTime() / 1000 && (
-                              <Text
-                                variant="caption"
-                                align="center"
-                                display="block"
-                                style={{ fontWeight: "bold" }}
-                              >
-                                UNTIL PUBLIC MINT
-                              </Text>
-                            )}
-                        </>
-                      )}
-                    </Grid>
-                  </Grid>
-                </MintDetails>
+                  </MintDetails>
+                )}
               </>
             )}
           </>
         )}
       </MintContainer>
       <Snackbar
-        open={alertState.open}
+        open={error?.open ?? false}
         autoHideDuration={
-          alertState.hideDuration === undefined ? 6000 : alertState.hideDuration
+          error?.hideDuration === undefined ? 6000 : error.hideDuration
         }
-        onClose={() => setAlertState({ ...alertState, open: false })}
+        onClose={() =>
+          store.setConnection({
+            ...store.connection,
+            error: { ...error, open: false },
+          })
+        }
       >
         <Alert
-          onClose={() => setAlertState({ ...alertState, open: false })}
-          severity={alertState.severity}
+          onClose={() =>
+            store.setConnection({
+              ...store.connection,
+              error: { ...error, open: false },
+            })
+          }
+          severity={error?.severity ?? "info"}
         >
-          {alertState.message}
+          {error?.message ?? "Unknown"}
         </Alert>
       </Snackbar>
     </>
@@ -649,19 +695,27 @@ const Wallet: React.FC<WalletProps> = (props) => {
 
 const MintButtonWrapper = styled.div`
   min-width: 237px;
-`;
+  width: 100%;
+  font-weight: 700;
+  border-radius: 20px;
 
-// const StyledMintContainer = styled(MintContainer)`
-//   ${(props) => props.theme.mediaQueries.mobile} {
-//     display: flex;
-//     justify-content: flex-end;
-//     padding-right: 48px;
-//   }
-// `;
+  ${(props) => props.theme.mediaQueries.mobile} {
+    max-width: 192px;
+    border-radius: 16px;
+    padding: 16px 8px;
+  }
+
+  .mint-button {
+    background: ${(props) => props.theme.colors.pink};
+    &:disabled {
+      background: darkslategray;
+      color: lightslategray;
+    }
+  }
+`;
 
 const MintDetails = styled.div`
   width: 100%;
-  position: absolute;
   justify-content: space-between;
   align-items: flex-start;
   margin-top: 16px;

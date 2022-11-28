@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
 import { CircularProgress } from "@material-ui/core";
 import { GatewayStatus, useGateway } from "@civic/solana-gateway-react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -12,17 +11,22 @@ import {
 } from "@identity.com/solana-gateway-ts";
 import { CandyMachineAccount } from "../../utils/candy-machine";
 import { CIVIC_GATEKEEPER_NETWORK } from "../../utils/candy-utils";
+import Button from "../Button";
 
 export const CTAButton = styled(Button)`
   width: 100%;
   height: 60px;
   margin-top: 10px;
   margin-bottom: 5px;
-  background: #ff5fdc;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
   border-radius: 20px;
+  font-family: inherit;
+  font-weight: 700;
+  border-radius: 20px;
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    border-radius: 16px;
+    max-width: 128px;
+  }
 `; // add your own styles here
 
 export const MintButton = ({
@@ -110,6 +114,7 @@ export const MintButton = ({
 
   return (
     <CTAButton
+      className="mint-button"
       disabled={isMinting || !isActive}
       onClick={async () => {
         if (candyMachine?.state.isActive && candyMachine?.state.gatekeeper) {

@@ -84,7 +84,12 @@ const App = () => {
                 txTimeout={DEFAULT_TIMEOUT}
                 rpcHost={rpcHost}
                 network={network}
-                error={error}
+                error={{
+                  hideDuration: error ? 6000 : undefined,
+                  message: error,
+                  open: !!error,
+                  severity: error ? "info" : undefined,
+                }}
               />
               <Routes>
                 <Route path="/" element={<Home />} />

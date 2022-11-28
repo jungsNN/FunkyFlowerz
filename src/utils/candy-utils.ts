@@ -10,8 +10,8 @@ import { CandyMachineAccount } from "./candy-machine";
 
 export interface AlertState {
   open: boolean;
-  message: string;
-  severity: "success" | "info" | "warning" | "error" | undefined;
+  message?: string | undefined;
+  severity?: "success" | "info" | "warning" | "error" | undefined;
   hideDuration?: number | null;
 }
 

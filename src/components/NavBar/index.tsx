@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import { WalletModalButton } from "@solana/wallet-adapter-react-ui";
 import Button from "../Button";
-import { Grid, Text } from "../shared";
-import { MoreIcon, WalletIcon } from "../svgs";
+import { Grid } from "../shared";
+import { MoreIcon } from "../svgs";
 import SideDrawer from "../SideDrawer";
-import Wallet from "../Wallet";
 
 interface NavBarProps {
   isMobile: boolean;
@@ -60,7 +58,7 @@ const MobileNavBar = ({
       gridCols="repeat(2, 1fr)"
       justify="justify-between"
     >
-      <Wallet
+      {/* <Wallet
         customButton={
           <MobileIconWallet>
             <div style={{ height: "40px" }}>
@@ -75,7 +73,7 @@ const MobileNavBar = ({
             </Text>
           </MobileIconWallet>
         }
-      />
+      /> */}
       <SideDrawer
         actionButton={
           <MoreIcon
@@ -93,7 +91,7 @@ const MobileNavBar = ({
           justify="space-between"
           pt="48px"
         >
-          <MobileWallet />
+          {/* <MobileWallet /> */}
           <Menu onNavigate={onNavigate} />
         </Grid>
       </SideDrawer>
@@ -130,24 +128,24 @@ const NavLinks = styled(Grid)`
   }
 `;
 
-const MobileIconWallet = styled(WalletModalButton)`
-  padding: 0;
-  margin: 0;
-  background: transparent;
-  border: none;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  justify-content: center;
-  align-items: center;
-`;
+// const MobileIconWallet = styled(WalletModalButton)`
+//   padding: 0;
+//   margin: 0;
+//   background: transparent;
+//   border: none;
+//   display: grid;
+//   grid-template-rows: auto 1fr;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
-const MobileWallet = styled(Wallet)`
-  ${(props) => props.theme.mediaQueries.mobile} {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 48px;
-    min-width: 0;
-  }
-`;
+// const MobileWallet = styled(Wallet)`
+//   ${(props) => props.theme.mediaQueries.mobile} {
+//     display: flex;
+//     justify-content: flex-end;
+//     padding-right: 48px;
+//     min-width: 0;
+//   }
+// `;
 
 export default NavBar;
