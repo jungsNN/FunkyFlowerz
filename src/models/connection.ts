@@ -1,12 +1,12 @@
+import * as anchor from "@project-serum/anchor";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { Connection as Web3Connection, PublicKey } from "@solana/web3.js";
+import { Connection as Web3Connection } from "@solana/web3.js";
 
-export type Connection = {
-  defaultNetwork: WalletAdapterNetwork;
-  candyMachineId?: PublicKey | undefined;
-  connection?: Web3Connection | undefined;
+export type ConnectionProps = {
+  connection: Web3Connection | undefined;
+  network: WalletAdapterNetwork;
+  rpcHost: string;
+  txTimeout: number;
+  candyMachineId?: anchor.web3.PublicKey | undefined;
   error?: string | undefined;
-  network?: WalletAdapterNetwork | undefined;
-  rpcHost?: string | undefined;
-  txTimeout?: number;
 };

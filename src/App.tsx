@@ -1,26 +1,30 @@
 import * as anchor from "@project-serum/anchor";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { ThemeProvider } from "styled-components";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { clusterApiUrl } from "@solana/web3.js";
 import {
+  getLedgerWallet,
   getPhantomWallet,
+  getSafePalWallet,
   getSlopeWallet,
   getSolflareWallet,
   getSolletExtensionWallet,
   getSolletWallet,
+  getSolongWallet,
 } from "@solana/wallet-adapter-wallets";
 import {
   ConnectionProvider,
   WalletProvider,
 } from "@solana/wallet-adapter-react";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { AppBar } from "./components";
 import { Home, Rarity, Team } from "./pages";
-import { theme } from "./theme/Theme.styled";
+import { DEFAULT_TIMEOUT } from "./utils/connection";
 import GlobalStyles from "./theme/Global";
+import { theme } from "./theme/Theme.styled";
 import "./App.css";
-import { useStore } from "./hooks";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
@@ -45,51 +49,42 @@ if (process.env.REACT_APP_SOLANA_NETWORK === undefined) {
 }
 
 const candyMachineId = getCandyMachineId();
-const defaultNetwork = (process.env.REACT_APP_SOLANA_NETWORK ??
+const network = (process.env.REACT_APP_SOLANA_NETWORK ??
   "devnet") as WalletAdapterNetwork;
 const rpcHost =
-  process.env.REACT_APP_SOLANA_RPC_HOST ??
-  anchor.web3.clusterApiUrl(defaultNetwork);
+  process.env.REACT_APP_SOLANA_RPC_HOST ?? anchor.web3.clusterApiUrl("devnet");
 const connection = new anchor.web3.Connection(rpcHost);
 
 const App = () => {
-  const store = useStore();
+  const endpoint = useMemo(() => clusterApiUrl(network), []);
   const wallets = useMemo(
     () => [
       getPhantomWallet(),
       getSolflareWallet(),
       getSlopeWallet(),
-      getSolletWallet(),
-      getSolletExtensionWallet(),
+      getSolletWallet({ network }),
+      getSolletExtensionWallet({ network }),
+      getSolongWallet(),
+      getLedgerWallet(),
+      getSafePalWallet(),
     ],
-    [defaultNetwork]
+    [network]
   );
 
-  useEffect(() => {
-    store.setConnection({
-      candyMachineId,
-      connection,
-      defaultNetwork,
-      error,
-      network: defaultNetwork,
-      rpcHost,
-    });
-  }, [candyMachineId, connection, defaultNetwork, error, rpcHost]);
-
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <ConnectionProvider endpoint={rpcHost}>
-        <WalletProvider wallets={wallets} autoConnect>
-          <WalletModalProvider>
-            <BrowserRouter>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <ConnectionProvider endpoint={endpoint}>
+          <WalletProvider wallets={wallets} autoConnect>
+            <WalletModalProvider>
               <AppBar
-              // candyMachineId={candyMachineId}
-              // connection={connection}
-              // txTimeout={DEFAULT_TIMEOUT}
-              // rpcHost={rpcHost}
-              // network={defaultNetwork}
-              // error={error}
+                candyMachineId={candyMachineId}
+                connection={connection}
+                txTimeout={DEFAULT_TIMEOUT}
+                rpcHost={rpcHost}
+                network={network}
+                error={error}
               />
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -97,11 +92,11 @@ const App = () => {
                 <Route path="team" element={<Team />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
-            </BrowserRouter>
-          </WalletModalProvider>
-        </WalletProvider>
-      </ConnectionProvider>
-    </ThemeProvider>
+            </WalletModalProvider>
+          </WalletProvider>
+        </ConnectionProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 

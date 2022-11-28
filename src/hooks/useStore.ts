@@ -1,26 +1,33 @@
+import * as anchor from "@project-serum/anchor";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import create from "zustand";
-import { Connection } from "../models/connection";
+import { ConnectionProps } from "../models/connection";
 import { DEFAULT_TIMEOUT } from "../utils/connection";
 
+const rpcHost =
+  process.env.REACT_APP_SOLANA_RPC_HOST ?? anchor.web3.clusterApiUrl("devnet");
+
 type State = {
-  connection: Connection;
+  connection: ConnectionProps;
   isMobile: boolean;
   network: WalletAdapterNetwork;
-  setConnection: (data: Connection) => void;
+  setConnection: (data: ConnectionProps) => void;
   setIsMobile: (isMobile: boolean) => void;
   setNetwork: (network: string) => void;
 };
 
 const useStore = create<State>((set) => ({
   connection: {
-    defaultNetwork: "devnet" as WalletAdapterNetwork,
+    connection: new anchor.web3.Connection(rpcHost),
+    network: (process.env.REACT_APP_SOLANA_NETWORK ??
+      "devnet") as WalletAdapterNetwork,
+    rpcHost: rpcHost,
     txTimeout: DEFAULT_TIMEOUT,
   },
   isMobile: false,
   network: (process.env.REACT_APP_SOLANA_NETWORK ??
     "devnet") as WalletAdapterNetwork,
-  setConnection: (data: Connection) =>
+  setConnection: (data: ConnectionProps) =>
     set((state) => ({ connection: (state.connection = data) })),
   setIsMobile: (isMobile: boolean) =>
     set((state) => ({ isMobile: (state.isMobile = isMobile) })),

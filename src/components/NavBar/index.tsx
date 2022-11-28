@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { WalletModalButton } from "@solana/wallet-adapter-react-ui";
 import Button from "../Button";
-import { MoreIcon, WalletIcon } from "../svgs";
 import { Grid, Text } from "../shared";
+import { MoreIcon, WalletIcon } from "../svgs";
 import SideDrawer from "../SideDrawer";
 import Wallet from "../Wallet";
 

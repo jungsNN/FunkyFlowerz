@@ -1,5 +1,5 @@
 import { Grid as MuiGrid } from "@mui/material";
-import type { GridProps } from "@mui/material/Grid";
+// import type { GridProps } from "@mui/material/Grid";
 import type { TypographyProps } from "@mui/material/Typography";
 import styled from "styled-components";
 import { LayoutProps } from "./types";
@@ -73,7 +73,7 @@ export const Flex = styled.div<LayoutProps>`
 `;
 
 export const Grid = styled(MuiGrid)<
-  { align?: string; justify?: string } & GridProps & LayoutProps
+  { align?: string; justify?: string } & LayoutProps
 >`
   align-items: ${(props) => props.align ?? "center"};
   display: ${(props) => props.display};

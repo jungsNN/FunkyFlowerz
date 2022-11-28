@@ -188,6 +188,7 @@ export const getCandyMachineState = async (
     getProgramState(),
     getCurrentBlockTime(),
   ]);
+
   const itemsAvailable = state.data.itemsAvailable.toNumber();
   const itemsRedeemed = state.itemsRedeemed.toNumber();
   const itemsRemaining = itemsAvailable - itemsRedeemed;
