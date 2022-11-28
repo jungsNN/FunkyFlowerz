@@ -36,9 +36,8 @@
   },
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
-    "build": "sh -ac '. .env.${REACT_APP_ENV}; react-scripts --openssl-legacy-provider build || react-scripts build'",
-    "build:staging": "REACT_APP_ENV=staging yarn build",
-    "build:production": "REACT_APP_ENV=production yarn build",
+    "build": "react-scripts --openssl-legacy-provider build || react-scripts build",
+    "build:types": "tsc",
     "format:fix": "prettier --write .",
     "format:check": "prettier -c .",
     "lint": "eslint src --fix --ext js,ts,tsx",
