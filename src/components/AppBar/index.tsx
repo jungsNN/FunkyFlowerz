@@ -1,3 +1,4 @@
+import { Connection } from "@solana/web3.js";
 import Paper from "@material-ui/core/Paper";
 import styled from "styled-components";
 // import { WalletModalButton } from "@solana/wallet-adapter-react-ui";
@@ -10,7 +11,12 @@ import SideDrawer from "../SideDrawer";
 // import Wallet from "../Wallet";
 import { useStore, useWindowSize } from "../../hooks";
 
-const AppBar: React.FC<ConnectionProps> = (props) => {
+interface AppBarProps {
+  connection?: Connection;
+  rpcHost?: string;
+}
+
+const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
   const store = useStore();
   const navigate = useNavigate();
   const windowWidth = useWindowSize();

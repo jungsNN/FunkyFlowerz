@@ -33,11 +33,13 @@ import { Grid, Text } from "../shared";
 import { MintButton, MintContainer, MintCountdown } from "../Mint";
 import { useStore } from "../../hooks";
 
-interface WalletProps extends ConnectionProps {
+interface WalletProps {
+  connection?: Connection | undefined;
   customButton?: React.ReactNode;
+  rpcHost?: string | undefined;
 }
 
-const Wallet: React.FC<WalletProps> = (props) => {
+const Wallet: React.FC<WalletProps & ConnectionProps> = (props) => {
   const { customButton, ...rest } = props;
   const store = useStore();
   const error = useMemo(() => store.connection.error, []);
