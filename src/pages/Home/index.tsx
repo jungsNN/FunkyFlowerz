@@ -1,13 +1,16 @@
 import styled from "styled-components";
 import { Container } from "../../components/shared";
 import { Page } from "../../components";
-import { FUNKY_FLOWERZ_SPLASH } from "../../constants/assets";
+import { FUNKY_FLOWERZ_SPLASH_URI, IPFS_API_URL } from "../../constants/assets";
 
 const Home = () => {
   return (
     <Page>
       <SplashContainer>
-        <SplashBG src={FUNKY_FLOWERZ_SPLASH} alt="funkyflowerz-splash" />
+        <SplashBG
+          src={[IPFS_API_URL, FUNKY_FLOWERZ_SPLASH_URI].join("/")}
+          alt="funkyflowerz-splash"
+        />
       </SplashContainer>
     </Page>
   );

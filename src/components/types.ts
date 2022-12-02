@@ -5,7 +5,7 @@ export interface LayoutProps {
   defaultGap?: string | "0px";
   display?: string | "flex";
   gap?: string | undefined;
-  gridFlow?: "column" | "row";
+  gridAutoFlow?: "column" | "row";
   gridRows?: string | "auto";
   gridCols?: string | "auto";
   items?: string | "unset";

@@ -8,10 +8,10 @@ const MintContainer: React.FC = (props) => {
 
 const StyledMintContainer = styled.div`
   position: relative;
-  min-width: 240px;
+  min-width: 256px;
 
-  ${(props) => props.theme.mediaQueries.tablet} {
-    min-width: 196px;
+  ${(props) => props.theme.mediaQueries.desktop} {
+    min-width: 192px;
   }
 
   ${(props) => props.theme.mediaQueries.mobile} {

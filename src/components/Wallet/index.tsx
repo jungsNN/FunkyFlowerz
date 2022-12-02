@@ -694,13 +694,13 @@ const Wallet: React.FC<WalletProps> = (props) => {
 };
 
 const MintButtonWrapper = styled.div`
-  min-width: 237px;
+  min-width: 256px;
   width: 100%;
   font-weight: 700;
   border-radius: 20px;
 
-  ${(props) => props.theme.mediaQueries.mobile} {
-    max-width: 192px;
+  ${(props) => props.theme.mediaQueries.desktop} {
+    min-width: 192px;
     border-radius: 16px;
     padding: 16px 8px;
   }

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "../Button";
 import { Grid } from "../shared";
+import { MENU_HOME_URI, IPFS_API_URL } from "../../constants/assets";
 import { MoreIcon } from "../svgs";
 import SideDrawer from "../SideDrawer";
 
@@ -23,7 +24,10 @@ const Menu = ({ onNavigate }: { onNavigate: (path: string) => void }) => {
         variant="text"
         style={navButtonStyle}
       >
-        Home
+        <MenuLink
+          src={[IPFS_API_URL, MENU_HOME_URI].join("/")}
+          alt="menu-home"
+        />
       </Button>
       <Button
         onClick={() => onNavigate("/rarity")}
@@ -126,6 +130,11 @@ const NavLinks = styled(Grid)`
     padding-right: 48px;
     padding-top: 48px;
   }
+`;
+
+const MenuLink = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 
 // const MobileIconWallet = styled(WalletModalButton)`

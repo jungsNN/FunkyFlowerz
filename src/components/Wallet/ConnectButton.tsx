@@ -14,7 +14,7 @@ const ConnectButton: React.FC<ConnectButtonProps> = (props) => {
   return (
     <StyledConnectButton {...rest}>
       {isMobile && (
-        <Grid display="grid" gap="4px" gridFlow="column" justify="center">
+        <Grid display="grid" gap="4px" gridAutoFlow="column" justify="center">
           <ButtonLabel small>{buttonText ?? "Connect"}</ButtonLabel>
           <WalletIcon
             stroke="white"

@@ -1,5 +1,4 @@
 import { Grid as MuiGrid } from "@mui/material";
-// import type { GridProps } from "@mui/material/Grid";
 import type { TypographyProps } from "@mui/material/Typography";
 import styled from "styled-components";
 import { LayoutProps } from "./types";
@@ -79,7 +78,7 @@ export const Grid = styled(MuiGrid)<
   display: ${(props) => props.display};
   flex-direction: ${(props) => `${props.by ?? props.direction}`};
   justify-content: ${(props) => props.justify ?? "start"};
-  grid-auto-flow: ${(props) => props.gridFlow};
+  grid-auto-flow: ${(props) => props.gridAutoFlow};
   grid-template-columns: ${(props) => props.gridCols ?? "unset"};
   grid-template-rows: ${(props) => props.gridRows ?? "unset"};
   margin: ${(props) => `${props.m ?? 0}`};
@@ -122,7 +121,7 @@ export const Text = styled.p<
   } & TypographyProps
 >`
   color: ${(props) => props.color ?? "#ffffff"};
-  font-family: "Gotham", sans-serif;
+  font-family: gotham-medium;
   font-size: ${(props) =>
     props.size === "sm" ? "18px" : props.size === "lg" ? "32px" : "24px"};
   font-weight: ${(props) => (props.bold ? "700" : "400")};
@@ -143,7 +142,6 @@ export const Text = styled.p<
       props.size === "sm" ? "20px" : props.size === "lg" ? "28px" : "20px"};
   }
 `;
-
 export const Title = styled.h1<
   {
     small?: boolean;
@@ -151,22 +149,15 @@ export const Title = styled.h1<
   } & TypographyProps
 >`
   color: ${(props) => props.color ?? "#ffffff"};
-  font-family: "Gotham", sans-serif;
+  font-family: gotham-bold;
   font-size: ${(props) => (props.small ? "24px" : "40px")};
   font-weight: ${(props) => (props.small ? "700" : "400")};
-  line-height: 48px;
+  line-height: ${(props) => (props.small ? "24px" : "48px")};
+  margin-top: 16px;
 
   ${(props) => props.theme.mediaQueries.desktop} {
-    font-size: ${(props) => (props.small ? "18px" : "28px")};
-    line-height: 36px;
-  }
-
-  ${(props) => props.theme.mediaQueries.tablet} {
     font-size: ${(props) => (props.small ? "16px" : "24px")};
-    line-height: 25px;
-  }
-
-  ${(props) => props.theme.mediaQueries.mobile} {
-    line-height: 26px;
+    line-height: 10px;
+    margin-top: 10px;
   }
 `;

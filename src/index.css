@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Gotham";
+  font-family: gotham-medium;
   font-style: normal;
   font-weight: 400;
   src: url("./theme/fonts/GothamMedium.ttf");
@@ -7,7 +7,7 @@
 }
 
 @font-face {
-  font-family: "Gotham";
+  font-family: gotham-bold;
   font-style: normal;
   font-weight: 700;
   src: url("./theme/fonts/GothamBold.ttf");
@@ -15,7 +15,7 @@
 }
 
 @font-face {
-  font-family: "Gotham";
+  font-family: gotham-book;
   font-style: normal;
   font-weight: 400;
   src: url("./theme/fonts/GothamBook.ttf");
@@ -25,7 +25,8 @@
 body {
   background: #002121;
   color: #ffffff;
-  font-family: "Gotham", "Courier", sans-serif;
+  font-family: "Gotham", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    Helvetica, "Calibri", "Roboto", Arial, sans-serif;
   margin: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -43,9 +44,5 @@ code {
 
 p {
   color: #ffffff;
-  font-weight: 400;
-}
-
-h1 {
   font-weight: 400;
 }
