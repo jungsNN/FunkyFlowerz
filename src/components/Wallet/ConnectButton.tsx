@@ -33,12 +33,32 @@ const ConnectButton: React.FC<ConnectButtonProps> = (props) => {
 
 const StyledConnectButton = styled(WalletModalButton)`
   width: 100%;
-  padding: 32px 24px;
+  min-width: calc(100vw * (237 / 1512));
+  max-width: calc(100vw * (237 / 1512));
+  height: auto;
+  min-height: calc(100vw * (62 / 1512));
+  max-height: calc(100vw * (62 / 1512));
+  padding: 0;
   background: #ff5fdc;
   color: white;
   font-family: inherit;
   font-weight: 700;
-  border-radius: 20px;
+  border-radius: calc(100vw * (20 / 1512));
+  > * {
+    font-size: calc(100vw * (24 / 1512));
+  }
+
+  @media (min-width: 1512px) {
+    border-radius: 20px;
+    min-width: 237px;
+    max-width: 237px;
+    min-height: 62px;
+    max-height: 62px;
+
+    > * {
+      font-size: 24px;
+    }
+  }
 
   ${(props) => props.theme.mediaQueries.mobile} {
     border-radius: 16px;

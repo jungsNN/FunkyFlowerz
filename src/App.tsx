@@ -20,8 +20,8 @@ import {
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { AppBar } from "./components";
-import { Home, Rarity, Team } from "./pages";
 import { DEFAULT_TIMEOUT } from "./utils/connection";
+import { Home, Rarity, Team } from "./pages";
 import GlobalStyles from "./theme/Global";
 import { theme } from "./theme/Theme.styled";
 import "./App.css";
@@ -56,7 +56,7 @@ const rpcHost =
 const connection = new anchor.web3.Connection(rpcHost);
 
 const App = () => {
-  const endpoint = useMemo(() => clusterApiUrl(network), []);
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
   const wallets = useMemo(
     () => [
       getPhantomWallet(),
