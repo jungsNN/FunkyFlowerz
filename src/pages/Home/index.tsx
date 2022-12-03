@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Container, Grid } from "../../components/shared";
 import FlowerSamples from "../../components/FlowerSamples";
 import HomeSplashBG from "../../components/svgs/HomeSplashBG";
+import HomeSplashHeader from "../../components/svgs/HomeSplashHeader";
 import Page from "../../components/Page";
 import { useStore } from "../../hooks";
 
@@ -20,7 +21,7 @@ const Home = () => {
           gridCols="repeat(2, 1fr)"
           wrap="nowrap"
         >
-          <HomeSplashBG isMobile />
+          <HomeSplashHeader />
           <SplashImage>
             <img src="./funky-flowerz-top.gif" alt="funkyflowerz-top" />
           </SplashImage>
