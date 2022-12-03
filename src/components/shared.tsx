@@ -130,7 +130,8 @@ export const Text = styled.p<
       : props.size === "lg"
       ? "calc(100vw * (32 / 1512))"
       : "calc(100vw * (24 / 1512))"};
-  font-weight: ${(props) => (props.fontWeight ?? props.bold ? "700" : "400")};
+  font-weight: ${(props) =>
+    props.bold ? "700" : props.thin ? "400" : `${props.fontWeight ?? "700"}`};
   line-height: ${(props) =>
     props.lineHeight ?? props.size === "sm"
       ? "calc(100vw * (10 / 1512))"
@@ -139,6 +140,8 @@ export const Text = styled.p<
       : "calc(100vw * (25 / 1512))"};
   margin-top: ${(props) =>
     `${(props.mt || props.marginTop) ?? "calc(100vw * (14 / 1512))"}`};
+  text-align: ${(props) => `${props.textAlign ?? "start"}`};
+  white-space: ${(props) => `${props.whiteSpace ?? "normal"}`};
 
   @media (min-width: 1512px) {
     font-size: ${(props) =>
@@ -192,6 +195,8 @@ export const Title = styled.h1<
       : "calc(100vw * (41 / 1512))"};
   margin-top: ${(props) =>
     `${(props.mt || props.marginTop) ?? "calc(100vw * (12 / 1512))"}`};
+  text-align: ${(props) => `${props.textAlign ?? "center"}`};
+  white-space: ${(props) => `${props.whiteSpace ?? "normal"}`};
 
   @media (min-width: 1512px) {
     font-size: ${(props) =>

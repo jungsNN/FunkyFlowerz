@@ -2,7 +2,7 @@ import Countdown from "react-countdown";
 import React from "react";
 import { Paper } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Title } from "../shared";
+import { Text } from "../shared";
 import colors from "../../theme/colors";
 import { useStore } from "../../hooks";
 
@@ -11,11 +11,12 @@ const useStyles = ({ isMobile }: { isMobile: boolean }) =>
     createStyles({
       root: {
         display: "flex",
-        padding: theme.spacing(2),
+        padding: theme.spacing(0),
+        justifyContent: "flex-end",
         "& > *": {
           margin: theme.spacing(0.4),
-          width: theme.spacing(6),
-          height: theme.spacing(6),
+          width: isMobile ? "32px" : `calc(100vw * (37 / 1512))`,
+          height: isMobile ? "32px" : `calc(100vw * (36 / 1512))`,
           display: "flex",
           flexDirection: "column",
           alignContent: "center",
@@ -24,18 +25,16 @@ const useStyles = ({ isMobile }: { isMobile: boolean }) =>
           background: "#384457",
           color: colors.textPrimary,
           borderRadius: 4,
-          fontSize: 10,
+          fontSize: `calc(100vw * (10 / 1512))`,
         },
       },
       done: {
         display: "flex",
         margin: 0,
-        marginTop: 0,
-        height: isMobile
-          ? "32px"
-          : `calc(100vw * (${theme.spacing(3)} / 1512))`,
-        paddingLeft: `calc(100vw * (${theme.spacing(3.3)} / 1512))`,
-        paddingRight: `calc(100vw * (${theme.spacing(3.3)} / 1512))`,
+        marginTop: 1,
+        height: isMobile ? "32px" : `calc(100vw * (30 / 1512))`,
+        paddingLeft: `calc(100vw * (${theme.spacing(1)} / 1512))`,
+        paddingRight: `calc(100vw * (${theme.spacing(1)} / 1512))`,
         flexDirection: "column",
         alignContent: "center",
         alignItems: "center",
@@ -44,7 +43,13 @@ const useStyles = ({ isMobile }: { isMobile: boolean }) =>
         color: colors.textPrimary,
         borderRadius: 4,
       },
-      item: {},
+      item: {
+        "& > p": {
+          fontSize: "calc(100vw * (18 / 1512))",
+          lineHeight: "calc(100vw * (22 / 1512))",
+          marginTop: "calc(100vw * (4 / 1512))",
+        },
+      },
     })
   );
 
@@ -53,6 +58,8 @@ interface MintCountdownProps {
   style?: React.CSSProperties;
   status?: string;
   onComplete?: () => void;
+  isMock?: boolean;
+  showMockCountdown?: boolean;
 }
 
 interface MintCountdownRender {
@@ -68,7 +75,10 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
   status,
   style,
   onComplete,
+  isMock = false,
+  showMockCountdown = false,
 }) => {
+  console.log({ date });
   const isMobile = useStore.getState().isMobile;
   const classes = useStyles({ isMobile })();
   const renderCountdown = ({
@@ -79,12 +89,10 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
     completed,
   }: MintCountdownRender) => {
     hours += days * 24;
-    if (completed) {
+    if (completed || (isMock && !showMockCountdown)) {
       return status ? (
         <span className={classes.done}>
-          <Title bold variant="caption">
-            {status}
-          </Title>
+          <Text size="sm">{status}</Text>
         </span>
       ) : null;
     } else {
@@ -92,25 +100,19 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
         <div className={classes.root} style={style}>
           <Paper elevation={0}>
             <span className={classes.item}>
-              <Title bold variant="caption">
-                {hours < 10 ? `0${hours}` : hours}
-              </Title>
+              <Text size="sm">{hours < 10 ? `0${hours}` : hours}</Text>
             </span>
             <span>hrs</span>
           </Paper>
           <Paper elevation={0}>
             <span className={classes.item}>
-              <Title bold variant="caption">
-                {minutes < 10 ? `0${minutes}` : minutes}
-              </Title>
+              <Text size="sm">{minutes < 10 ? `0${minutes}` : minutes}</Text>
             </span>
             <span>mins</span>
           </Paper>
           <Paper elevation={0}>
             <span className={classes.item}>
-              <Title bold variant="caption">
-                {seconds < 10 ? `0${seconds}` : seconds}
-              </Title>
+              <Text size="sm">{seconds < 10 ? `0${seconds}` : seconds}</Text>
             </span>
             <span>secs</span>
           </Paper>
@@ -119,11 +121,11 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
     }
   };
 
-  if (date) {
+  if (isMock || date) {
     return (
       <Countdown
-        date={date}
-        onComplete={onComplete}
+        date={date ?? new Date(Date.now() + 36000)}
+        onComplete={isMock ? () => {} : onComplete}
         renderer={renderCountdown}
       />
     );

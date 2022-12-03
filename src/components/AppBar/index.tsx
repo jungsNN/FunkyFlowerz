@@ -564,213 +564,208 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
     </MintButtonWrapper>
   );
 
-  const mintContainer = () => {
-    return wallet.connected ? (
+  const mockMintCountDown = ({
+    variant = "status",
+    status = "live",
+  }: {
+    variant: "status" | "countdown";
+    status?: "completed" | "presale" | "live";
+  }) => {
+    return variant === "countdown" ? (
+      <Grid direction="row" justify="center">
+        <MintCountdown
+          isMock
+          showMockCountdown
+          key="endSettings"
+          date={new Date(Date.now() + 3600000)}
+          style={{ justifyContent: "flex-end" }}
+          status="COMPLETED"
+          onComplete={toggleMintButton}
+        />
+        <Text
+          display="block"
+          size="sm"
+          style={{
+            fontSize: "calc(100vw * (12 / 1512))",
+            letterSpacing: "calc(100vw * (0.04em / 1512))",
+            lineHeight: "0",
+          }}
+          textAlign="center"
+          whiteSpace="nowrap"
+        >
+          TO END OF MINT
+        </Text>
+      </Grid>
+    ) : (
+      <Grid direction="row" justify="center">
+        <MintCountdown
+          isMock
+          key="goLive"
+          date={getCountdownDate(candyMachine!)}
+          onComplete={toggleMintButton}
+          style={{ justifyContent: "flex-end" }}
+          status={
+            status === "completed"
+              ? "COMPLETED"
+              : status === "presale"
+              ? "PRESALE"
+              : "LIVE"
+          }
+        />
+        {status === "presale" &&
+          candyMachine!.state.goLiveDate &&
+          candyMachine!.state.goLiveDate.toNumber() >
+            new Date().getTime() / 1000 && (
+            <Text
+              display="block"
+              size="sm"
+              style={{
+                fontSize: "calc(100vw * (12 / 1512))",
+                letterSpacing: "calc(100vw * (0.04em / 1512))",
+                lineHeight: "0",
+              }}
+              textAlign="center"
+              whiteSpace="nowrap"
+            >
+              UNTIL PUBLIC MINT
+            </Text>
+          )}
+      </Grid>
+    );
+  };
+
+  const mintContainer = (isMock?: { isMock?: boolean }) => {
+    return (
       <MintContainer>
         {!store.isMobile && mintButton()}
         {candyMachine && (
-          <MintDetails className="mint-details-floater">
-            <Grid container direction="row" wrap="nowrap">
-              <Grid className="mint-status" item xs={2}>
-                {isActive && endDate && Date.now() < endDate.getTime() ? (
-                  <>
-                    <MintCountdown
-                      key="endSettings"
-                      date={getCountdownDate(candyMachine)}
-                      style={{ justifyContent: "flex-end" }}
-                      status="COMPLETED"
-                      onComplete={toggleMintButton}
-                    />
-                    <Text bold variant="caption" align="center" display="block">
-                      TO END OF MINT
-                    </Text>
-                  </>
-                ) : (
-                  <>
-                    <MintCountdown
-                      key="goLive"
-                      date={getCountdownDate(candyMachine)}
-                      style={{ justifyContent: "flex-end" }}
-                      status={
-                        candyMachine?.state?.isSoldOut ||
-                        (endDate && Date.now() > endDate.getTime())
-                          ? "COMPLETED"
-                          : isPresale
-                          ? "PRESALE"
-                          : "LIVE"
-                      }
-                      onComplete={toggleMintButton}
-                    />
-                    {isPresale &&
-                      candyMachine.state.goLiveDate &&
-                      candyMachine.state.goLiveDate.toNumber() >
-                        new Date().getTime() / 1000 && (
-                        <Text
-                          bold
-                          variant="caption"
-                          align="center"
-                          display="block"
-                        >
-                          UNTIL PUBLIC MINT
-                        </Text>
-                      )}
-                  </>
-                )}
-              </Grid>
-              <Grid
-                item
-                align="center"
-                display="flex"
-                gap="4px"
-                justify="flex-end"
-                style={{
-                  width: "100%",
-                }}
-                xs={5}
-              >
-                <Title thin variant="caption">
-                  {isWhitelistUser && discountPrice
-                    ? "Discount Price"
-                    : "Price"}
-                </Title>
-                <Text
-                  bold
-                  size="sm"
-                  variant="h6"
-                  style={{
-                    whiteSpace: "nowrap",
-                    wordBreak: "keep-all",
-                  }}
-                >
-                  {isWhitelistUser && discountPrice
-                    ? `◎${formatNumber.asNumber(discountPrice)}`
-                    : `◎${formatNumber.asNumber(candyMachine.state.price)}`}
-                </Text>
-              </Grid>
-              <Grid
-                item
-                align="center"
-                display="flex"
-                gap="4px"
-                justify="flex-end"
-                style={{
-                  width: "100%",
-                }}
-                xs={5}
-              >
-                <Title thin variant="caption">
-                  Remaining
-                </Title>
-                <Text bold size="sm" variant="h6">
-                  {`${itemsRemaining}`}
-                </Text>
-              </Grid>
-            </Grid>
-          </MintDetails>
-        )}
-        {/* {!wallet.connected ? (
-          <ConnectButton isMobile={store.isMobile} />
-        ) : (
           <>
-            {!!candyMachine && (
-              <>
-                {mintButton()}
-                {!store.isMobile && (
-                  <MintDetails>
-                    <Grid container direction="row">
-                      <Grid item xs={4}>
-                        <Text size="sm" variant="body2" color="textSecondary">
-                          Remaining
-                        </Text>
-                        <Text bold size="sm" variant="h6">
-                          {`${itemsRemaining}`}
-                        </Text>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Text size="sm" variant="body2" color="textSecondary">
-                          {isWhitelistUser && discountPrice
-                            ? "Discount Price"
-                            : "Price"}
-                        </Text>
-                        <Text
-                          bold
-                          size="sm"
-                          variant="h6"
-                          style={{
-                            whiteSpace: "nowrap",
-                            wordBreak: "keep-all",
-                          }}
-                        >
-                          {isWhitelistUser && discountPrice
-                            ? `◎ ${formatNumber.asNumber(discountPrice)}`
-                            : `◎ ${formatNumber.asNumber(
-                                candyMachine.state.price
-                              )}`}
-                        </Text>
-                      </Grid>
-                      <Grid item xs={4}>
-                        {isActive &&
-                        endDate &&
-                        Date.now() < endDate.getTime() ? (
-                          <>
-                            <MintCountdown
-                              key="endSettings"
-                              date={getCountdownDate(candyMachine)}
-                              style={{ justifyContent: "flex-end" }}
-                              status="COMPLETED"
-                              onComplete={toggleMintButton}
-                            />
-                            <Text
-                              bold
-                              variant="caption"
-                              align="center"
-                              display="block"
-                            >
-                              TO END OF MINT
-                            </Text>
-                          </>
-                        ) : (
-                          <>
-                            <MintCountdown
-                              key="goLive"
-                              date={getCountdownDate(candyMachine)}
-                              style={{ justifyContent: "flex-end" }}
-                              status={
-                                candyMachine?.state?.isSoldOut ||
-                                (endDate && Date.now() > endDate.getTime())
-                                  ? "COMPLETED"
-                                  : isPresale
-                                  ? "PRESALE"
-                                  : "LIVE"
-                              }
-                              onComplete={toggleMintButton}
-                            />
-                            {isPresale &&
-                              candyMachine.state.goLiveDate &&
-                              candyMachine.state.goLiveDate.toNumber() >
-                                new Date().getTime() / 1000 && (
-                                <Text
-                                  bold
-                                  variant="caption"
-                                  align="center"
-                                  display="block"
-                                >
-                                  UNTIL PUBLIC MINT
-                                </Text>
-                              )}
-                          </>
-                        )}
-                      </Grid>
+            <MintDetails className="mint-details-floater">
+              <Grid
+                container
+                direction="row"
+                wrap="nowrap"
+                style={{ position: "relative" }}
+              >
+                <MintStatus direction="column" className="mint-status">
+                  {isMock ? (
+                    mockMintCountDown({
+                      variant: "countdown",
+                      status: "presale",
+                    })
+                  ) : isActive && endDate && Date.now() < endDate.getTime() ? (
+                    <Grid direction="row" justify="center">
+                      <MintCountdown
+                        key="endSettings"
+                        date={getCountdownDate(candyMachine)}
+                        style={{ justifyContent: "flex-end" }}
+                        status="COMPLETED"
+                        onComplete={toggleMintButton}
+                      />
+                      <Text
+                        display="block"
+                        size="sm"
+                        style={{
+                          fontSize: "calc(100vw * (12 / 1512))",
+                          letterSpacing: "calc(100vw * (0.04em / 1512))",
+                          lineHeight: "0",
+                        }}
+                        textAlign="center"
+                        whiteSpace="nowrap"
+                      >
+                        TO END OF MINT
+                      </Text>
                     </Grid>
-                  </MintDetails>
-                )}
-              </>
-            )}
+                  ) : (
+                    <Grid direction="row" justify="center">
+                      <MintCountdown
+                        key="goLive"
+                        date={getCountdownDate(candyMachine)}
+                        style={{ justifyContent: "flex-end" }}
+                        status={
+                          candyMachine?.state?.isSoldOut ||
+                          (endDate && Date.now() > endDate.getTime())
+                            ? "COMPLETED"
+                            : isPresale
+                            ? "PRESALE"
+                            : "LIVE"
+                        }
+                        onComplete={toggleMintButton}
+                      />
+                      {isPresale &&
+                        candyMachine.state.goLiveDate &&
+                        candyMachine.state.goLiveDate.toNumber() >
+                          new Date().getTime() / 1000 && (
+                          <Text
+                            display="block"
+                            size="sm"
+                            style={{
+                              fontSize: "calc(100vw * (12 / 1512))",
+                              letterSpacing: "calc(100vw * (0.04em / 1512))",
+                              lineHeight: "0",
+                            }}
+                            textAlign="center"
+                            whiteSpace="nowrap"
+                          >
+                            UNTIL PUBLIC MINT
+                          </Text>
+                        )}
+                    </Grid>
+                  )}
+                </MintStatus>
+                <Grid
+                  item
+                  align="center"
+                  display="flex"
+                  gap="4px"
+                  justify="flex-end"
+                  style={{
+                    width: "100%",
+                  }}
+                  xs={5}
+                >
+                  <Title thin variant="caption">
+                    {isWhitelistUser && discountPrice
+                      ? "Discount Price"
+                      : "Price"}
+                  </Title>
+                  <Text
+                    bold
+                    size="sm"
+                    variant="h6"
+                    style={{
+                      whiteSpace: "nowrap",
+                      wordBreak: "keep-all",
+                    }}
+                  >
+                    {isWhitelistUser && discountPrice
+                      ? `◎${formatNumber.asNumber(discountPrice)}`
+                      : `◎${formatNumber.asNumber(candyMachine.state.price)}`}
+                  </Text>
+                </Grid>
+                <Grid
+                  item
+                  align="center"
+                  display="flex"
+                  gap="4px"
+                  justify="flex-end"
+                  style={{
+                    width: "100%",
+                  }}
+                  xs={7}
+                >
+                  <Title thin variant="caption">
+                    Remaining
+                  </Title>
+                  <Text bold size="sm" variant="h6">
+                    {`${itemsRemaining}`}
+                  </Text>
+                </Grid>
+              </Grid>
+            </MintDetails>
           </>
-        )} */}
+        )}
       </MintContainer>
-    ) : (
-      <ConnectButton isMobile={store.isMobile} />
     );
   };
 
@@ -800,7 +795,8 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
               ) : (
                 <Menu onNavigate={navigate} />
               )}
-              {mintContainer()}
+              {wallet.connected && mintContainer({ isMock: true })}
+              {!wallet.connected && <ConnectButton isMobile={store.isMobile} />}
               {/* {!store.isMobile && <Wallet {...store.connection} />} */}
             </Grid>
           </AppBarGrid>
@@ -939,7 +935,7 @@ const MintDetails = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   position: absolute;
-  top: calc(100vw * (62 / 1512) * 1.25);
+  top: calc(100vw * (62 / 1512) * 1.4);
   right: 0;
 `;
 
@@ -1011,6 +1007,17 @@ const MenuButton = styled.button`
       margin-top: 16px;
     }
   }
+`;
+
+const MintStatus = styled(Grid)`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: flex-end;
+  padding-right: calc(100vw * (42 / 1512));
+  position: absolute;
+  right: 100%;
+  width: 100%;
 `;
 
 export default AppBar;
