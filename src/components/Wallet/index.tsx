@@ -545,6 +545,8 @@ const Wallet: React.FC<WalletProps & ConnectionProps> = (props) => {
             isActive={
               isActive || (isPresale && isWhitelistUser && isValidBalance)
             }
+            isLoading={false}
+            isValidBalance={isValidBalance}
           />
         </GatewayProvider>
       ) : (
@@ -558,6 +560,8 @@ const Wallet: React.FC<WalletProps & ConnectionProps> = (props) => {
           isActive={
             isActive || (isPresale && isWhitelistUser && isValidBalance)
           }
+          isLoading={false}
+          isValidBalance={isValidBalance}
         />
       )}
     </MintButtonWrapper>
@@ -696,15 +700,16 @@ const Wallet: React.FC<WalletProps & ConnectionProps> = (props) => {
 };
 
 const MintButtonWrapper = styled.div`
-  min-width: 256px;
   width: 100%;
   font-weight: 700;
-  border-radius: 20px;
+  border-radius: calc(100vw * (20 / 1512));
+
+  @media (min-width: 1512px) {
+    border-radius: 20px;
+  }
 
   ${(props) => props.theme.mediaQueries.desktop} {
-    min-width: 192px;
     border-radius: 16px;
-    padding: 16px 8px;
   }
 
   .mint-button {

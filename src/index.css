@@ -1,4 +1,12 @@
 @font-face {
+  font-family: gotham-light;
+  font-style: normal;
+  font-weight: 400;
+  src: url("./theme/fonts/GothamLight.ttf");
+  src: url("./theme/fonts/GothamLight.ttf") format("truetype");
+}
+
+@font-face {
   font-family: gotham-medium;
   font-style: normal;
   font-weight: 400;

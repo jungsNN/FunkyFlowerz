@@ -12,16 +12,10 @@ import {
 import { CandyMachineAccount } from "../../utils/candy-machine";
 import { CIVIC_GATEKEEPER_NETWORK } from "../../utils/candy-utils";
 import Button from "../Button";
+import { Title } from "../shared";
 
 export const CTAButton = styled(Button)`
   width: 100%;
-  height: 60px;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  border-radius: 20px;
-  font-family: inherit;
-  font-weight: 700;
-  border-radius: 20px;
 
   ${(props) => props.theme.mediaQueries.mobile} {
     border-radius: 16px;
@@ -35,12 +29,16 @@ export const MintButton = ({
   isMinting,
   setIsMinting,
   isActive,
+  isLoading,
+  isValidBalance,
 }: {
   onMint: () => Promise<void>;
   candyMachine?: CandyMachineAccount;
   isMinting: boolean;
   setIsMinting: (val: boolean) => void;
   isActive: boolean;
+  isLoading: boolean;
+  isValidBalance: boolean;
 }) => {
   const wallet = useWallet();
   const connection = useConnection();
@@ -51,7 +49,11 @@ export const MintButton = ({
   const [waitForActiveToken, setWaitForActiveToken] = useState(false);
 
   const getMintButtonContent = () => {
-    if (candyMachine?.state.isSoldOut) {
+    if (isLoading) {
+      return "LOADING...";
+    } else if (!candyMachine) {
+      return "STORE CLOSED";
+    } else if (candyMachine?.state.isSoldOut) {
       return "SOLD OUT";
     } else if (isMinting) {
       return <CircularProgress />;
@@ -60,6 +62,8 @@ export const MintButton = ({
       candyMachine?.state.isWhitelistOnly
     ) {
       return "WHITELIST MINT";
+    } else if (!isValidBalance) {
+      return "LOW BALANCE";
     }
 
     return "MINT";
@@ -174,7 +178,7 @@ export const MintButton = ({
       }}
       variant="contained"
     >
-      {getMintButtonContent()}
+      <Title small>{getMintButtonContent()}</Title>
     </CTAButton>
   );
 };

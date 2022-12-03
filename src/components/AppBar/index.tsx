@@ -70,7 +70,6 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
   const [needTxnSplit, setNeedTxnSplit] = useState(true);
   const [setupTxn, setSetupTxn] = useState<SetupState>();
 
-  const rpcUrl = props.rpcHost;
   const wallet = useWallet();
   const cluster = props.network;
   const anchorWallet = useMemo(() => {
@@ -91,7 +90,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
   }, [wallet]);
 
   const setIsMobile = () => {
-    store.setIsMobile((windowWidth?.width ?? window.innerWidth) < 768);
+    store.setIsMobile((windowWidth?.width ?? window.innerWidth) <= 480);
   };
 
   useEffect(() => {
@@ -103,7 +102,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
       if (!anchorWallet) {
         return;
       }
-      if (props.error !== undefined) {
+      if (props.error) {
         setAlertState({
           open: true,
           message: props.error.message,
@@ -113,7 +112,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
         return;
       }
 
-      const connection = new Connection(rpcUrl, commitment);
+      const connection = new Connection(props.rpcHost, commitment);
 
       if (props.candyMachineId) {
         try {
@@ -126,6 +125,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
           let active = cndy?.state.goLiveDate
             ? cndy?.state.goLiveDate.toNumber() < new Date().getTime() / 1000
             : false;
+
           let presale = false;
 
           // duplication of state to make sure we have the right values!
@@ -490,18 +490,28 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
     refreshCandyMachineState,
   ]);
 
-  useEffect(() => {
-    (function loop() {
-      setTimeout(() => {
-        refreshCandyMachineState();
-        loop();
-      }, 20000);
-    })();
-  }, [refreshCandyMachineState]);
+  // useEffect(() => {
+  //   (function loop() {
+  //     setTimeout(() => {
+  //       refreshCandyMachineState();
+  //       loop();
+  //     }, 20000);
+  //   })();
+  // }, [refreshCandyMachineState]);
 
   const mintButton = () => (
     <MintButtonWrapper>
-      {candyMachine?.state.isActive &&
+      {/* <Text bold>
+        {props.candyMachineId &&
+          String(props.candyMachineId)
+            .split("")
+            .fill(" ", 4, -4)
+            .join("")
+            .split("         ")
+            .join(".")}
+      </Text> */}
+      {!isDevelopment &&
+      candyMachine?.state.isActive &&
       candyMachine?.state.gatekeeper &&
       wallet.publicKey &&
       wallet.signTransaction ? (
@@ -512,7 +522,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
             signTransaction: wallet.signTransaction,
           }}
           gatekeeperNetwork={candyMachine?.state?.gatekeeper?.gatekeeperNetwork}
-          clusterUrl={rpcUrl!}
+          clusterUrl={props.rpcHost!}
           cluster={cluster}
           options={{ autoShowModal: false }}
         >
@@ -526,6 +536,11 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
             isActive={
               isActive || (isPresale && isWhitelistUser && isValidBalance)
             }
+            isLoading={
+              ((wallet && !anchorWallet) || (anchorWallet && !candyMachine)) ??
+              false
+            }
+            isValidBalance={isValidBalance}
           />
         </GatewayProvider>
       ) : (
@@ -539,15 +554,121 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
           isActive={
             isActive || (isPresale && isWhitelistUser && isValidBalance)
           }
+          isLoading={
+            ((wallet && !anchorWallet) || (anchorWallet && !candyMachine)) ??
+            false
+          }
+          isValidBalance={isValidBalance}
         />
       )}
     </MintButtonWrapper>
   );
 
   const mintContainer = () => {
-    return (
+    return wallet.connected ? (
       <MintContainer>
-        {!wallet.connected ? (
+        {!store.isMobile && mintButton()}
+        {candyMachine && (
+          <MintDetails className="mint-details-floater">
+            <Grid container direction="row" wrap="nowrap">
+              <Grid className="mint-status" item xs={2}>
+                {isActive && endDate && Date.now() < endDate.getTime() ? (
+                  <>
+                    <MintCountdown
+                      key="endSettings"
+                      date={getCountdownDate(candyMachine)}
+                      style={{ justifyContent: "flex-end" }}
+                      status="COMPLETED"
+                      onComplete={toggleMintButton}
+                    />
+                    <Text bold variant="caption" align="center" display="block">
+                      TO END OF MINT
+                    </Text>
+                  </>
+                ) : (
+                  <>
+                    <MintCountdown
+                      key="goLive"
+                      date={getCountdownDate(candyMachine)}
+                      style={{ justifyContent: "flex-end" }}
+                      status={
+                        candyMachine?.state?.isSoldOut ||
+                        (endDate && Date.now() > endDate.getTime())
+                          ? "COMPLETED"
+                          : isPresale
+                          ? "PRESALE"
+                          : "LIVE"
+                      }
+                      onComplete={toggleMintButton}
+                    />
+                    {isPresale &&
+                      candyMachine.state.goLiveDate &&
+                      candyMachine.state.goLiveDate.toNumber() >
+                        new Date().getTime() / 1000 && (
+                        <Text
+                          bold
+                          variant="caption"
+                          align="center"
+                          display="block"
+                        >
+                          UNTIL PUBLIC MINT
+                        </Text>
+                      )}
+                  </>
+                )}
+              </Grid>
+              <Grid
+                item
+                align="center"
+                display="flex"
+                gap="4px"
+                justify="flex-end"
+                style={{
+                  width: "100%",
+                }}
+                xs={5}
+              >
+                <Title thin variant="caption">
+                  {isWhitelistUser && discountPrice
+                    ? "Discount Price"
+                    : "Price"}
+                </Title>
+                <Text
+                  bold
+                  size="sm"
+                  variant="h6"
+                  style={{
+                    whiteSpace: "nowrap",
+                    wordBreak: "keep-all",
+                  }}
+                >
+                  {isWhitelistUser && discountPrice
+                    ? `◎${formatNumber.asNumber(discountPrice)}`
+                    : `◎${formatNumber.asNumber(candyMachine.state.price)}`}
+                </Text>
+              </Grid>
+              <Grid
+                item
+                align="center"
+                display="flex"
+                gap="4px"
+                justify="flex-end"
+                style={{
+                  width: "100%",
+                }}
+                xs={5}
+              >
+                <Title thin variant="caption">
+                  Remaining
+                </Title>
+                <Text bold size="sm" variant="h6">
+                  {`${itemsRemaining}`}
+                </Text>
+              </Grid>
+            </Grid>
+          </MintDetails>
+        )}
+        {/* {!wallet.connected ? (
           <ConnectButton isMobile={store.isMobile} />
         ) : (
           <>
@@ -646,18 +767,15 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
               </>
             )}
           </>
-        )}
+        )} */}
       </MintContainer>
+    ) : (
+      <ConnectButton isMobile={store.isMobile} />
     );
   };
 
   return (
-    <Container
-      style={{
-        marginTop: store.isMobile ? "32px" : "48px",
-        marginBottom: store.isMobile ? "48px" : "64px",
-      }}
-    >
+    <AppBarContainer>
       <Container style={{ position: "relative" }}>
         <Paper
           elevation={0}
@@ -682,14 +800,14 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
               ) : (
                 <Menu onNavigate={navigate} />
               )}
-              {!store.isMobile && <ConnectButton isMobile={store.isMobile} />}
-              {store.isMobile && mintContainer()}
+              {mintContainer()}
               {/* {!store.isMobile && <Wallet {...store.connection} />} */}
             </Grid>
           </AppBarGrid>
         </Paper>
         <Snackbar
-          open={alertState.open}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          open={alertState.open === true}
           autoHideDuration={
             alertState.hideDuration === undefined
               ? 6000
@@ -705,7 +823,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
           </Alert>
         </Snackbar>
       </Container>
-    </Container>
+    </AppBarContainer>
   );
 };
 
@@ -764,6 +882,16 @@ const MobileNavBar = ({
   );
 };
 
+const AppBarContainer = styled(Container)`
+  margin-top: calc(100vw * (45 / 1512));
+  margin-bottom: calc(100vw * (93.7 / 1512));
+
+  @media (min-width: 1512px) {
+    margin-top: 45px;
+    margin-bottom: 93.7px;
+  }
+`;
+
 const AppBarGrid = styled(Grid)`
   align-items: center;
   grid-template-columns: auto auto;
@@ -799,38 +927,20 @@ const AppBarGrid = styled(Grid)`
       max-height: 100px;
     }
   }
-
-  ${(props) => props.theme.mediaQueries.tablet} {
-    grid-gap: 32px;
-  }
 `;
 
 const MintButtonWrapper = styled.div`
-  min-width: 256px;
   width: 100%;
-  font-weight: 700;
-  border-radius: 20px;
-
-  ${(props) => props.theme.mediaQueries.desktop} {
-    min-width: 192px;
-    border-radius: 16px;
-    padding: 16px 8px;
-  }
-
-  .mint-button {
-    background: ${(props) => props.theme.colors.pink};
-    &:disabled {
-      background: darkslategray;
-      color: lightslategray;
-    }
-  }
+  position: relative;
 `;
 
 const MintDetails = styled.div`
-  width: 100%;
+  overflow: visible;
   justify-content: space-between;
   align-items: flex-start;
-  margin-top: 16px;
+  position: absolute;
+  top: calc(100vw * (62 / 1512) * 1.25);
+  right: 0;
 `;
 
 const NavLinks = styled(Grid)`
@@ -841,10 +951,6 @@ const NavLinks = styled(Grid)`
 
   @media (min-width: 1512px) {
     grid-gap: 35px;
-  }
-
-  ${(props) => props.theme.mediaQueries.tablet} {
-    grid-gap: 40px;
   }
 
   ${(props) => props.theme.mediaQueries.mobile} {

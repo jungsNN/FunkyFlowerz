@@ -26,8 +26,15 @@ const RoundedEllipses: React.FC<MoreIconProps> = (props) => {
       {...rest}
     >
       <g clipPath="url(#clip0_1_2301)">
-        <circle cx="12" cy="12" r="10" fill={bg ?? "#292929"} />
+        <circle
+          className="rounded-filled-circle"
+          cx="12"
+          cy="12"
+          r="10"
+          fill={bg ?? "#292929"}
+        />
         <rect
+          className="dot-rect"
           x="7.90629"
           y="11.3813"
           width="1.2375"
@@ -37,6 +44,7 @@ const RoundedEllipses: React.FC<MoreIconProps> = (props) => {
           strokeWidth="1.2375"
         />
         <rect
+          className="dot-rect"
           x="11.3813"
           y="11.3813"
           width="1.2375"
@@ -46,6 +54,7 @@ const RoundedEllipses: React.FC<MoreIconProps> = (props) => {
           strokeWidth="1.2375"
         />
         <rect
+          className="dot-rect"
           x="14.8562"
           y="11.3813"
           width="1.2375"

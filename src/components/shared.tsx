@@ -116,48 +116,102 @@ export const Row = styled.div<LayoutProps>`
 export const Text = styled.p<
   {
     bold?: boolean;
+    thin?: boolean;
     size?: "sm" | "lg" | "default";
     color?: string;
   } & TypographyProps
 >`
   color: ${(props) => props.color ?? "#ffffff"};
-  font-family: gotham-medium;
+  font-family: ${(props) =>
+    props.fontFamily ?? props.thin ? "gotham-light" : "gotham-bold"};
   font-size: ${(props) =>
-    props.size === "sm" ? "18px" : props.size === "lg" ? "32px" : "24px"};
-  font-weight: ${(props) => (props.bold ? "700" : "400")};
+    props.fontSize ?? props.size === "sm"
+      ? "calc(100vw * (20 / 1512))"
+      : props.size === "lg"
+      ? "calc(100vw * (32 / 1512))"
+      : "calc(100vw * (24 / 1512))"};
+  font-weight: ${(props) => (props.fontWeight ?? props.bold ? "700" : "400")};
   line-height: ${(props) =>
-    props.size === "sm" ? "22px" : props.size === "lg" ? "36px" : "28px"};
+    props.lineHeight ?? props.size === "sm"
+      ? "calc(100vw * (10 / 1512))"
+      : props.size === "lg"
+      ? "calc(100vw * (33 / 1512))"
+      : "calc(100vw * (25 / 1512))"};
+  margin-top: ${(props) =>
+    `${(props.mt || props.marginTop) ?? "calc(100vw * (14 / 1512))"}`};
 
-  ${(props) => props.theme.mediaQueries.desktop} {
+  @media (min-width: 1512px) {
     font-size: ${(props) =>
-      props.size === "sm" ? "16px" : props.size === "lg" ? "24px" : "20px"};
+      props.fontSize ?? props.size === "sm"
+        ? "20px"
+        : props.size === "lg"
+        ? "32px"
+        : "24px"};
     line-height: ${(props) =>
-      props.size === "sm" ? "20px" : props.size === "lg" ? "32px" : "24px"};
-  }
-
-  ${(props) => props.theme.mediaQueries.tablet} {
-    font-size: ${(props) =>
-      props.size === "sm" ? "16px" : props.size === "lg" ? "20px" : "16px"};
-    line-height: ${(props) =>
-      props.size === "sm" ? "20px" : props.size === "lg" ? "28px" : "20px"};
+      props.lineHeight ?? props.size === "sm"
+        ? "10px"
+        : props.size === "lg"
+        ? "33px"
+        : "25px"};
+    margin-top: ${(props) => `${(props.mt || props.marginTop) ?? "14px"}`};
   }
 `;
 export const Title = styled.h1<
   {
-    small?: boolean;
+    bold?: boolean;
+    thin?: boolean;
     color?: string;
+    small?: boolean;
   } & TypographyProps
 >`
-  color: ${(props) => props.color ?? "#ffffff"};
-  font-family: gotham-bold;
-  font-size: ${(props) => (props.small ? "24px" : "40px")};
-  font-weight: ${(props) => (props.small ? "700" : "400")};
-  line-height: ${(props) => (props.small ? "24px" : "48px")};
-  margin-top: 16px;
+  color: ${(props) =>
+    props.color ?? (props.variant === "caption" && !props.bold)
+      ? "#cdcdcd"
+      : "#ffffff"};
+  font-family: ${(props) =>
+    props.fontFamily ?? props.thin ? "gotham-light" : "gotham-bold"};
+  font-size: ${(props) =>
+    props.fontSize ?? props.variant === "caption"
+      ? "calc(100vw * (16 / 1512))"
+      : props.small
+      ? "calc(100vw * (24 / 1512))"
+      : "calc(100vw * (40 / 1512))"};
+  font-weight: ${(props) =>
+    props.fontWeight ?? props.bold
+      ? "700"
+      : props.thin
+      ? "bold"
+      : props.small
+      ? "700"
+      : "500"};
+  line-height: ${(props) =>
+    props.lineHeight ?? props.variant === "caption"
+      ? "calc(100vw * (10 / 1512))"
+      : props.small
+      ? "calc(100vw * (25 / 1512))"
+      : "calc(100vw * (41 / 1512))"};
+  margin-top: ${(props) =>
+    `${(props.mt || props.marginTop) ?? "calc(100vw * (12 / 1512))"}`};
 
-  ${(props) => props.theme.mediaQueries.desktop} {
-    font-size: ${(props) => (props.small ? "16px" : "24px")};
-    line-height: 10px;
-    margin-top: 10px;
+  @media (min-width: 1512px) {
+    font-size: ${(props) =>
+      props.fontSize ?? props.variant === "caption"
+        ? "16px"
+        : props.small
+        ? "24px"
+        : "40px"};
+    line-height: ${(props) =>
+      props.lineHeight ?? props.variant === "caption"
+        ? "10px"
+        : props.small
+        ? "25px"
+        : "41px"};
+    margin-top: ${(props) => `${(props.mt || props.marginTop) ?? "12px"}`};
   }
 `;
+
+// ${(props) => props.theme.mediaQueries.desktop} {
+//   font-size: ${(props) => (props.fontSize ?? props.small ? "calc" : "24px")};
+//   line-height: calc(100vw * (10 / 1512));
+//   margin-top: calc(100vw * (10 / 1512));
+// }
