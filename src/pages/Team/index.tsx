@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { FlowerSamples, Page } from "../../components";
 import { Grid, Text } from "../../components/shared";
 import {
@@ -19,8 +18,8 @@ type MemberProps = {
 const IVOR: MemberProps = {
   bio: 'Ivor Guest is a designer and art director based in New York, who created the art for Funky Flowerz. His inspiration came from Benyamin Ahmed\'s "Weird Whales" collection, mixed with his love for flowers and the game Pikmin.',
   headerIcon: <TeamIvor />,
-  instagram: "https://instagram.com/",
-  twitter: "https://twitter.com/",
+  instagram: "https://instagram.com/ivorguest",
+  twitter: "https://www.instagram.com/guestudios/?hl=en",
 };
 
 const JENNY: MemberProps = {
@@ -30,24 +29,18 @@ const JENNY: MemberProps = {
   twitter: "https://twitter.com/jungsnn",
 };
 
-const Member = ({
-  member,
-  onNavigate,
-}: {
-  member: MemberProps;
-  onNavigate: (url: string) => void;
-}) => {
+const Member = ({ member }: { member: MemberProps }) => {
   return (
     <MemberContainer className="team-ivor" display="grid" gridAutoFlow="row">
       <MemberHeader display="grid" gridAutoFlow="column">
         <TitleWrapper>{member.headerIcon}</TitleWrapper>
         <SocialIcons display="grid" gridAutoFlow="column">
-          <div onClick={() => onNavigate(member.instagram)}>
+          <a href={member.instagram} rel="noreferrer" target="_blank">
             <InstagramIcon />
-          </div>
-          <div onClick={() => onNavigate(member.twitter)}>
+          </a>
+          <a href={member.twitter} rel="noreferrer" target="_blank">
             <TwitterIcon />
-          </div>
+          </a>
         </SocialIcons>
       </MemberHeader>
       <MemberDescrition>
@@ -60,13 +53,11 @@ const Member = ({
 };
 
 const Team = () => {
-  const navigate = useNavigate();
-
   return (
     <Page>
       <Section container direction="column">
-        <Member member={IVOR} onNavigate={navigate} />
-        <Member member={JENNY} onNavigate={navigate} />
+        <Member member={IVOR} />
+        <Member member={JENNY} />
         {/* <MemberContainer
           className="team-jenny"
           display="grid"
