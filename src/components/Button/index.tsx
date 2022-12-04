@@ -20,15 +20,20 @@ const StyledButton = styled.button<{ isIcon: boolean }>`
   width: 100%;
   height: auto;
   padding: 0;
-  background: ${(props) => props.theme.colors.pink};
+  background: ${(props) =>
+    props.isIcon ? "transparent" : props.theme.colors.pink};
   border-radius: ${(props) =>
     props.isIcon ? "50%" : "calc(100vw * (20 / 1512))"};
   border: none;
   box-shadow: none;
-  min-width: calc(100vw * (237 / 1512));
-  max-width: calc(100vw * (237 / 1512));
-  min-height: calc(100vw * (62 / 1512));
-  max-height: calc(100vw * (62 / 1512));
+  min-width: ${(props) =>
+    props.isIcon ? "100%" : "calc(100vw * (237 / 1512))"};
+  max-width: ${(props) =>
+    props.isIcon ? "100%" : "calc(100vw * (237 / 1512))"};
+  min-height: ${(props) =>
+    props.isIcon ? "100%" : "calc(100vw * (62 / 1512))"};
+  max-height: ${(props) =>
+    props.isIcon ? "100%" : "calc(100vw * (62 / 1512))"};
   opacity: ${(props) => (props.disabled ? "0.4" : "1")};
   > * {
     color: ${(props) => props.theme.colors.textPrimary};
@@ -39,10 +44,10 @@ const StyledButton = styled.button<{ isIcon: boolean }>`
 
   @media (min-width: 1512px) {
     border-radius: 20px;
-    min-width: 237px;
-    max-width: 237px;
-    min-height: 62px;
-    max-height: 62px;
+    min-width: ${(props) => (props.isIcon ? "100%" : "237px")};
+    max-width: ${(props) => (props.isIcon ? "100%" : "237px")};
+    min-height: ${(props) => (props.isIcon ? "100%" : "62px")};
+    max-height: ${(props) => (props.isIcon ? "100%" : "62px")};
 
     > * {
       font-size: 24px;
@@ -50,18 +55,18 @@ const StyledButton = styled.button<{ isIcon: boolean }>`
       margin-top: 16px;
     }
   }
-
-  ${(props) => props.theme.mediaQueries.mobile} {
-    border-radius: 16px;
-    padding: 16px 8px;
-    max-width: 128px;
-
-    > * {
-      p {
-        margin-top: 8px;
-      }
-    }
-  }
 `;
+
+// ${(props) => props.theme.mediaQueries.mobile} {
+//   border-radius: 16px;
+//   padding: 16px 8px;
+//   max-width: 128px;
+
+//   > * {
+//     p {
+//       margin-top: 8px;
+//     }
+//   }
+// }
 
 export default Button;

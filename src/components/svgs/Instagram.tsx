@@ -1,4 +1,4 @@
-const Instagram = () => {
+const Instagram: React.FC = (props) => {
   return (
     <svg
       width="44"
@@ -6,6 +6,7 @@ const Instagram = () => {
       viewBox="0 0 44 44"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g clipPath="url(#clip0_606_4)">
         <path

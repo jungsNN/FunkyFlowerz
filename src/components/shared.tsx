@@ -123,7 +123,7 @@ export const Text = styled.p<
 >`
   color: ${(props) => props.color ?? "#ffffff"};
   font-family: ${(props) =>
-    props.fontFamily ?? props.thin ? "gotham-light" : "gotham-bold"};
+    props.fontFamily ?? props.thin ? "gotham-book" : "gotham-bold"};
   font-size: ${(props) =>
     props.fontSize ?? props.size === "sm"
       ? "calc(100vw * (20 / 1512))"
