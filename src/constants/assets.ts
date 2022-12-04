@@ -1,9 +1,7 @@
 export const IPFS_API_URL = "https://nftstorage.link/ipfs";
-export const FUNKY_FLOWERZ_SPLASH_URI =
-  "bafkreigmxo4hc6ist5vtn52i5l77obcvkakivcrdvga47suigwe2p4zw6e";
-export const MENU_HOME_URI =
-  "bafkreidxx7vk5doin3y24pknty3emkc7jra5ha7b3yp3qljvhgwfvs4zf4";
-export const MENU_RARITY_URI =
-  "bafkreicamwgypgobf7o4htaecshacj5bhcus6e3xidgmxpkiitctmosnli";
-export const MENU_TEAM_URI =
-  "bafkreie5646ab652bjczfd7lm5gympwrzcest52weqwqjoigpwv7cewaa4";
+export const RARITY_CHART_URI =
+  "bafkreibmlv6znygf5vcthtl5us2527udmqdslmzhw5ku7sgmvu43qq2tzu";
+export const RARITY_SPECIAL_EDITIONS_URI =
+  "bafkreickyxfjnlzvbqbk7bxbh6nnaab526j22bgogcnbs7dor4bklap5rm";
+export const RARITY_SUPERIOR_TRAITS_URI =
+  "bafkreibrf7gom4yc4us2676gf76wr3wjzte5z22bwd7mjh6pqm64nbp67q";

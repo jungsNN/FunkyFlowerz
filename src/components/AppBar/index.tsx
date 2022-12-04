@@ -978,6 +978,7 @@ const NavLinks = styled(Grid)`
 // `;
 
 const MenuButton = styled.button`
+  cursor: pointer;
   display: flex;
   width: 100%;
   height: 100%;

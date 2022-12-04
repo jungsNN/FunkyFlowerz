@@ -2,95 +2,44 @@ import styled from "styled-components";
 import { Grid } from "../../components/shared";
 import { Page } from "../../components";
 import {
-  RarityChartTitle,
-  SpecialEditionTitle,
-  SuperiorTraitTitle,
-} from "../../components/svgs";
+  IPFS_API_URL,
+  RARITY_CHART_URI,
+  RARITY_SPECIAL_EDITIONS_URI,
+  RARITY_SUPERIOR_TRAITS_URI,
+} from "../../constants/assets";
 
 const Rarity = () => {
   return (
     <Page>
-      <Container container direction="column">
-        <Section>
-          <TitleWrapper>
-            <RarityChartTitle />
-          </TitleWrapper>
-          <img src="./rarity-chart.png" alt="rarity-chart" />
-        </Section>
-        <Section>
-          <TitleWrapper>
-            <SpecialEditionTitle />
-          </TitleWrapper>
-          <img src="./special-editions.png" alt="rarity-chart" />
-        </Section>
-        <Section>
-          <TitleWrapper>
-            <SuperiorTraitTitle />
-          </TitleWrapper>
-          <img src="./superior-traits.png" alt="rarity-chart" />
-        </Section>
+      <Container container display="grid">
+        <img
+          src={[IPFS_API_URL, RARITY_CHART_URI].join("/")}
+          alt="rarity-chart"
+        />
+        <img
+          src={[IPFS_API_URL, RARITY_SPECIAL_EDITIONS_URI].join("/")}
+          alt="rarity-chart"
+        />
+        <img
+          src={[IPFS_API_URL, RARITY_SUPERIOR_TRAITS_URI].join("/")}
+          alt="rarity-chart"
+        />
       </Container>
     </Page>
   );
 };
 
 const Container = styled(Grid)`
-  grid-gap: 144px;
-
-  ${(props) => props.theme.mediaQueries.desktop} {
-    grid-gap: 128px;
-  }
-
-  ${(props) => props.theme.mediaQueries.tablet} {
-    grid-gap: 96px;
-  }
-
-  ${(props) => props.theme.mediaQueries.mobile} {
-    grid-gap: 64px;
-  }
-`;
-
-const TitleWrapper = styled.div`
-  width: 100%;
-  min-width: 192px;
-  max-width: calc(100vw / 1.8);
-
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  ${(props) => props.theme.mediaQueries.desktopXl} {
-    max-width: 720px;
-  }
-`;
-
-const Section = styled(Grid)`
-  display: grid;
-  flex-direction: row;
-  grid-gap: 64px;
-  padding-left: 32px;
-  padding-right: 32px;
+  grid-auto-flow: row;
+  grid-gap: calc(100vw * (140 / 1512));
 
   img {
     width: 100%;
     height: 100%;
   }
 
-  ${(props) => props.theme.mediaQueries.desktop} {
-    grid-gap: 48px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  ${(props) => props.theme.mediaQueries.tablet} {
-    grid-gap: 32px;
-  }
-
-  ${(props) => props.theme.mediaQueries.mobile} {
-    grid-gap: 24px;
-    padding-left: 8px;
-    padding-right: 8px;
+  @media (min-width: 1512px) {
+    grid-gap: 140px;
   }
 `;
 
