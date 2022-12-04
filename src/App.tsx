@@ -1,6 +1,6 @@
 import * as anchor from "@project-serum/anchor";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { ThemeProvider } from "styled-components";
 import { clusterApiUrl } from "@solana/web3.js";
 import {
@@ -24,6 +24,7 @@ import { DEFAULT_TIMEOUT } from "./utils/connection";
 import { Home, Rarity, Team } from "./pages";
 import GlobalStyles from "./theme/Global";
 import { theme } from "./theme/Theme.styled";
+import { useStore, useWindowSize } from "./hooks";
 import "./App.css";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
@@ -56,6 +57,15 @@ const rpcHost =
 const connection = new anchor.web3.Connection(rpcHost);
 
 const App = () => {
+  const store = useStore();
+  const windowWidth = useWindowSize();
+  useEffect(() => {
+    if (window && typeof window !== "undefined") {
+      store.setIsMobile((windowWidth.width ?? window.innerWidth) <= 480);
+    }
+  }, [windowWidth.width]);
+
+  const isMobile = useCallback(() => useStore.getState().isMobile, []);
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
   const wallets = useMemo(
     () => [
@@ -81,6 +91,7 @@ const App = () => {
               <AppBar
                 candyMachineId={candyMachineId}
                 connection={connection}
+                isMobile={isMobile()}
                 txTimeout={DEFAULT_TIMEOUT}
                 rpcHost={rpcHost}
                 network={network}
@@ -96,7 +107,7 @@ const App = () => {
                 }
               />
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home isMobile={isMobile()} />} />
                 <Route path="rarity" element={<Rarity />} />
                 <Route path="team" element={<Team />} />
                 <Route path="*" element={<Navigate to="/" />} />

@@ -40,19 +40,18 @@ import {
   MintCountdown,
 } from "../../components/Mint";
 import SideDrawer from "../SideDrawer";
-import { useStore, useWindowSize } from "../../hooks";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 interface AppBarProps {
+  isMobile: boolean;
   rpcHost: string;
   connection?: Connection | undefined;
 }
 
 const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
-  const store = useStore();
+  const isMobile = props.isMobile;
   const navigate = useNavigate();
-  const windowWidth = useWindowSize();
   const [isUserMinting, setIsUserMinting] = useState(false);
   const [candyMachine, setCandyMachine] = useState<CandyMachineAccount>();
   const [alertState, setAlertState] = useState<AlertState>({
@@ -88,14 +87,6 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
       signTransaction: wallet.signTransaction,
     } as anchor.Wallet;
   }, [wallet]);
-
-  const setIsMobile = () => {
-    store.setIsMobile((windowWidth?.width ?? window.innerWidth) <= 480);
-  };
-
-  useEffect(() => {
-    setIsMobile();
-  }, []);
 
   const refreshCandyMachineState = useCallback(
     async (commitment: Commitment = "confirmed") => {
@@ -572,7 +563,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
     status?: "completed" | "presale" | "live";
   }) => {
     return variant === "countdown" ? (
-      <Grid direction="row" justify="center">
+      <Grid by="row" justify="center">
         <MintCountdown
           isMock
           showMockCountdown
@@ -597,7 +588,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
         </Text>
       </Grid>
     ) : (
-      <Grid direction="row" justify="center">
+      <Grid by="row" justify="center">
         <MintCountdown
           isMock
           key="goLive"
@@ -637,7 +628,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
   const mintContainer = (isMock?: { isMock?: boolean }) => {
     return (
       <MintContainer>
-        {!store.isMobile && mintButton()}
+        {!isMobile && mintButton()}
         {candyMachine && (
           <>
             <MintDetails className="mint-details-floater">
@@ -647,14 +638,14 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                 wrap="nowrap"
                 style={{ position: "relative" }}
               >
-                <MintStatus direction="column" className="mint-status">
+                <MintStatus by="column" className="mint-status">
                   {isMock ? (
                     mockMintCountDown({
                       variant: "countdown",
                       status: "presale",
                     })
                   ) : isActive && endDate && Date.now() < endDate.getTime() ? (
-                    <Grid direction="row" justify="center">
+                    <Grid by="row" justify="center">
                       <MintCountdown
                         key="endSettings"
                         date={getCountdownDate(candyMachine)}
@@ -677,7 +668,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                       </Text>
                     </Grid>
                   ) : (
-                    <Grid direction="row" justify="center">
+                    <Grid by="row" justify="center">
                       <MintCountdown
                         key="goLive"
                         date={getCountdownDate(candyMachine)}
@@ -787,7 +778,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
               <FunkyFlowerzLogo />
             </div>
             <Grid display="grid" gap="38px" gridAutoFlow="column">
-              {store.isMobile ? (
+              {isMobile ? (
                 <MobileNavBar
                   // candyProps={store.connection}
                   onNavigate={navigate}
@@ -796,8 +787,8 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                 <Menu onNavigate={navigate} />
               )}
               {wallet.connected && mintContainer({ isMock: true })}
-              {!wallet.connected && <ConnectButton isMobile={store.isMobile} />}
-              {/* {!store.isMobile && <Wallet {...store.connection} />} */}
+              {!wallet.connected && <ConnectButton isMobile={isMobile} />}
+              {/* {!isMobile && <Wallet {...store.connection} />} */}
             </Grid>
           </AppBarGrid>
         </Paper>
@@ -865,12 +856,7 @@ const MobileNavBar = ({
           />
         }
       >
-        <Grid
-          direction="column"
-          align="center"
-          justify="space-between"
-          pt="48px"
-        >
+        <Grid by="column" align="center" justify="space-between" pt="48px">
           <Menu onNavigate={onNavigate} />
         </Grid>
       </SideDrawer>

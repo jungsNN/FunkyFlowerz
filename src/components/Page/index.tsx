@@ -1,26 +1,41 @@
 import React from "react";
 import styled from "styled-components";
-import { Container, Flex } from "../shared";
+import { Container } from "../shared";
+import Footer from "../Footer";
 
 const Page: React.FC = ({ children }) => {
   return (
-    <Container width="100%" height="100vh" maxW="calc(100vw * (1288 / 1512))">
+    <PageContainer>
       <Wrapper>{children}</Wrapper>
-    </Container>
+      <FooterWrapper>
+        <Footer />
+      </FooterWrapper>
+    </PageContainer>
   );
 };
 
-const Wrapper = styled(Flex)`
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 0;
-  padding-right: 0;
+const PageContainer = styled(Container)`
+  height: 100vh;
+  max-width: calc(100vw * (1288 / 1512));
   align-items: start;
   justify-content: center;
 
   @media (min-width: 1512px) {
     max-width: 1288px;
   }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    max-width: calc(100vw * (375 / 480));
+  }
+`;
+
+const Wrapper = styled.div`
+  padding-left: 0;
+  padding-right: 0;
+`;
+
+const FooterWrapper = styled.div`
+  margin-top: calc(100vw * (128 / 1512));
 `;
 
 export default Page;

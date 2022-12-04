@@ -78,7 +78,6 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
   isMock = false,
   showMockCountdown = false,
 }) => {
-  console.log({ date });
   const isMobile = useStore.getState().isMobile;
   const classes = useStyles({ isMobile })();
   const renderCountdown = ({

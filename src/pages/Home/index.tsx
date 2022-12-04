@@ -2,28 +2,27 @@ import styled from "styled-components";
 import { Container, Grid } from "../../components/shared";
 import FlowerSamples from "../../components/FlowerSamples";
 import HomeSplashBG from "../../components/svgs/HomeSplashBG";
-import HomeSplashHeader from "../../components/svgs/HomeSplashHeader";
+import { FUNKY_FLOWERZ_INTRO_URI, IPFS_API_URL } from "../../constants/assets";
 import Page from "../../components/Page";
-import { useStore } from "../../hooks";
 
-const Home = () => {
-  const isMobile = useStore.getState().isMobile;
-
+const Home = ({ isMobile }: { isMobile: boolean }) => {
   return isMobile ? (
     <Page>
       <SplashContainer>
-        <SplashHeader
-          container
-          align="center"
-          direction="column-reverse"
-          display="flex"
-          gap="48px"
-          gridCols="repeat(2, 1fr)"
-          wrap="nowrap"
-        >
-          <HomeSplashHeader />
+        <SplashHeader display="grid" gridAutoFlow="row">
           <SplashImage>
-            <img src="./funky-flowerz-top.gif" alt="funkyflowerz-top" />
+            <img
+              className="funkyflowerz-gif"
+              src="./funky-flowerz-top.gif"
+              alt="funkyflowerz-gif"
+            />
+          </SplashImage>
+          <SplashImage>
+            <img
+              className="funkyflowerz-intro"
+              src={[IPFS_API_URL, FUNKY_FLOWERZ_INTRO_URI].join("/")}
+              alt="funkyflowerz-intro"
+            />
           </SplashImage>
         </SplashHeader>
         <FlowerSamples />
@@ -59,14 +58,30 @@ const SplashContainer = styled(Container)`
 
 const SplashHeader = styled(Grid)`
   height: 100%;
+  grid-gap: 32px;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const SplashImage = styled.div`
-  width: calc(100vw * (128 / 480));
-  height: calc(100vw * (128 / 480));
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
 
-  img {
+  .funkyflowerz-gif {
+    width: calc(100vw * (128 / 480));
+    height: calc(100vw * (128 / 480));
+  }
+
+  .funkyflowerz-intro {
     width: 100%;
     height: 100%;
   }

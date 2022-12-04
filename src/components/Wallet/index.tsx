@@ -545,24 +545,24 @@ const Wallet: React.FC<WalletProps & ConnectionProps> = (props) => {
             isActive={
               isActive || (isPresale && isWhitelistUser && isValidBalance)
             }
-            isLoading={false}
             isValidBalance={isValidBalance}
+            isLoading={false}
           />
         </GatewayProvider>
       ) : (
-        <MintButton
-          candyMachine={candyMachine}
-          isMinting={isUserMinting}
-          setIsMinting={(val: boolean | ((prevState: boolean) => boolean)) =>
-            setIsUserMinting(val)
-          }
-          onMint={onMint}
-          isActive={
-            isActive || (isPresale && isWhitelistUser && isValidBalance)
-          }
-          isLoading={false}
-          isValidBalance={isValidBalance}
-        />
+        <></>
+        // <MintButton
+        //   candyMachine={candyMachine}
+        //   isMinting={isUserMinting}
+        //   setIsMinting={(val: boolean | ((prevState: boolean) => boolean)) =>
+        //     setIsUserMinting(val)
+        //   }
+        //   onMint={onMint}
+        //   isActive={
+        //     isActive || (isPresale && isWhitelistUser && isValidBalance)
+        //   }
+        //   isValidBalance={isValidBalance}
+        // />
       )}
     </MintButtonWrapper>
   );
@@ -703,10 +703,6 @@ const MintButtonWrapper = styled.div`
   width: 100%;
   font-weight: 700;
   border-radius: calc(100vw * (20 / 1512));
-
-  @media (min-width: 1512px) {
-    border-radius: 20px;
-  }
 
   ${(props) => props.theme.mediaQueries.desktop} {
     border-radius: 16px;
