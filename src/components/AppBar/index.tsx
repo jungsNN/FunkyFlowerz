@@ -731,7 +731,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                   style={{
                     width: "100%",
                   }}
-                  xs={5}
+                  xs={4}
                 >
                   <Title thin variant="caption">
                     {isWhitelistUser && discountPrice
@@ -761,7 +761,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                   style={{
                     width: "100%",
                   }}
-                  xs={7}
+                  xs={8}
                 >
                   <Title thin variant="caption">
                     Remaining
