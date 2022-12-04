@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { WalletModalButton } from "@solana/wallet-adapter-react-ui";
-import colors from "../../theme/colors";
-import { Grid, Title } from "../shared";
-import { WalletIcon } from "../svgs";
+import { Title } from "../shared";
 
 interface ConnectButtonProps {
   isMobile: boolean;
@@ -12,41 +10,42 @@ interface ConnectButtonProps {
 const ConnectButton: React.FC<ConnectButtonProps> = (props) => {
   const { buttonText, isMobile, ...rest } = props;
   return (
-    <StyledConnectButton {...rest}>
-      {isMobile && (
-        <Grid display="grid" gap="4px" gridAutoFlow="column" justify="center">
-          <ButtonLabel small>{buttonText ?? "Connect"}</ButtonLabel>
-          <WalletIcon
-            stroke="white"
-            bg={colors.pink}
-            width="24px"
-            height="24px"
-          />
-        </Grid>
-      )}
+    <StyledConnectButton
+      isMobile={isMobile}
+      maxw={isMobile ? 480 : 1512}
+      {...rest}
+    >
       <ButtonLabel small>
-        {!isMobile && (buttonText ?? "Connect Wallet")}
+        {buttonText ?? (isMobile ? "Connect" : "Connect Wallet")}
       </ButtonLabel>
     </StyledConnectButton>
   );
 };
-
-const StyledConnectButton = styled(WalletModalButton)`
+// height: auto;
+//   min-height: calc(100vw * (62 / ${({ maxw }) => `${maxw}`}));
+// > * {
+//   font-size: calc(100vw * (24 / ${({ maxw }) => `${maxw}`}));
+// }
+const StyledConnectButton = styled(WalletModalButton)<{
+  isMobile: boolean;
+  maxw: number;
+}>`
   width: 100%;
-  min-width: calc(100vw * (237 / 1512));
-  max-width: calc(100vw * (237 / 1512));
-  height: auto;
-  min-height: calc(100vw * (62 / 1512));
-  max-height: calc(100vw * (62 / 1512));
+  min-width: calc(100vw * (237 / ${({ maxw }) => `${maxw}`}));
+  max-width: calc(100vw * (237 / ${({ maxw }) => `${maxw}`}));
+  height: calc(
+    100vw *
+      (
+        ${({ isMobile }) => (isMobile ? "48" : "62")} /
+          ${({ maxw }) => `${maxw}`}
+      )
+  );
   padding: 0;
-  background: #ff5fdc;
+  background: ${(props) => props.theme.colors.pink};
   color: white;
   font-family: inherit;
   font-weight: 700;
-  border-radius: calc(100vw * (20 / 1512));
-  > * {
-    font-size: calc(100vw * (24 / 1512));
-  }
+  border-radius: calc(100vw * (20 / ${({ maxw }) => `${maxw}`}));
 
   @media (min-width: 1512px) {
     border-radius: 20px;
@@ -61,28 +60,11 @@ const StyledConnectButton = styled(WalletModalButton)`
   }
 
   ${(props) => props.theme.mediaQueries.mobile} {
-    border-radius: 16px;
-    padding: 16px 8px;
-    max-width: 128px;
-
-    > & * {
-      p {
-        margin-top: 8px;
-      }
-    }
+    min-width: calc(100vw * (160 / ${({ maxw }) => `${maxw}`}));
+    max-width: calc(100vw * (160 / ${({ maxw }) => `${maxw}`}));
   }
 `;
 
-const ButtonLabel = styled(Title)`
-  margin-top: 12px;
-
-  ${(props) => props.theme.mediaQueries.tablet} {
-    margin-top: 8px;
-  }
-
-  ${(props) => props.theme.mediaQueries.mobile} {
-    margin-top: 10px;
-  }
-`;
+const ButtonLabel = styled(Title)``;
 
 export default ConnectButton;

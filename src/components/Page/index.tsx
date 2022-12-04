@@ -25,7 +25,7 @@ const PageContainer = styled(Container)`
   }
 
   ${(props) => props.theme.mediaQueries.mobile} {
-    max-width: calc(100vw * (375 / 480));
+    max-width: calc(100vw * (392 / 480));
   }
 `;
 
@@ -36,6 +36,10 @@ const Wrapper = styled.div`
 
 const FooterWrapper = styled.div`
   margin-top: calc(100vw * (128 / 1512));
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    margin-top: calc(100vw * (128 / 480));
+  }
 `;
 
 export default Page;

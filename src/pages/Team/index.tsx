@@ -58,30 +58,6 @@ const Team = () => {
       <Section container direction="column">
         <Member member={IVOR} />
         <Member member={JENNY} />
-        {/* <MemberContainer
-          className="team-jenny"
-          display="grid"
-          gridAutoFlow="row"
-        >
-          <MemberHeader display="grid" gridAutoFlow="column">
-            <TitleWrapper>
-              <TeamJenny />
-            </TitleWrapper>
-            <SocialIcons display="grid" gridAutoFlow="column">
-              <div onClick={() => navigate(JENNY.instagram)}>
-                <InstagramIcon />
-              </div>
-              <div onClick={() => navigate(JENNY.twitter)}>
-                <TwitterIcon />
-              </div>
-            </SocialIcons>
-          </MemberHeader>
-          <MemberDescrition>
-            <Text thin size="lg">
-              {JENNY.bio}
-            </Text>
-          </MemberDescrition>
-        </MemberContainer> */}
         <FlowerSamplesContainer>
           <FlowerSamples />
         </FlowerSamplesContainer>
@@ -95,6 +71,9 @@ const FlowerSamplesContainer = styled.div`
 
   @media (min-width: 1512px) {
     margin-top: 120px;
+  }
+  ${(props) => props.theme.mediaQueries.mobile} {
+    margin-top: calc(100vw * (60 / 480));
   }
 `;
 
@@ -113,6 +92,17 @@ const MemberDescrition = styled.div`
       line-height: 36px;
     }
   }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    height: 100%;
+    padding-bottom: calc(100vw * (109 / 480));
+
+    p {
+      font-size: calc(100vw * (30 / 480));
+      line-height: calc(100vw * (36 / 480));
+      margin-top: 0;
+    }
+  }
 `;
 
 const MemberContainer = styled(Grid)`
@@ -120,6 +110,9 @@ const MemberContainer = styled(Grid)`
 
   @media (min-width: 1512px) {
     grid-gap: 28px;
+  }
+  ${(props) => props.theme.mediaQueries.mobile} {
+    grid-gap: calc(100vw * (32 / 480));
   }
 `;
 
@@ -132,6 +125,9 @@ const MemberHeader = styled(Grid)`
   @media (min-width: 1512px) {
     grid-gap: 40px;
   }
+  ${(props) => props.theme.mediaQueries.mobile} {
+    grid-gap: calc(100vw * (32 / 480));
+  }
 `;
 
 const Section = styled(Grid)``;
@@ -142,8 +138,8 @@ const SocialIcons = styled(Grid)`
 
   svg {
     cursor: pointer;
-    height: calc(100vw (48 / 1512));
-    width: calc(100vw (48 / 1512));
+    height: calc(100vw * (48 / 1512));
+    width: calc(100vw * (48 / 1512));
   }
 
   @media (min-width: 1512px) {
@@ -154,38 +150,32 @@ const SocialIcons = styled(Grid)`
       width: 48px;
     }
   }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    grid-gap: calc(100vw * (30 / 480));
+
+    svg {
+      height: calc(100vw * (30 / 480));
+      width: calc(100vw * (30 / 480));
+    }
+  }
 `;
 
 const TitleWrapper = styled.div`
   width: 100%;
   height: calc(100vw * (76 / 1512));
-  padding: calc(100vw * (15 / 1512)) 0;
+  padding-bottom: calc(100vw * (15 / 1512));
+  padding-top: calc(100vw * (15 / 1512));
 
   svg {
     width: 100%;
     height: 100%;
   }
+  ${(props) => props.theme.mediaQueries.mobile} {
+    height: 100%;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
 `;
 
-// & > * {
-//   button {
-// svg {
-//   height: calc(100vw (48 / 1512));
-//   width: calc(100vw (48 / 1512));
-// }
-//   }
-// }
-
-// @media (min-width: 1512px) {
-//   grid-gap: 32px;
-
-//   & > * {
-//     button {
-// svg {
-//   height: 48px;
-//   width: 48px;
-// }
-//     }
-//   }
-// }
 export default Team;

@@ -32,7 +32,13 @@ export default function SideDrawer(props: SideDrawerProps) {
   return (
     <div>
       <React.Fragment key={anchor ?? "right"}>
-        <Button fullWidth={false} onClick={toggleDrawer(true)} size="small">
+        <Button
+          className="side-drawer-toggle"
+          isIcon
+          fullWidth={false}
+          onClick={toggleDrawer(true)}
+          size="small"
+        >
           {actionButton}
         </Button>
         <Drawer
@@ -44,8 +50,8 @@ export default function SideDrawer(props: SideDrawerProps) {
             sx={{
               height: "100vh",
               width: "100%",
-              minWidth: fullWidth ? "100vw" : setWidth ?? "calc(100vw / 1.33)",
-              maxWidth: fullWidth ? "100vw" : setWidth ?? "calc(100vw / 1.33)",
+              minWidth: fullWidth ? "100vw" : setWidth ?? "calc(100vw / 1.5)",
+              maxWidth: fullWidth ? "100vw" : setWidth ?? "calc(100vw / 1.5)",
               background: `${colors.bg}`,
               position: "relative",
             }}
@@ -55,11 +61,13 @@ export default function SideDrawer(props: SideDrawerProps) {
           >
             {children}
             <Button
+              isIcon
               onClick={toggleDrawer(false)}
               style={{
                 position: "absolute",
-                top: "calc(100vh / 2 - 18px)",
+                top: "0",
                 justifyContent: "flex-start",
+                zIndex: "50",
               }}
             >
               {

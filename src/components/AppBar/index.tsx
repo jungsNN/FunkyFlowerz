@@ -481,28 +481,19 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
     refreshCandyMachineState,
   ]);
 
-  // useEffect(() => {
-  //   (function loop() {
-  //     setTimeout(() => {
-  //       refreshCandyMachineState();
-  //       loop();
-  //     }, 20000);
-  //   })();
-  // }, [refreshCandyMachineState]);
+  useEffect(() => {
+    !isDevelopment &&
+      (function loop() {
+        setTimeout(() => {
+          refreshCandyMachineState();
+          loop();
+        }, 20000);
+      })();
+  }, [refreshCandyMachineState]);
 
   const mintButton = () => (
     <MintButtonWrapper>
-      {/* <Text bold>
-        {props.candyMachineId &&
-          String(props.candyMachineId)
-            .split("")
-            .fill(" ", 4, -4)
-            .join("")
-            .split("         ")
-            .join(".")}
-      </Text> */}
-      {!isDevelopment &&
-      candyMachine?.state.isActive &&
+      {candyMachine?.state.isActive &&
       candyMachine?.state.gatekeeper &&
       wallet.publicKey &&
       wallet.signTransaction ? (
@@ -566,6 +557,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
       <Grid by="row" justify="center">
         <MintCountdown
           isMock
+          isMobile={isMobile}
           showMockCountdown
           key="endSettings"
           date={new Date(Date.now() + 3600000)}
@@ -577,12 +569,15 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
           display="block"
           size="sm"
           style={{
-            fontSize: "calc(100vw * (12 / 1512))",
-            letterSpacing: "calc(100vw * (0.04em / 1512))",
+            fontSize: `calc(100vw * (12 / ${isMobile ? "480" : "1512"}))`,
+            letterSpacing: `calc(100vw * (0.04em / ${
+              isMobile ? "480" : "1512"
+            }))`,
             lineHeight: "0",
           }}
           textAlign="center"
           whiteSpace="nowrap"
+          variant="caption"
         >
           TO END OF MINT
         </Text>
@@ -591,6 +586,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
       <Grid by="row" justify="center">
         <MintCountdown
           isMock
+          isMobile={isMobile}
           key="goLive"
           date={getCountdownDate(candyMachine!)}
           onComplete={toggleMintButton}
@@ -608,15 +604,19 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
           candyMachine!.state.goLiveDate.toNumber() >
             new Date().getTime() / 1000 && (
             <Text
+              thin
               display="block"
               size="sm"
               style={{
-                fontSize: "calc(100vw * (12 / 1512))",
-                letterSpacing: "calc(100vw * (0.04em / 1512))",
+                fontSize: `calc(100vw * (12 / ${isMobile ? "480" : "1512"}))`,
+                letterSpacing: `calc(100vw * (0.04em / ${
+                  isMobile ? "480" : "1512"
+                }))`,
                 lineHeight: "0",
               }}
               textAlign="center"
               whiteSpace="nowrap"
+              variant="caption"
             >
               UNTIL PUBLIC MINT
             </Text>
@@ -625,17 +625,23 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
     );
   };
 
-  const mintContainer = (isMock?: { isMock?: boolean }) => {
+  const mintContainer = ({
+    isMock = false,
+  }: {
+    isMock: boolean | undefined;
+  }) => {
     return (
-      <MintContainer>
-        {!isMobile && mintButton()}
+      <MintContainer className="mint-container">
+        {mintButton()}
         {candyMachine && (
           <>
             <MintDetails className="mint-details-floater">
               <Grid
                 container
                 direction="row"
+                justify="center"
                 wrap="nowrap"
+                gap={isMobile ? "calc(100vw * (16 / 480))" : "unset"}
                 style={{ position: "relative" }}
               >
                 <MintStatus by="column" className="mint-status">
@@ -647,6 +653,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                   ) : isActive && endDate && Date.now() < endDate.getTime() ? (
                     <Grid by="row" justify="center">
                       <MintCountdown
+                        isMobile={isMobile}
                         key="endSettings"
                         date={getCountdownDate(candyMachine)}
                         style={{ justifyContent: "flex-end" }}
@@ -657,12 +664,17 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                         display="block"
                         size="sm"
                         style={{
-                          fontSize: "calc(100vw * (12 / 1512))",
-                          letterSpacing: "calc(100vw * (0.04em / 1512))",
+                          fontSize: `calc(100vw * (12 / ${
+                            isMobile ? "480" : "1512"
+                          }))`,
+                          letterSpacing: `calc(100vw * (0.04em / ${
+                            isMobile ? "480" : "1512"
+                          }))`,
                           lineHeight: "0",
                         }}
                         textAlign="center"
                         whiteSpace="nowrap"
+                        variant="caption"
                       >
                         TO END OF MINT
                       </Text>
@@ -670,6 +682,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                   ) : (
                     <Grid by="row" justify="center">
                       <MintCountdown
+                        isMobile={isMobile}
                         key="goLive"
                         date={getCountdownDate(candyMachine)}
                         style={{ justifyContent: "flex-end" }}
@@ -691,12 +704,17 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                             display="block"
                             size="sm"
                             style={{
-                              fontSize: "calc(100vw * (12 / 1512))",
-                              letterSpacing: "calc(100vw * (0.04em / 1512))",
+                              fontSize: `calc(100vw * (12 / ${
+                                isMobile ? "480" : "1512"
+                              }))`,
+                              letterSpacing: `calc(100vw * (0.04em / ${
+                                isMobile ? "480" : "1512"
+                              }))`,
                               lineHeight: "0",
                             }}
                             textAlign="center"
                             whiteSpace="nowrap"
+                            variant="caption"
                           >
                             UNTIL PUBLIC MINT
                           </Text>
@@ -708,7 +726,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                   item
                   align="center"
                   display="flex"
-                  gap="4px"
+                  gap={`calc(100vw * (4 / ${isMobile ? "480" : "1512"}))`}
                   justify="flex-end"
                   style={{
                     width: "100%",
@@ -738,7 +756,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
                   item
                   align="center"
                   display="flex"
-                  gap="4px"
+                  gap={`calc(100vw * (4 / ${isMobile ? "480" : "1512"}))`}
                   justify="flex-end"
                   style={{
                     width: "100%",
@@ -777,18 +795,35 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
             <div className="home-logo" onClick={() => navigate("/")}>
               <FunkyFlowerzLogo />
             </div>
-            <Grid display="grid" gap="38px" gridAutoFlow="column">
+            <Grid
+              className="navbar-right"
+              display="grid"
+              gap={`calc(100vw * (38 / ${isMobile ? "480" : "1512"}))`}
+              gridAutoFlow="column"
+              style={{ position: isMobile ? "relative" : "initial" }}
+            >
               {isMobile ? (
-                <MobileNavBar
-                  // candyProps={store.connection}
-                  onNavigate={navigate}
-                />
+                <>
+                  {wallet.connected ? (
+                    mintContainer({ isMock: false })
+                  ) : (
+                    <ConnectButton isMobile />
+                  )}
+                  <MobileNavBar
+                    // candyProps={store.connection}
+                    onNavigate={navigate}
+                  />
+                </>
               ) : (
-                <Menu onNavigate={navigate} />
+                <>
+                  <Menu onNavigate={navigate} />
+                  {wallet.connected ? (
+                    mintContainer({ isMock: false })
+                  ) : (
+                    <ConnectButton isMobile={false} />
+                  )}
+                </>
               )}
-              {wallet.connected && mintContainer({ isMock: true })}
-              {!wallet.connected && <ConnectButton isMobile={isMobile} />}
-              {/* {!isMobile && <Wallet {...store.connection} />} */}
             </Grid>
           </AppBarGrid>
         </Paper>
@@ -834,29 +869,34 @@ const MobileNavBar = ({
   onNavigate,
 }: {
   onNavigate: (path: string) => void;
-  candyProps?: ConnectionProps;
+  // candyProps?: ConnectionProps;
 }) => {
   return (
     <Grid
       item
       align="center"
       display="grid"
-      gap={"32px"}
+      gap="calc(100vw * (32 / 480))"
       gridAutoFlow="column"
       justify="justify-between"
     >
       <SideDrawer
         actionButton={
           <MoreIcon
-            height="48px"
+            height="calc(100vw * (48 / 480))"
             stroke="#ffffffd1"
             bg="black"
-            width="48px"
+            width="calc(100vw * (48 / 480))"
             variant="rounded-filled"
           />
         }
       >
-        <Grid by="column" align="center" justify="space-between" pt="48px">
+        <Grid
+          by="column"
+          align="center"
+          justify="space-between"
+          pt="calc(100vw * (48 / 480))"
+        >
           <Menu onNavigate={onNavigate} />
         </Grid>
       </SideDrawer>
@@ -865,19 +905,24 @@ const MobileNavBar = ({
 };
 
 const AppBarContainer = styled(Container)`
-  margin-top: calc(100vw * (45 / 1512));
   margin-bottom: calc(100vw * (93.7 / 1512));
+  margin-top: calc(100vw * (45 / 1512));
 
   @media (min-width: 1512px) {
-    margin-top: 45px;
     margin-bottom: 93.7px;
+    margin-top: 45px;
+  }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    margin-bottom: calc(100vw * (93.7 / 480));
+    margin-top: calc(100vw * (45 / 480));
   }
 `;
 
 const AppBarGrid = styled(Grid)`
   align-items: center;
   grid-template-columns: auto auto;
-  grid-gap: 32px;
+  grid-gap: calc(100vw * (32 / 1512));
   justify-content: space-between;
   width: 100%;
   min-width: calc(100vw * (1288 / 1512));
@@ -909,11 +954,28 @@ const AppBarGrid = styled(Grid)`
       max-height: 100px;
     }
   }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    grid-gap: calc(100vw * (32 / 480));
+    min-width: calc(100vw * (392 / 480));
+    max-width: calc(100vw * (392 / 480));
+
+    .home-logo {
+      min-height: calc(100vw * (48 / 480));
+      max-height: calc(100vw * (48 / 480));
+      min-width: calc(100vw * (48 / 480));
+      max-width: calc(100vw * (48 / 480));
+    }
+  }
 `;
 
 const MintButtonWrapper = styled.div`
   width: 100%;
   position: relative;
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    position: initial;
+  }
 `;
 
 const MintDetails = styled.div`
@@ -923,6 +985,12 @@ const MintDetails = styled.div`
   position: absolute;
   top: calc(100vw * (62 / 1512) * 1.4);
   right: 0;
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    width: 100%;
+    top: calc(100vw * (62 / 480) * 1.33);
+    right: calc(25% + (100vw * (8 / 392)));
+  }
 `;
 
 const NavLinks = styled(Grid)`
@@ -930,38 +998,20 @@ const NavLinks = styled(Grid)`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: calc(100vw * (35 / 1512));
   justify-content: flex-end;
+  z-index: 70;
 
   @media (min-width: 1512px) {
     grid-gap: 35px;
   }
 
   ${(props) => props.theme.mediaQueries.mobile} {
+    grid-gap: calc(100vw * (48 / 480));
     grid-template-columns: auto;
     grid-template-rows: repeat(3, 1fr);
-    padding-right: 48px;
-    padding-top: 48px;
+    padding-right: calc(100vw * (64 / 480));
+    padding-top: calc(100vw * (48 / 480));
   }
 `;
-
-// const MobileIconWallet = styled(WalletModalButton)`
-//   padding: 0;
-//   margin: 0;
-//   background: transparent;
-//   border: none;
-//   display: grid;
-//   grid-template-rows: auto 1fr;
-//   justify-content: center;
-//   align-items: center;
-// `;
-
-// const MobileWallet = styled(Wallet)<{ connected?: boolean }>`
-//   ${(props) => props.theme.mediaQueries.mobile} {
-//     display: flex;
-//     justify-content: flex-end;
-//     padding-right: ${(props) => (props.connected ? "0" : "48px")};
-//     min-width: 20px;
-//   }
-// `;
 
 const MenuButton = styled.button`
   cursor: pointer;
@@ -977,6 +1027,7 @@ const MenuButton = styled.button`
   max-width: calc(100vw * (80 / 1512));
   min-height: calc(100vw * (25 / 1512));
   max-height: calc(100vw * (25 / 1512));
+  z-index: 90;
   h1 {
     font-size: calc(100vw * (24 / 1512));
     line-height: calc(100vw * (8 / 1512));
@@ -994,6 +1045,18 @@ const MenuButton = styled.button`
       margin-top: 16px;
     }
   }
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    min-width: calc(100vw * (64 / 480));
+    max-width: calc(100vw * (64 / 480));
+    min-height: calc(100vw * (24 / 480));
+    max-height: calc(100vw * (24 / 480));
+    h1 {
+      font-size: calc(100vw * (24 / 480));
+      line-height: calc(100vw * (8 / 480));
+      margin-top: calc(100vw * (16 / 480));
+    }
+  }
 `;
 
 const MintStatus = styled(Grid)`
@@ -1005,6 +1068,11 @@ const MintStatus = styled(Grid)`
   position: absolute;
   right: 100%;
   width: 100%;
+
+  ${(props) => props.theme.mediaQueries.mobile} {
+    position: initial;
+    padding-right: 0;
+  }
 `;
 
 export default AppBar;

@@ -1,6 +1,9 @@
-import styled from "styled-components";
+import React from "react";
+import styled, { CSSProperties } from "styled-components";
 
-const MintContainer: React.FC = (props) => {
+const MintContainer: React.FC<
+  React.HTMLAttributes<HTMLDivElement> & CSSProperties
+> = (props) => {
   const { children, ...rest } = props;
 
   return <StyledMintContainer {...rest}>{children}</StyledMintContainer>;
@@ -10,7 +13,7 @@ const StyledMintContainer = styled.div`
   position: relative;
 
   ${(props) => props.theme.mediaQueries.mobile} {
-    min-width: 40px;
+    position: initial;
   }
 `;
 

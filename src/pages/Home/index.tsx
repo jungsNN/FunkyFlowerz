@@ -52,13 +52,13 @@ const SplashContainer = styled(Container)`
     grid-auto-flow: row;
     align-items: start;
     justify-content: center;
-    grid-gap: 64px;
+    grid-gap: calc(100vw * (64 / 480));
   }
 `;
 
 const SplashHeader = styled(Grid)`
   height: 100%;
-  grid-gap: 32px;
+  grid-gap: calc(100vw * (32 / 480));
   justify-content: center;
   align-items: center;
   width: 100%;

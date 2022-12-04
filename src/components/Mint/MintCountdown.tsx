@@ -4,7 +4,6 @@ import { Paper } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Text } from "../shared";
 import colors from "../../theme/colors";
-import { useStore } from "../../hooks";
 
 const useStyles = ({ isMobile }: { isMobile: boolean }) =>
   makeStyles((theme: Theme) =>
@@ -15,8 +14,8 @@ const useStyles = ({ isMobile }: { isMobile: boolean }) =>
         justifyContent: "flex-end",
         "& > *": {
           margin: theme.spacing(0.4),
-          width: isMobile ? "32px" : `calc(100vw * (37 / 1512))`,
-          height: isMobile ? "32px" : `calc(100vw * (36 / 1512))`,
+          width: `calc(100vw * (37 / ${isMobile ? "480" : "1512"}))`,
+          height: `calc(100vw * (36 / ${isMobile ? "480" : "1512"}))`,
           display: "flex",
           flexDirection: "column",
           alignContent: "center",
@@ -25,16 +24,20 @@ const useStyles = ({ isMobile }: { isMobile: boolean }) =>
           background: "#384457",
           color: colors.textPrimary,
           borderRadius: 4,
-          fontSize: `calc(100vw * (10 / 1512))`,
+          fontSize: `calc(100vw * (10 / ${isMobile ? "480" : "1512"}))`,
         },
       },
       done: {
         display: "flex",
         margin: 0,
         marginTop: 1,
-        height: isMobile ? "32px" : `calc(100vw * (30 / 1512))`,
-        paddingLeft: `calc(100vw * (${theme.spacing(1)} / 1512))`,
-        paddingRight: `calc(100vw * (${theme.spacing(1)} / 1512))`,
+        height: `calc(100vw * (32 / ${isMobile ? "480" : "1512"}))`,
+        paddingLeft: `calc(100vw * (${theme.spacing(1)} / ${
+          isMobile ? "480" : "1512"
+        }))`,
+        paddingRight: `calc(100vw * (${theme.spacing(1)} / ${
+          isMobile ? "480" : "1512"
+        }))`,
         flexDirection: "column",
         alignContent: "center",
         alignItems: "center",
@@ -45,9 +48,9 @@ const useStyles = ({ isMobile }: { isMobile: boolean }) =>
       },
       item: {
         "& > p": {
-          fontSize: "calc(100vw * (18 / 1512))",
-          lineHeight: "calc(100vw * (22 / 1512))",
-          marginTop: "calc(100vw * (4 / 1512))",
+          fontSize: `calc(100vw * (18 / ${isMobile ? "480" : "1512"}))`,
+          lineHeight: `calc(100vw * (22 / ${isMobile ? "480" : "1512"}))`,
+          marginTop: `calc(100vw * (4 / ${isMobile ? "480" : "1512"}))`,
         },
       },
     })
@@ -58,6 +61,7 @@ interface MintCountdownProps {
   style?: React.CSSProperties;
   status?: string;
   onComplete?: () => void;
+  isMobile?: boolean;
   isMock?: boolean;
   showMockCountdown?: boolean;
 }
@@ -75,10 +79,10 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
   status,
   style,
   onComplete,
+  isMobile = false,
   isMock = false,
   showMockCountdown = false,
 }) => {
-  const isMobile = useStore.getState().isMobile;
   const classes = useStyles({ isMobile })();
   const renderCountdown = ({
     days,
@@ -99,19 +103,25 @@ export const MintCountdown: React.FC<MintCountdownProps> = ({
         <div className={classes.root} style={style}>
           <Paper elevation={0}>
             <span className={classes.item}>
-              <Text size="sm">{hours < 10 ? `0${hours}` : hours}</Text>
+              <Text size={isMobile ? "default" : "sm"}>
+                {hours < 10 ? `0${hours}` : hours}
+              </Text>
             </span>
             <span>hrs</span>
           </Paper>
           <Paper elevation={0}>
             <span className={classes.item}>
-              <Text size="sm">{minutes < 10 ? `0${minutes}` : minutes}</Text>
+              <Text size={isMobile ? "default" : "sm"}>
+                {minutes < 10 ? `0${minutes}` : minutes}
+              </Text>
             </span>
             <span>mins</span>
           </Paper>
           <Paper elevation={0}>
             <span className={classes.item}>
-              <Text size="sm">{seconds < 10 ? `0${seconds}` : seconds}</Text>
+              <Text size={isMobile ? "default" : "sm"}>
+                {seconds < 10 ? `0${seconds}` : seconds}
+              </Text>
             </span>
             <span>secs</span>
           </Paper>

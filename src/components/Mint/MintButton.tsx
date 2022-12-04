@@ -16,11 +16,6 @@ import { Title } from "../shared";
 
 export const CTAButton = styled(Button)`
   width: 100%;
-
-  ${(props) => props.theme.mediaQueries.mobile} {
-    border-radius: 16px;
-    max-width: 128px;
-  }
 `; // add your own styles here
 
 export const MintButton = ({
@@ -50,11 +45,11 @@ export const MintButton = ({
 
   const getMintButtonContent = () => {
     if (isLoading) {
-      return "LOADING...";
+      return "LOADING";
     } else if (!candyMachine) {
-      return "STORE CLOSED";
+      return "CLOSED!";
     } else if (candyMachine?.state.isSoldOut) {
-      return "SOLD OUT";
+      return "SOLDOUT";
     } else if (isMinting) {
       return <CircularProgress />;
     } else if (

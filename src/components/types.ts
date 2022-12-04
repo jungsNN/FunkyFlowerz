@@ -23,3 +23,48 @@ export interface LayoutProps {
   self?: string | "unset";
   wrap?: string | "nowrap";
 }
+
+export interface TextProps
+  extends React.HTMLAttributes<HTMLHeadingElement | HTMLElement> {
+  // React.HTMLAttributes<HTMLElement> &
+  align?: "center" | "end" | "start" | undefined;
+  bold?: boolean | false;
+  color?: string | undefined;
+  display?: string | undefined;
+  fontFamily?:
+    | "Gotham"
+    | "gotham-bold"
+    | "gotham-book"
+    | "gotham-light"
+    | "gotham-medium"
+    | string
+    | undefined;
+  fontSize?: string | undefined;
+  lineHeight?: string | undefined;
+  justify?:
+    | "baseline"
+    | "center"
+    | "end"
+    | "flex-start"
+    | "flex-end"
+    | "space-around"
+    | "space-between"
+    | "space-evenly"
+    | "start"
+    | "stretch"
+    | "initial"
+    | "revert"
+    | undefined;
+  mb?: number | string | undefined;
+  mt?: number | string | undefined;
+  maxw?: number | undefined;
+  marginTop?: number | string | undefined;
+  marginBottom?: number | string | undefined;
+  size?: "sm" | "lg" | "default" | undefined;
+  small?: boolean | false;
+  textAlign?: "center" | "end" | "start" | undefined;
+  thin?: boolean | false;
+  weight?: string | undefined;
+  whiteSpace?: "nowrap" | string | undefined;
+  variant?: string | undefined;
+}
