@@ -13,5 +13,4 @@ React web app forked from Metaplex candy-ui, and redesigned by Ivor Guest.
 
 - [ ] add nextjs
 - [ ] update packages
-- [ ] convert to tailwindcss or other style toolkit to remove MUI
-- [ ]
+- [ ] clean up unused components and assets
