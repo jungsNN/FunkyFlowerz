@@ -77,8 +77,8 @@ const SplashImage = styled.div`
   justify-content: center;
 
   .funkyflowerz-gif {
-    width: calc(100vw * (128 / 480));
-    height: calc(100vw * (128 / 480));
+    width: calc(100vw * (192 / 480));
+    height: calc(100vw * (192 / 480));
   }
 
   .funkyflowerz-intro {
