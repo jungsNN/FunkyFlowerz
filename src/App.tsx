@@ -82,12 +82,12 @@ const App = () => {
   );
 
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <ConnectionProvider endpoint={endpoint}>
-          <WalletProvider wallets={wallets} autoConnect>
-            <WalletModalProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <ConnectionProvider endpoint={endpoint}>
+        <WalletProvider wallets={wallets} autoConnect>
+          <WalletModalProvider>
+            <BrowserRouter>
               <AppBar
                 candyMachineId={candyMachineId}
                 connection={connection}
@@ -112,11 +112,11 @@ const App = () => {
                 <Route path="team" element={<Team />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
-            </WalletModalProvider>
-          </WalletProvider>
-        </ConnectionProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+            </BrowserRouter>
+          </WalletModalProvider>
+        </WalletProvider>
+      </ConnectionProvider>
+    </ThemeProvider>
   );
 };
 
