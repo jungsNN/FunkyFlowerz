@@ -141,7 +141,7 @@ const MemberContainer = styled.div`
 
 const MemberHeader = styled.div`
   display: grid;
-  grid-template-columns: auto 1fr 1fr;
+  grid-auto-flow: column;
   align-items: center;
   justify-content: flex-start;
   grid-gap: calc(100vw * (40 / 1512));
