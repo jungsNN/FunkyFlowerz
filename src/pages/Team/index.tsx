@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { FlowerSamples, Page } from "../../components";
-import { Grid, Text } from "../../components/shared";
+import { Page } from "../../components";
+import { Text } from "../../components/shared";
 import {
   InstagramIcon,
   TeamIvor,
@@ -18,23 +18,23 @@ type MemberProps = {
 const IVOR: MemberProps = {
   bio: 'Ivor Guest is a designer and art director based in New York, who created the art for Funky Flowerz. His inspiration came from Benyamin Ahmed\'s "Weird Whales" collection, mixed with his love for flowers and the game Pikmin.',
   headerIcon: <TeamIvor />,
-  instagram: "https://instagram.com/ivorguest",
-  twitter: "https://www.instagram.com/guestudios/?hl=en",
+  instagram: "https://www.instagram.com/guestudios/?hl=en",
+  twitter: "https://twitter.com/ivorguest",
 };
 
 const JENNY: MemberProps = {
   bio: "Jenny Jung is a software engineer at WeWork and a former web3 frontend engineer. She continues to pioneer in the web3 space, and has packaged the art and metadata into NFTs for Funky Flowerz. Her areas of expertise include Web3, mobile development, full stack and machine learning.",
   headerIcon: <TeamJenny />,
-  instagram: "https://instagram.com/wldo_jenny",
+  instagram: "https://instagram.com/jenny_wldo",
   twitter: "https://twitter.com/jungsnn",
 };
 
 const Member = ({ member }: { member: MemberProps }) => {
   return (
-    <MemberContainer className="team-ivor" display="grid" gridAutoFlow="row">
-      <MemberHeader display="grid" gridAutoFlow="column">
+    <MemberContainer>
+      <MemberHeader>
         <TitleWrapper>{member.headerIcon}</TitleWrapper>
-        <SocialIcons display="grid" gridAutoFlow="column">
+        <SocialIcons>
           <a href={member.instagram} rel="noreferrer" target="_blank">
             <InstagramIcon />
           </a>
@@ -55,11 +55,11 @@ const Member = ({ member }: { member: MemberProps }) => {
 const Team = () => {
   return (
     <Page>
-      <Section container direction="column">
+      <Section>
         <Member member={IVOR} />
         <Member member={JENNY} />
-        <FlowerSamplesContainer>
-          <FlowerSamples />
+        <FlowerSamplesContainer className="flower-samples">
+          <img src="./funkyflowerz-bg.png" alt="funkyflowerz-samples" />
         </FlowerSamplesContainer>
       </Section>
     </Page>
@@ -67,13 +67,34 @@ const Team = () => {
 };
 
 const FlowerSamplesContainer = styled.div`
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
   margin-top: calc(100vw * (120 / 1512));
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+
+  img {
+    height: 100%;
+    width: calc(100vw * (608 / 1512));
+  }
 
   @media (min-width: 1512px) {
     margin-top: 120px;
+
+    img {
+      width: 608px;
+    }
   }
+
   ${(props) => props.theme.mediaQueries.mobile} {
-    margin-top: calc(100vw * (60 / 480));
+    padding-left: calc(100vw * (44 / 480));
+    padding-right: calc(100vw * (44 / 480));
+    img {
+      width: 100%;
+    }
   }
 `;
 
@@ -95,31 +116,34 @@ const MemberDescrition = styled.div`
 
   ${(props) => props.theme.mediaQueries.mobile} {
     height: 100%;
-    padding-bottom: calc(100vw * (109 / 480));
+    padding-bottom: calc(100vw * (96 / 480));
 
     p {
-      font-size: calc(100vw * (30 / 480));
-      line-height: calc(100vw * (36 / 480));
-      margin-top: 0;
+      font-size: calc(100vw * (24 / 480));
+      line-height: calc(100vw * (32 / 480));
+      margin-top: calc(100vw * (16 / 480));
     }
   }
 `;
 
-const MemberContainer = styled(Grid)`
+const MemberContainer = styled.div`
+  display: grid;
+  grid-template-rows: 1fr auto;
   grid-gap: calc(100vw * (28 / 1512));
 
   @media (min-width: 1512px) {
     grid-gap: 28px;
   }
   ${(props) => props.theme.mediaQueries.mobile} {
-    grid-gap: calc(100vw * (32 / 480));
+    grid-gap: calc(100vw * (16 / 480));
   }
 `;
 
-const MemberHeader = styled(Grid)`
-  height: 100%;
+const MemberHeader = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   grid-gap: calc(100vw * (40 / 1512));
 
   @media (min-width: 1512px) {
@@ -130,10 +154,18 @@ const MemberHeader = styled(Grid)`
   }
 `;
 
-const Section = styled(Grid)``;
+const Section = styled.div`
+  display: grid;
+  grid-template-rows: auto auto auto;
+  justify-content: center;
+  align-items: start;
+`;
 
-const SocialIcons = styled(Grid)`
+const SocialIcons = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   align-items: center;
+  justify-content: flex-start;
   grid-gap: calc(100vw * (32 / 1512));
 
   svg {
