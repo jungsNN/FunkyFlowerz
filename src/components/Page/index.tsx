@@ -32,6 +32,7 @@ const PageContainer = styled(Container)`
 const Wrapper = styled.div`
   padding-left: 0;
   padding-right: 0;
+  min-height: 100vh;
 `;
 
 const FooterWrapper = styled.div`
