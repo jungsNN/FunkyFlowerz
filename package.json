@@ -65,6 +65,10 @@
       "last 1 safari version"
     ]
   },
+  "engines": {
+    "node": "18.7.0",
+    "yarn": "1.22.19"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
