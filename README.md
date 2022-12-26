@@ -16,9 +16,9 @@ For any urgent questions, issues regarding the minting process, and any other no
 
 ### Minting
 
-:warning: You need to install a wallet to mint. Most recommended wallets are (Phantom)[https://phantom.app/download] or (Solflare)[https://solflare.com/download].
+:warning: You need to install a wallet to mint. Most recommended wallets are [Phantom](https://phantom.app/download) or [Solflare](https://solflare.com/download).
 
-:warning: You must change your wallet network to **mainnet-beta** when minting on our website, (funkyflowerz.com)[https://funkyflowerz.com].
+:warning: You must change your wallet network to **mainnet-beta** when minting on our website, [funkyflowerz.com](https://funkyflowerz.com).
 
 Once minting has successfully completed, you can view your Funky Flowerz NFT in your wallet.
 
