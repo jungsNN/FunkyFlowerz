@@ -1,5 +1,7 @@
 # Funky Flowerz
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4ba9e5da-cec7-4de4-86b8-79361c8ce7ce/deploy-status)](https://app.netlify.com/sites/funkyflowerz/deploys)
+
 **2700 Funky Flowerz NFT**
 
 **Minting is now live on Solana mainnet-beta**</br>
