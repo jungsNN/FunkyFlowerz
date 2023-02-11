@@ -1,9 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import DragEdge from "../svgs/DragEdge";
-import colors from "../../theme/colors";
 import Button from "../Button";
+import colors from "../../theme/colors";
+import { DragEdge } from "../svgs";
 
 interface SideDrawerProps {
   actionButton: React.ReactNode;

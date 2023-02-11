@@ -9,7 +9,7 @@ const FunkyFlowerzGif = () => {
   );
 };
 
-const HomeSplashBG = () => {
+const HeroGif = () => {
   return (
     <svg
       width="1288"
@@ -1064,4 +1064,4 @@ const HomeSplashBG = () => {
   );
 };
 
-export default HomeSplashBG;
+export default HeroGif;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Container, Grid } from "../../components/shared";
 import FlowerSamples from "../../components/FlowerSamples";
-import HomeSplashBG from "../../components/svgs/HomeSplashBG";
+import { FunkyFlowerzHeroGif } from "../../components/svgs";
 import { FUNKY_FLOWERZ_INTRO_URI, IPFS_API_URL } from "../../constants/assets";
 import Page from "../../components/Page";
 
@@ -31,7 +31,7 @@ const Home = ({ isMobile }: { isMobile: boolean }) => {
   ) : (
     <Page>
       <SplashContainer>
-        <HomeSplashBG />
+        <FunkyFlowerzHeroGif />
       </SplashContainer>
     </Page>
   );
