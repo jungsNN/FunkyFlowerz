@@ -40,6 +40,7 @@ import {
   MintCountdown,
 } from "../../components/Mint";
 import SideDrawer from "../SideDrawer";
+import React from "react";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -48,6 +49,9 @@ interface AppBarProps {
   rpcHost: string;
   connection?: Connection | undefined;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// const FunkyFlowerzLogo = React.lazy(() => import("../svgs/FunkyFlowerzLogo")); // import('./mstile-150x150.png'));
 
 const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
   const isMobile = props.isMobile;
@@ -793,12 +797,12 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
         >
           <AppBarGrid display="grid">
             <div className="home-logo" onClick={() => navigate("/")}>
-              <FunkyFlowerzLogo />
+              <FunkyFlowerzLogo width="100%" height="100%" />
             </div>
             <Grid
               className="navbar-right"
               display="grid"
-              gap={`calc(100vw * (38 / ${isMobile ? "480" : "1512"}))`}
+              gap={`calc(100vw * 32 / ${isMobile ? "480" : "1512"})`}
               gridAutoFlow="column"
               style={{ position: isMobile ? "relative" : "initial" }}
             >
@@ -883,10 +887,10 @@ const MobileNavBar = ({
       <SideDrawer
         actionButton={
           <MoreIcon
-            height="calc(100vw * (48 / 480))"
+            height="calc(100vw * (55 / 480))"
             stroke="#ffffffd1"
             bg="black"
-            width="calc(100vw * (48 / 480))"
+            width="calc(100vw * (55 / 480))"
             variant="rounded-filled"
           />
         }
@@ -930,17 +934,8 @@ const AppBarGrid = styled(Grid)`
 
   .home-logo {
     cursor: pointer;
-    width: 100%;
-    height: auto;
-    min-height: calc(100vw * (100 / 1512));
-    max-height: calc(100vw * (100 / 1512));
-    min-width: calc(100vw * (100 / 1512));
-    max-width: calc(100vw * (100 / 1512));
-
-    svg {
-      width: 100%;
-      height: auto;
-    }
+    height: calc(100vw * (100 / 1512));
+    width: calc(100vw * (100 / 1512));
   }
 
   @media (min-width: 1512px) {
@@ -948,10 +943,8 @@ const AppBarGrid = styled(Grid)`
     max-width: 1288px;
 
     .home-logo {
-      min-width: 100px;
-      max-width: 100px;
-      min-height: 100px;
-      max-height: 100px;
+      width: 100px;
+      height: 100px;
     }
   }
 
@@ -961,10 +954,8 @@ const AppBarGrid = styled(Grid)`
     max-width: calc(100vw * (392 / 480));
 
     .home-logo {
-      min-height: calc(100vw * (48 / 480));
-      max-height: calc(100vw * (48 / 480));
-      min-width: calc(100vw * (48 / 480));
-      max-width: calc(100vw * (48 / 480));
+      height: calc(100vw * (64 / 480));
+      width: calc(100vw * (64 / 480));
     }
   }
 `;
