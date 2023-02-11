@@ -5,10 +5,6 @@
 **Minting is now live on Solana mainnet-beta**</br>
 Get yourself a one-of-a-kind, pixelated flower, each hand-crafted by our artist & designer, Ivor Guest.
 
-## Updates
-
-:warning: _Issue with incorrect minted NFT collection name. Next update with present bug fix expected by January 6th 2023_
-
 ## Support
 
 For any urgent questions, issues regarding the minting process, and any other non-commercial considerations, please email me directly</br>
@@ -26,10 +22,9 @@ Once minting has successfully completed, you can view your Funky Flowerz NFT in 
 
 React web app forked from Metaplex candy-ui, redesigned by Ivor Guest.
 
-## TODO
+## TODO/Updates
 
-- [ ] minor & major fixes (2023)
-  - [ ] fix collection names on mainnet-beta
-- [ ] add nextjs
+- [ ] integrate nextjs
 - [ ] update packages
-- [ ] clean up unused components and assets
+- [ ] clean up
+  - [x] **Feb. 11, 2023** light-cleanup: removed unused assets, recorded major cleanup sections related to solana/web3.js latest version
