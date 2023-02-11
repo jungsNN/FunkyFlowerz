@@ -1,3 +1,4 @@
+/** TODO: Clean up props */
 export interface LayoutProps {
   adjustVal?: string | undefined;
   align?: string | "start";
@@ -26,7 +27,6 @@ export interface LayoutProps {
 
 export interface TextProps
   extends React.HTMLAttributes<HTMLHeadingElement | HTMLElement> {
-  // React.HTMLAttributes<HTMLElement> &
   align?: "center" | "end" | "start" | undefined;
   bold?: boolean | false;
   color?: string | undefined;

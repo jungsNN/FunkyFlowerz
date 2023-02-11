@@ -1,9 +1,9 @@
 import Countdown from "react-countdown";
 import React from "react";
 import { Paper } from "@material-ui/core";
+import colors from "../../theme/colors";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Text } from "../shared";
-import colors from "../../theme/colors";
 
 const useStyles = ({ isMobile }: { isMobile: boolean }) =>
   makeStyles((theme: Theme) =>

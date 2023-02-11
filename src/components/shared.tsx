@@ -4,6 +4,7 @@ import styled, { CSSProperties } from "styled-components";
 import { LayoutProps, TextProps } from "./types";
 import { useStore } from "../hooks";
 
+/** TODO: Clean up & sub hard-coded size calcs with dynamic layout fn */
 export const Container = styled.div<{
   height?: string;
   maxH?: string;

@@ -1,11 +1,11 @@
 import * as anchor from "@project-serum/anchor";
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { SystemProgram } from "@solana/web3.js";
 import {
   LAMPORTS_PER_SOL,
   SYSVAR_RENT_PUBKEY,
   TransactionInstruction,
+  SystemProgram,
 } from "@solana/web3.js";
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { CandyMachineAccount } from "./candy-machine";
 
 export interface AlertState {
@@ -14,39 +14,6 @@ export interface AlertState {
   severity?: "success" | "info" | "warning" | "error" | undefined;
   hideDuration?: number | null;
 }
-
-export const toDate = (value?: anchor.BN) => {
-  if (!value) {
-    return;
-  }
-
-  return new Date(value.toNumber() * 1000);
-};
-
-export const getCountdownDate = (
-  candyMachine: CandyMachineAccount
-): Date | undefined => {
-  if (
-    candyMachine.state.isActive &&
-    candyMachine.state.endSettings?.endSettingType.date
-  ) {
-    return toDate(candyMachine.state.endSettings.number);
-  }
-
-  return toDate(
-    candyMachine.state.goLiveDate
-      ? candyMachine.state.goLiveDate
-      : candyMachine.state.isPresale
-      ? new anchor.BN(new Date().getTime() / 1000)
-      : undefined
-  );
-};
-
-const numberFormater = new Intl.NumberFormat("en-US", {
-  style: "decimal",
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
 
 export const formatNumber = {
   format: (val?: number) => {
@@ -65,8 +32,11 @@ export const formatNumber = {
   },
 };
 
-export const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID =
-  new anchor.web3.PublicKey("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL");
+const numberFormater = new Intl.NumberFormat("en-US", {
+  style: "decimal",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
 export const CIVIC = new anchor.web3.PublicKey(
   "gatem74V238djXdzWnJf94Wo1DcnuGkfijbf3AuBhfs"
@@ -75,39 +45,8 @@ export const CIVIC = new anchor.web3.PublicKey(
 export const CIVIC_GATEKEEPER_NETWORK =
   "ignREusXmGrscGNUesoU9mxfds9AiYTezUKex2PsZV6";
 
-export const getAtaForMint = async (
-  mint: anchor.web3.PublicKey,
-  buyer: anchor.web3.PublicKey
-): Promise<[anchor.web3.PublicKey, number]> => {
-  return await anchor.web3.PublicKey.findProgramAddress(
-    [buyer.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), mint.toBuffer()],
-    SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
-  );
-};
-
-export const getNetworkExpire = async (
-  gatekeeperNetwork: anchor.web3.PublicKey
-): Promise<[anchor.web3.PublicKey, number]> => {
-  return await anchor.web3.PublicKey.findProgramAddress(
-    [gatekeeperNetwork.toBuffer(), Buffer.from("expire")],
-    CIVIC
-  );
-};
-
-export const getNetworkToken = async (
-  wallet: anchor.web3.PublicKey,
-  gatekeeperNetwork: anchor.web3.PublicKey
-): Promise<[anchor.web3.PublicKey, number]> => {
-  return await anchor.web3.PublicKey.findProgramAddress(
-    [
-      wallet.toBuffer(),
-      Buffer.from("gateway"),
-      Buffer.from([0, 0, 0, 0, 0, 0, 0, 0]),
-      gatekeeperNetwork.toBuffer(),
-    ],
-    CIVIC
-  );
-};
+export const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID =
+  new anchor.web3.PublicKey("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL");
 
 export function createAssociatedTokenAccountInstruction(
   associatedTokenAddress: anchor.web3.PublicKey,
@@ -158,3 +97,64 @@ export function createAssociatedTokenAccountInstruction(
     data: Buffer.from([]),
   });
 }
+
+export const getAtaForMint = async (
+  mint: anchor.web3.PublicKey,
+  buyer: anchor.web3.PublicKey
+): Promise<[anchor.web3.PublicKey, number]> => {
+  return await anchor.web3.PublicKey.findProgramAddress(
+    [buyer.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), mint.toBuffer()],
+    SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
+  );
+};
+
+export const getCountdownDate = (
+  candyMachine: CandyMachineAccount
+): Date | undefined => {
+  if (
+    candyMachine.state.isActive &&
+    candyMachine.state.endSettings?.endSettingType.date
+  ) {
+    return toDate(candyMachine.state.endSettings.number);
+  }
+
+  return toDate(
+    candyMachine.state.goLiveDate
+      ? candyMachine.state.goLiveDate
+      : candyMachine.state.isPresale
+      ? new anchor.BN(new Date().getTime() / 1000)
+      : undefined
+  );
+};
+
+export const getNetworkExpire = async (
+  gatekeeperNetwork: anchor.web3.PublicKey
+): Promise<[anchor.web3.PublicKey, number]> => {
+  return await anchor.web3.PublicKey.findProgramAddress(
+    [gatekeeperNetwork.toBuffer(), Buffer.from("expire")],
+    CIVIC
+  );
+};
+
+export const getNetworkToken = async (
+  wallet: anchor.web3.PublicKey,
+  gatekeeperNetwork: anchor.web3.PublicKey
+): Promise<[anchor.web3.PublicKey, number]> => {
+  return await anchor.web3.PublicKey.findProgramAddress(
+    [
+      wallet.toBuffer(),
+      Buffer.from("gateway"),
+      Buffer.from([0, 0, 0, 0, 0, 0, 0, 0]),
+      gatekeeperNetwork.toBuffer(),
+    ],
+    CIVIC
+  );
+};
+
+export const toDate = (value?: anchor.BN) => {
+  if (!value) {
+    return;
+  }
+
+  return new Date(value.toNumber() * 1000);
+};

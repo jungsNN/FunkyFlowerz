@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { Page } from "../../components";
-import { Text } from "../../components/shared";
 import {
   InstagramIcon,
   TeamIvor,
   TeamJenny,
   TwitterIcon,
 } from "../../components/svgs";
+import { Page } from "../../components";
+import { Text } from "../../components/shared";
 
 type MemberProps = {
   bio: string;
@@ -23,7 +23,7 @@ const IVOR: MemberProps = {
 };
 
 const JENNY: MemberProps = {
-  bio: "Jenny Jung is a software engineer at WeWork and a former web3 frontend engineer. She continues to pioneer in the web3 space, and has packaged the art and metadata into NFTs for Funky Flowerz. Her areas of expertise include Web3, mobile development, full stack and machine learning.",
+  bio: "Jenny Jung is a software engineer based in New York, and has previous experience as a Web3 frontend engineer. She continues to pioneer in the Web3 space, and has packaged the NFTs for Funky Flowerz. Her areas of expertise include Web3, web & mobile development and machine learning.",
   headerIcon: <TeamJenny />,
   instagram: "https://instagram.com/jenny_wldo",
   twitter: "https://twitter.com/jungsnn",

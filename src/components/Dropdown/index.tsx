@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { ClickOutside } from "../utils/useClickOutside";
 import { Grid } from "../shared";
 import { MoreIcon } from "../svgs";
-// import colors from "../../theme/colors";
 
 interface DropdownProps {
   name: string;
@@ -61,16 +60,7 @@ export default function Dropdown(props: DropdownProps) {
     </ClickOutside>
   );
 }
-// align-items: center;
-//   background: ${(props) => props.background ?? props.theme.colors.pink};
-//   border: 4px solid ${(props) => props.borderColor ?? props.theme.colors.border};
-//   border-radius: calc(100vw * (20 / 1512));
-//   display: flex;
-//   justify-content: center;
-//   max-width: ${(props) =>
-//     props.isSmall ? "calc(100vw * (237 / 1512))" : "100vw"};
-//   min-width: 0px;
-//   width: auto;
+
 const DropdownContainer = styled.div<{
   background?: string | undefined;
   borderColor?: string | undefined;
@@ -183,17 +173,6 @@ const DropdownContainer = styled.div<{
     }
   }
 `;
-
-// @media (min-width: 1512px) {
-//   max-width: ${(props) => (props.isSmall ? "237px" : "100vw")};
-//   min-width: ${(props) => (props.isSmall ? "237px" : "100vw")};
-//   min-height: 0px;
-
-//   &:active {
-//     min-height: 500px;
-//     transition: all 2s ease-in-out;
-//   }
-// }
 
 const VertMenu = styled(Grid)`
   li {

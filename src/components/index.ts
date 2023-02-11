@@ -6,4 +6,3 @@ export { default as MintButton } from "./Mint/MintButton";
 export { default as MintContainer } from "./Mint/MintContainer";
 export { default as MintCountdown } from "./Mint/MintCountdown";
 export { default as Page } from "./Page";
-export { default as Wallet } from "./Wallet";

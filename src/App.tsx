@@ -1,8 +1,12 @@
 import * as anchor from "@project-serum/anchor";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useCallback, useEffect, useMemo } from "react";
-import { ThemeProvider } from "styled-components";
 import { clusterApiUrl } from "@solana/web3.js";
+import { ThemeProvider } from "styled-components";
+import { useCallback, useEffect, useMemo } from "react";
+import {
+  ConnectionProvider,
+  WalletProvider,
+} from "@solana/wallet-adapter-react";
 import {
   getLedgerWallet,
   getPhantomWallet,
@@ -13,16 +17,12 @@ import {
   getSolletWallet,
   getSolongWallet,
 } from "@solana/wallet-adapter-wallets";
-import {
-  ConnectionProvider,
-  WalletProvider,
-} from "@solana/wallet-adapter-react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { AppBar } from "./components";
 import { DEFAULT_TIMEOUT } from "./utils/connection";
-import { Home, Rarity, Team } from "./pages";
 import GlobalStyles from "./theme/Global";
+import { Home, Rarity, Team } from "./pages";
 import { theme } from "./theme/Theme.styled";
 import { useStore, useWindowSize } from "./hooks";
 import "./App.css";

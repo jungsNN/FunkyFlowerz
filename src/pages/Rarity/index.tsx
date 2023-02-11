@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { Grid } from "../../components/shared";
-import { Page } from "../../components";
 import {
   IPFS_API_URL,
   RARITY_CHART_URI,
   RARITY_SPECIAL_EDITIONS_URI,
   RARITY_SUPERIOR_TRAITS_URI,
 } from "../../constants/assets";
+import { Page } from "../../components";
 
 const Rarity = () => {
   return (

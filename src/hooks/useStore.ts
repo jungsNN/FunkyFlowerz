@@ -10,6 +10,7 @@ type State = {
   setIsMobile: (isMobile: boolean) => void;
 };
 
+/** TOOD: Remove unused states */
 const useStore = create<State>((set) => ({
   connection: {
     network: (process.env.REACT_APP_SOLANA_NETWORK ??

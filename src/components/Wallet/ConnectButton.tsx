@@ -21,11 +21,7 @@ const ConnectButton: React.FC<ConnectButtonProps> = (props) => {
     </StyledConnectButton>
   );
 };
-// height: auto;
-//   min-height: calc(100vw * (62 / ${({ maxw }) => `${maxw}`}));
-// > * {
-//   font-size: calc(100vw * (24 / ${({ maxw }) => `${maxw}`}));
-// }
+
 const StyledConnectButton = styled(WalletModalButton)<{
   isMobile: boolean;
   maxw: number;

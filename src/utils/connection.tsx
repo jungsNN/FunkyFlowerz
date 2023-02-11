@@ -1,19 +1,28 @@
 /* eslint-disable */
 import {
-  Keypair,
+  Blockhash,
   Commitment,
   Connection,
+  FeeCalculator,
+  Keypair,
   RpcResponseAndContext,
   SignatureStatus,
   SimulatedTransactionResponse,
   Transaction,
   TransactionInstruction,
   TransactionSignature,
-  Blockhash,
-  FeeCalculator,
 } from "@solana/web3.js";
-
 import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
+
+/**
+ * TODO:
+ *  - Update deprecated methods
+ *  - Replace console.logs & throws with popup UI for tx processes on prod
+ *    and leave as is for testnet/devnet debugging
+ *  - Apply above for remaining utils modules/fns
+ */
+
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 interface BlockhashAndFeeCalculator {
   blockhash: Blockhash;
@@ -109,16 +118,17 @@ export async function sendTransactionsWithManualRetry(
         ids = ids.concat(txs.map((t) => t.txid));
       }
     } catch (e) {
-      console.error(e);
+      console.error(`ERROR on sending transactions with Manual Retry`, e);
     }
-    console.log(
-      "Died on ",
-      stopPoint,
-      "retrying from instruction",
-      instructions[stopPoint],
-      "instructions length is",
-      instructions.length
-    );
+    isDevelopment &&
+      console.log(
+        "Died on ",
+        stopPoint,
+        "retrying from instruction",
+        instructions[stopPoint],
+        "instructions length is",
+        instructions.length
+      );
     lastInstructionsLength = instructions.length;
   }
 
@@ -183,12 +193,13 @@ export const sendTransactions = async (
   signedTxns = fullySignedTransactions.concat(signedTxns);
   const pendingTxns: Promise<{ txid: string; slot: number }>[] = [];
 
-  console.log(
-    "Signed txns length",
-    signedTxns.length,
-    "vs handed in length",
-    instructionSet.length
-  );
+  isDevelopment &&
+    console.log(
+      "Signed txns length",
+      signedTxns.length,
+      "vs handed in length",
+      instructionSet.length
+    );
   for (let i = 0; i < signedTxns.length; i++) {
     const signedTxnPromise = sendSignedTransaction({
       connection,
@@ -202,8 +213,11 @@ export const sendTransactions = async (
         );
         pendingTxns.push(signedTxnPromise);
       } catch (e) {
-        console.log("Failed at txn index:", i);
-        console.log("Caught failure:", e);
+        isDevelopment &&
+          console.log(
+            `ERROR [connection][sendTransactions()] Caught failure at txn index ${i}: `,
+            { e }
+          );
 
         failCallback(signedTxns[i], i);
         if (sequenceType === SequenceType.StopOnFailure) {
@@ -245,7 +259,7 @@ export const sendTransaction = async (
     transaction = new Transaction();
     instructions.forEach((instruction) => transaction.add(instruction));
     transaction.recentBlockhash = (
-      block || (await connection.getRecentBlockhash(commitment))
+      block || (await connection.getLatestBlockhash(commitment))
     ).blockhash;
 
     if (includesFeePayer) {
@@ -290,7 +304,11 @@ export const sendTransaction = async (
     if (confirmation?.err) {
       const errors = await getErrorForTransaction(connection, txid);
 
-      console.log(errors);
+      isDevelopment &&
+        console.log(
+          `ERROR [connection][sendTransaction()] confirmation error: Raw transaction ${txid} faild`,
+          errors
+        );
       throw new Error(`Raw transaction ${txid} failed`);
     }
   }
@@ -313,7 +331,7 @@ export const sendTransactionWithRetry = async (
   let transaction = new Transaction();
   instructions.forEach((instruction) => transaction.add(instruction));
   transaction.recentBlockhash = (
-    block || (await connection.getRecentBlockhash(commitment))
+    block || (await connection.getLatestBlockhash(commitment))
   ).blockhash;
 
   if (includesFeePayer) {
@@ -372,7 +390,7 @@ export async function sendSignedTransaction({
     }
   );
 
-  console.log("Started awaiting confirmation for", txid);
+  isDevelopment && console.log("Started awaiting confirmation for", txid);
 
   let done = false;
   (async () => {
@@ -430,7 +448,7 @@ export async function sendSignedTransaction({
     done = true;
   }
 
-  console.log("Latency", txid, getUnixTs() - startTime);
+  isDevelopment && console.log("Latency", txid, getUnixTs() - startTime);
   return { txid, slot };
 }
 
@@ -447,7 +465,7 @@ async function simulateTransaction(
 
   const signData = transaction.serializeMessage();
   // @ts-ignore
-  const wireTransaction = transaction._serialize(signData);
+  const wireTransaction = transaction.serialize(signData);
   const encodedTransaction = wireTransaction.toString("base64");
   const config: any = { encoding: "base64", commitment };
   const args = [encodedTransaction, config];
@@ -497,7 +515,7 @@ async function awaitTransactionSignatureConfirmation(
             console.log("Rejected via websocket", result.err);
             reject(status);
           } else {
-            console.log("Resolved via websocket", result);
+            isDevelopment && console.log("Resolved via websocket", result);
             resolve(status);
           }
         },
@@ -540,11 +558,16 @@ async function awaitTransactionSignatureConfirmation(
     }
   });
 
-  //@ts-ignore
   try {
     await connection.removeSignatureListener(subId);
   } catch (e) {
-    // ignore
+    if (isDevelopment) {
+      console.log(
+        `ERROR[connection][awaitTransactionSignatureConfirmation()] Caught at 'connection.removeSignatureListener(subId)'`,
+        { error: e }
+      );
+      throw e;
+    }
   }
   done = true;
   console.log("Returning status", status);
