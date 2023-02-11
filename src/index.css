@@ -4,6 +4,7 @@
   font-weight: 400;
   src: url("./theme/fonts/GothamLight.ttf");
   src: url("./theme/fonts/GothamLight.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
@@ -12,6 +13,7 @@
   font-weight: 400;
   src: url("./theme/fonts/GothamMedium.ttf");
   src: url("./theme/fonts/GothamMedium.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
@@ -20,6 +22,7 @@
   font-weight: 700;
   src: url("./theme/fonts/GothamBold.ttf");
   src: url("./theme/fonts/GothamBold.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
@@ -28,6 +31,7 @@
   font-weight: 400;
   src: url("./theme/fonts/GothamBook.ttf");
   src: url("./theme/fonts/GothamBook.ttf") format("truetype");
+  font-display: swap;
 }
 
 body {
