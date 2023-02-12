@@ -14,14 +14,6 @@ import {
 } from "@solana/web3.js";
 import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 
-/**
- * TODO:
- *  - Update deprecated methods
- *  - Replace console.logs & throws with popup UI for tx processes on prod
- *    and leave as is for testnet/devnet debugging
- *  - Apply above for remaining utils modules/fns
- */
-
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 interface BlockhashAndFeeCalculator {
@@ -465,7 +457,7 @@ async function simulateTransaction(
 
   const signData = transaction.serializeMessage();
   // @ts-ignore
-  const wireTransaction = transaction.serialize(signData);
+  const wireTransaction = transaction._serialize(signData);
   const encodedTransaction = wireTransaction.toString("base64");
   const config: any = { encoding: "base64", commitment };
   const args = [encodedTransaction, config];
