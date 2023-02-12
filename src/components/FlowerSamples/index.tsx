@@ -4,7 +4,12 @@ import { Container } from "../shared";
 const FlowerSamples = ({ pt }: { pt?: string }) => {
   return (
     <Samples pt={pt}>
-      <img src="./funkyflowerz-bg.png" alt="funky flowerz samples" />
+      <img
+        src="./funkyflowerz-bg.png"
+        alt="funky flowerz samples"
+        height="100%"
+        width="100%"
+      />
     </Samples>
   );
 };
@@ -12,11 +17,6 @@ const FlowerSamples = ({ pt }: { pt?: string }) => {
 const Samples = styled(Container)<{ pt?: string }>`
   padding-top: ${(props) => (props.pt ? props.pt : "0")};
   max-width: 720px;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
 
   ${(props) => props.theme.mediaQueries.desktop} {
     max-width: calc(100vw / 2);

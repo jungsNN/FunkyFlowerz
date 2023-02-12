@@ -59,7 +59,11 @@ const Team = () => {
         <Member member={IVOR} />
         <Member member={JENNY} />
         <FlowerSamplesContainer className="flower-samples">
-          <img src="./funkyflowerz-bg.png" alt="funkyflowerz-samples" />
+          <img
+            src="./funkyflowerz-bg.png"
+            alt="funkyflowerz-samples"
+            height="100%"
+          />
         </FlowerSamplesContainer>
       </Section>
     </Page>
@@ -77,7 +81,6 @@ const FlowerSamplesContainer = styled.div`
   width: 100%;
 
   img {
-    height: 100%;
     width: calc(100vw * (608 / 1512));
   }
 
