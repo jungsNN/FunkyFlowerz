@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <Title
           thin
           variant="caption"
-        >{`${"Copyright © 2022 Funky Flowerz"}`}</Title>
+        >{`Copyright © ${new Date().getFullYear()} Funky Flowerz`}</Title>
       </Wrapper>
     </FooterBox>
   );
