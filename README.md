@@ -9,7 +9,7 @@ Get yourself a one-of-a-kind, pixelated flower, each hand-crafted by our artist 
 
 ## Support
 
-For any urgent questions, issues regarding the minting process, and any other non-commercial considerations, please email me directly</br>
+For any urgent questions, issues regarding the minting process, and any other non-commercial suggestions, please email me directly</br>
 :e-mail: wiseheartnation.eth@gmail.com
 
 ### Minting
