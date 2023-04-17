@@ -28,5 +28,9 @@ React web app forked from Metaplex candy-ui, redesigned by Ivor Guest.
 
 - [ ] integrate nextjs
 - [ ] update packages
-- [ ] clean up
-  - [x] **Feb. 11, 2023** light-cleanup: removed unused assets, recorded major cleanup sections related to solana/web3.js latest version
+- [ ] add instructions on how to create wallet & purchasing
+
+### Updates:
+
+- [x] **Feb. 11, 2023** light-cleanup: removed unused assets, recorded major cleanup sections related to solana/web3.js latest version
+- [x] **Apr. 17, 2023** replaced appbar logo svg with png to fix logo not appearing in some browsers
