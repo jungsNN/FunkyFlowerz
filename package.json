@@ -66,8 +66,8 @@
     ]
   },
   "engines": {
-    "node": "16.19.0",
-    "yarn": "1.22.19"
+    "node": ">=16.19.0",
+    "yarn": ">=1.22.19"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
