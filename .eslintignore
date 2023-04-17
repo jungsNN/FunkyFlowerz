@@ -6,6 +6,5 @@ public/*
 .husky/*
 .github/*
 node_modules/*
-package.json
 *.log
 *.lock
