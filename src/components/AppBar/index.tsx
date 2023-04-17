@@ -33,12 +33,12 @@ import {
 import ConnectButton from "../../components/Wallet/ConnectButton";
 import { ConnectionProps } from "../../models/connection";
 import { Container, Grid, Text, Title } from "../shared";
-import { FunkyFlowerzLogo, MoreIcon } from "../svgs";
 import {
   MintButton,
   MintContainer,
   MintCountdown,
 } from "../../components/Mint";
+import { MoreIcon } from "../svgs";
 import SideDrawer from "../SideDrawer";
 import React from "react";
 
@@ -49,9 +49,6 @@ interface AppBarProps {
   rpcHost: string;
   connection?: Connection | undefined;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// const FunkyFlowerzLogo = React.lazy(() => import("../svgs/FunkyFlowerzLogo")); // import('./mstile-150x150.png'));
 
 const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
   const isMobile = props.isMobile;
@@ -782,6 +779,10 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
     );
   };
 
+  const logoImg = (
+    <img src="./sunhead.png" alt="sunhead-logo" width="100%" height="100%" />
+  );
+
   return (
     <AppBarContainer>
       <Container style={{ position: "relative" }}>
@@ -797,7 +798,7 @@ const AppBar: React.FC<AppBarProps & ConnectionProps> = (props) => {
         >
           <AppBarGrid display="grid">
             <div className="home-logo" onClick={() => navigate("/")}>
-              <FunkyFlowerzLogo width="100%" height="100%" />
+              {logoImg}
             </div>
             <Grid
               className="navbar-right"
